@@ -1,2 +1,2 @@
-TODO
-    add google translate
+Version 1dev1 -- internally released 2012-04-25
+cmb	initial release

@@ -7,7 +7,7 @@
  */
 
 
-define('POLYGLOTT_VERSION', '1alpha1');
+define('POLYGLOTT_VERSION', '1dev1');
 
 
 /**
@@ -48,14 +48,14 @@ function polyglott_select_page($tag) {
 	    }
 	}
     }
-    if ($s >= 0) {
+    //if ($s >= 0) {
 	$url = 'http'.(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '').'://'
 		.$_SERVER['SERVER_NAME'].$sn.($s >= 0 ? '?'.$u[$s] : '');
-	//header('HTTP/1.1 301 Moved Permanently');
-	header('Location: '.$url); // TODO: moved permanently?
-    } else {
-	$o .=  $plugin_tx['polyglott']['not_translated'];
-    }
+	header('HTTP/1.1 301 Moved Permanently'); // TODO: as config option? at least: document!
+	header('Location: '.$url);
+//    } else {
+//	$o .=  $plugin_tx['polyglott']['not_translated'];
+    //}
 }
 
 
@@ -76,7 +76,7 @@ function polyglott_languagemenu() {
     }
     $o = '';
     foreach (polyglott_other_languages() as $lang) {
-	$url = $pth['folder']['base'].($lang == $cf['language']['default'] ? '' : $lang).$polyglott;
+	$url = $pth['folder']['base'].($lang == $cf['language']['default'] ? '' : $lang.'/').$polyglott;
 	$o .= '<a href="'.$url.'">'
 		.tag('img src="'.$pth['folder']['flags'].$lang.'.gif" alt="'.$lang.'"'
 		    .' title="'.$lang.'"').'</a>';

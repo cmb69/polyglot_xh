@@ -60,6 +60,21 @@ function polyglott_select_page($tag) {
 }
 
 
+function Polyglott_languageLabels()
+{
+    global $plugin_cf;
+
+    $pcf = $plugin_cf['polyglott'];
+    $langs = explode(';', $pcf['languages']);
+    $res = array();
+    foreach ($langs as $lang) {
+	list($key, $value) = explode('=', $lang);
+	$res[$key] = $value;
+    }
+    return $res;
+}
+
+
 /**
  * Returns the language menu.
  *
@@ -75,12 +90,14 @@ function polyglott_languagemenu() {
     } else {
 	$polyglott = '';//(!empty($_SERVER['QUERY_STRING']) ? '?' : '').$_SERVER['QUERY_STRING'];
     }
+    $languages = Polyglott_languageLabels();
     $o = '';
     foreach (polyglott_other_languages() as $lang) {
 	$url = $pth['folder']['base'].($lang == $cf['language']['default'] ? '' : $lang.'/').$polyglott;
+	$alt = isset($languages[$lang]) ? $languages[$lang] : $lang;
 	$o .= '<a href="'.$url.'">'
-		.tag('img src="'.$pth['folder']['flags'].$lang.'.gif" alt="'.$lang.'"'
-		    .' title="'.$lang.'"').'</a>';
+		.tag('img src="'.$pth['folder']['flags'].$lang.'.gif" alt="'.$alt.'"'
+		    .' title="'.$alt.'"').'</a>';
     }
     return $o;
 }

@@ -1,2 +1,5 @@
+Version 1dev2 - internally released 2012-04-23
+cmb     made some improvements regarding SEO
+
 Version 1dev1 -- internally released 2012-04-25
 cmb	initial release

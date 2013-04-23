@@ -7,7 +7,7 @@
  */
 
 
-define('POLYGLOTT_VERSION', '1dev1');
+define('POLYGLOTT_VERSION', '1dev2');
 
 
 /**

@@ -51,7 +51,7 @@ function polyglott_select_page($tag) {
     //if ($s >= 0) {
 	$url = 'http'.(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '').'://'
 		.$_SERVER['SERVER_NAME'].$sn.($s >= 0 ? '?'.$u[$s] : '');
-	header('HTTP/1.1 301 Moved Permanently'); // TODO: as config option? at least: document!
+	//header('HTTP/1.1 301 Moved Permanently'); // TODO: as config option? at least: document! DO NOT 301!
 	header('Location: '.$url);
 //    } else {
 //	$o .=  $plugin_tx['polyglott']['not_translated'];

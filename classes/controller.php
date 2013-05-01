@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * Controller of Polyglott_XH.
+ *
+ * @package    Polyglott
+ * @copyright  Copyright (c) 2012-2013 Christoph M. Becker <http://3-magi.net/>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
+ * @version    $Id$
+ * @link       http://3-magi.net/?CMSimple_XH/Polyglott_XH
+ */
+
+
+/**
+ * The controller class.
+ *
+ * @package Polyglott
+ */
 class Polyglott_Controller
 {
     /**
@@ -297,6 +313,8 @@ class Polyglott_Controller
     /**
      * Returns the main administration view.
      *
+     * @access private
+     *
      * @global string  The script name.
      * @global int  The number of pages.
      * @global array  The headings of the pages.
@@ -351,3 +369,5 @@ class Polyglott_Controller
         return $this->_render('languagemenu', compact('languages'));
     }
 }
+
+?>

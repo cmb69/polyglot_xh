@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * Model of Polyglott_XH.
+ *
+ * @package    Polyglott
+ * @copyright  Copyright (c) 2012-2013 Christoph M. Becker <http://3-magi.net/>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
+ * @version    $Id$
+ * @link       http://3-magi.net/?CMSimple_XH/Polyglott_XH
+ */
+
+
+/**
+ * The model class.
+ *
+ * @package Polyglott
+ */
 class Polyglott_Model
 {
     /**
@@ -227,6 +243,15 @@ class Polyglott_Model
         return $res;
     }
 
+    /**
+     * Returns whether a page is translated in a certain language.
+     *
+     * @access public
+     *
+     * @param  string $tag  The polyglott tag.
+     * @param  string $language  The language code.
+     * @return bool
+     */
     function isTranslated($tag, $language)
     {
         return isset($this->_tags[$tag][$language]);

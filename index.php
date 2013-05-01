@@ -26,6 +26,14 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 define('POLYGLOTT_VERSION', '1dev2');
 
 
+function Polyglott_cache()
+{
+    // read file
+    // check if current; otherwise update -> write back
+    // return contents
+}
+
+
 /**
  * Returns all available languages other than the current one.
  *

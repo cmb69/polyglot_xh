@@ -21,41 +21,15 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 
 
 /**
- * The plugin version.
+ * The model class.
  */
-define('POLYGLOTT_VERSION', '1dev2');
-
-
-function Polyglott_cache()
-{
-    // read file
-    // check if current; otherwise update -> write back
-    // return contents
-}
+require $pth['folder']['plugin_classes'] . 'model.php';
 
 
 /**
- * Returns all available languages other than the current one.
- *
- * @global string $sl  The current language.
- * @global array  The paths of system files and folders.
- * @global array $cf  The configuration of the core.
- * @return array
+ * The plugin version.
  */
-function Polyglott_otherLanguages()
-{
-    global $sl, $pth, $cf;
-
-    $langs = array($cf['language']['default']);
-    $dh = opendir($pth['folder']['base']);
-    while (($dir = readdir($dh)) !== false) {
-	if (preg_match('/^[A-z]{2}$/', $dir)) {
-	    $langs[] = $dir;
-	}
-    }
-    unset($langs[array_search($sl, $langs)]);
-    return $langs;
-}
+define('POLYGLOTT_VERSION', '1dev2');
 
 
 /**
@@ -119,11 +93,12 @@ function Polyglott_languageLabels()
  * @global array  The paths of system files and folders.
  * @global array  The configuration of the core.
  * @global array  The page data of the current page.
+ * @global object  The polyglott model.
  * @return string  The (X)HTML.
  */
 function Polyglott_languageMenu()
 {
-    global $s, $pth, $cf, $pd_current;
+    global $s, $pth, $cf, $pd_current, $_Polyglott;
 
     if ($s >= 0) {
 	$tag = isset($pd_current['polyglott_tag'])
@@ -135,7 +110,7 @@ function Polyglott_languageMenu()
     }
     $languages = Polyglott_languageLabels();
     $o = '';
-    foreach (Polyglott_otherLanguages() as $lang) {
+    foreach ($_Polyglott->otherLanguages() as $lang) {
 	$url = $pth['folder']['base']
 	    . ($lang == $cf['language']['default'] ? '' : $lang . '/')
 	    . $polyglott;
@@ -147,6 +122,12 @@ function Polyglott_languageMenu()
     }
     return $o;
 }
+
+
+/*
+ * Instanciate the model.
+ */
+$_Polyglott = new Polyglott_Model($sl, $cf['language']['default'], $pth['folder']['base']);
 
 
 /**

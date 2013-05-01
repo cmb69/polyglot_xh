@@ -114,12 +114,15 @@ function Polyglott_pageData($lang)
 /**
  * Returns the list of the tags for all languages.
  *
+ * @global object  The model.
  * @return array
  */
 function Polyglott_tags()
 {
+    global $_Polyglott;
+
     $tags = array();
-    $langs = Polyglott_otherLanguages();
+    $langs = $_Polyglott->otherLanguages();
     foreach ($langs as $lang) {
 	$tags[$lang] = Polyglott_pageData($lang);
     }
@@ -138,13 +141,14 @@ function Polyglott_tags()
  * @global array  The paths of system files and folders.
  * @global array  The configuration of the core.
  * @global object  The page data router.
+ * @global object  The polyglott model.
  * @return string  The (X)HTML.
  */
 function Polyglott_admin()
 {
-    global $sn, $cl, $h, $l, $u, $pth, $cf, $pd_router;
+    global $sn, $cl, $h, $l, $u, $pth, $cf, $pd_router, $_Polyglott;
 
-    $langs = Polyglott_otherLanguages();
+    $langs = $_Polyglott->otherLanguages();
     $tags = Polyglott_tags();
     $o = '<table>'
 	. '<thead><tr><td>Heading</td><td>Tag</td>';

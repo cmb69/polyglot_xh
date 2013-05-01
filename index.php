@@ -52,11 +52,4 @@ function Polyglott_languageMenu()
  */
 $_Polyglott = new Polyglott_Controller();
 
-
-/**
- * Register the page data field.
- */
-$pd_router->add_interest('polyglott_tag');
-
-
 ?>

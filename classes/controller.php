@@ -46,6 +46,7 @@ class Polyglott_Controller
         } else {
             e('cntopen', 'file', $this->_model->tagsFile());
         }
+        $pd_router->add_interest('polyglott_tag');
         if ($adm) {
             $pd_router->add_tab(
                 'Polyglott',

@@ -30,19 +30,51 @@ class Polyglott_Model
     var $_baseFolder;
 
     /**
-     * Construct a model.
+     * The relative path of the data folder.
+     *
+     * @access private
+     *
+     * @var string
+     */
+    var $_dataFolder;
+
+    /**
+     * The polyglott tags.
+     *
+     * @access private
+     *
+     * @var array
+     */
+    var $_tags;
+
+    /**
+     * Construct a model instance.
      *
      * @access public
      *
      * @param  string $language  The current langage.
      * @param  string $defaultLanguage  The default language.
      * @param  string $baseFolder  The relative path of the base folder.
+     * @param  string $dataFolder  The relative path of the data folder.
      */
-    function Polyglott_Model($language, $defaultLanguage, $baseFolder)
+    function Polyglott_Model($language, $defaultLanguage, $baseFolder, $dataFolder)
     {
         $this->_language = $language;
         $this->_defaultLanguage = $defaultLanguage;
         $this->_baseFolder = $baseFolder;
+        $this->_dataFolder = $dataFolder;
+    }
+
+    /**
+     * Returns the path of the tags file.
+     *
+     * @access public
+     * 
+     * @return string
+     */
+    function tagsFile()
+    {
+        return $this->_dataFolder . 'tags.dat';
     }
 
     /**
@@ -83,7 +115,82 @@ class Polyglott_Model
         return $res;
     }
 
-}
+    /**
+     * Returns the timestamp of the last modification of the cache file.
+     *
+     * @access public
+     *
+     * @return int
+     */
+    function lastMod()
+    {
+        $res = filemtime($this->tagsFile());
+        return $res;
+    }
 
+    /**
+     * Reads the cache file and returns whether that succeeded.
+     *
+     * @access public
+     *
+     * @return bool
+     */
+    function init()
+    {
+        $contents = file_get_contents($this->tagsFile());
+        if ($contents === false) {
+            $contents = serialize(array());
+            if (!file_put_contents($this->tagsFile(), $contents)) {
+                return false;
+            }
+        }
+        $this->_tags = unserialize($contents);
+        return $this->_tags !== false;
+
+    }
+
+    /**
+     * Updates the cache file for the current language
+     * and returns whether that succeeded.
+     *
+     * @access public
+     *
+     * @param  array $pageData  The page data of all pages.
+     * @param  array $urls  The "URLs" of the pages.
+     * @return bool
+     */
+    function update($pageData, $urls)
+    {
+        foreach ($pageData as $i => $data) {
+            if (!empty($data['polyglott_tag'])) {
+                $tag = $data['polyglott_tag'];
+                $this->_tags[$tag][$this->_language] = $urls[$i];
+            }
+        }
+        $contents = serialize($this->_tags);
+        return !!file_put_contents($this->tagsFile(), $contents);
+    }
+
+    /**
+     * Returns the URL to another language.
+     *
+     * @access public
+     *
+     * @param  string $language  The language to link to.
+     * @param  string $tag  The polyglott tag.
+     * @return string
+     */
+    function languageURL($language, $tag)
+    {
+        $res = $this->_baseFolder;
+        if ($language != $this->_defaultLanguage) {
+            $res .= $language . '/';
+        }
+        if (isset($this->_tags[$tag][$language])) {
+            $res .= '?' . $this->_tags[$tag][$language];
+        }
+        return $res;
+    }
+}
 
 ?>

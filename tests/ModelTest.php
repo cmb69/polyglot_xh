@@ -9,7 +9,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->model = new Polyglott_Model('en', 'en', './data/');
+        $this->model = new Polyglott_Model('en', 'en', './data/', './data/cache');
     }
 
     public function testOtherLanguages()

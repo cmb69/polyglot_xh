@@ -14,18 +14,34 @@ class Polyglott_Controller
     /**
      * Construct a controller instance.
      *
+     * @access public
+     *
      * @global string  The current language.
      * @global array  The paths of system files and folders.
+     * @global array  The "URLs" of the pages.
      * @global array  The configuration of the core.
+     * @global object  The page data router.
      * @access public
      */
     function Polyglott_Controller()
     {
-        global $sl, $pth, $cf;
+        global $sl, $pth, $u, $cf, $pd_router;
 
+        $dataFolder = $pth['folder']['plugins'] . 'polyglott/data/';
         $this->_model = new Polyglott_Model(
-            $sl, $cf['language']['default'], $pth['folder']['base']
+            $sl, $cf['language']['default'], $pth['folder']['base'],
+            $dataFolder
         );
+        if (!$this->_model->init()) {
+            e('cntopen', 'file', $this->_model->tagsFile());
+        }
+        $contentLastMod = filemtime($pth['file']['content']);
+        $pageDataLastMod = filemtime($pth['file']['pagedata']);
+        if ($this->_model->lastMod() < max($contentLastMod, $pageDataLastMod)) {
+            if (!$this->_model->update($pd_router->find_all(), $u)) {
+                e('cntsave', 'file', $this->_model->tagsFile());
+            }
+        }
     }
 
     /**
@@ -142,6 +158,8 @@ class Polyglott_Controller
     /**
      * Returns a dictionary from lanugage codes to labels.
      *
+     * @access private
+     *
      * @global array  The configuration of the plugins.
      * @return array
      */
@@ -182,26 +200,22 @@ class Polyglott_Controller
      * @access private
      *
      * @global int  The index of the current page.
-     * @global array  The paths of system files and folders.
      * @global array  The page data of the current page.
      * @param  string $language  A language code.
      * @return string
      */
     function _languageURL($language)
     {
-        global $s, $pth, $pd_current;
+        global $s, $pd_current;
 
         if ($s >= 0) {
             $tag = isset($pd_current['polyglott_tag'])
                 ? $pd_current['polyglott_tag']
-                : false;
-            $polyglott = $tag ? '?polyglott=' . $tag : '';
+                : null;
         } else {
-            $polyglott = '';
+            $tag = null;
         }
-        $res = $pth['folder']['base']
-            . ($language == $this->_model->_defaultLanguage ? '' : $language . '/')
-            . $polyglott;
+        $res = $this->_model->languageURL($language, $tag);
         return $res;
     }
 

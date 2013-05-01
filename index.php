@@ -65,42 +65,16 @@ function Polyglott_selectPage($tag)
 
 
 /**
- * Returns the language menu.
+ * Procedural wrapper for $_Polyglott->languageMenu().
  *
- * @access public
- *
- * @global int  The index of the current page.
- * @global array  The paths of system files and folders.
- * @global array  The configuration of the core.
- * @global array  The page data of the current page.
  * @global object  The polyglott controller.
  * @return string  The (X)HTML.
  */
 function Polyglott_languageMenu()
 {
-    global $s, $pth, $cf, $pd_current, $_Polyglott;
+    global $_Polyglott;
 
-    if ($s >= 0) {
-	$tag = isset($pd_current['polyglott_tag'])
-	    ? $pd_current['polyglott_tag']
-	    : false;
-	$polyglott = $tag ? '?polyglott=' . $tag : '';
-    } else {
-	$polyglott = '';
-    }
-    $languages = $_Polyglott->_languageLabels();
-    $o = '';
-    foreach ($_Polyglott->_model->otherLanguages() as $lang) {
-	$url = $pth['folder']['base']
-	    . ($lang == $cf['language']['default'] ? '' : $lang . '/')
-	    . $polyglott;
-	$alt = isset($languages[$lang]) ? $languages[$lang] : $lang;
-	$o .= '<a href="' . $url . '">'
-	    . tag('img src="' . $pth['folder']['flags'] . $lang . '.gif"'
-		  . ' alt="' . $alt . '" title="' . $alt . '"')
-	    . '</a>';
-    }
-    return $o;
+    return $_Polyglott->languageMenu();
 }
 
 

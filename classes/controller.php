@@ -160,19 +160,36 @@ class Polyglott_Controller
     }
 
     /**
-     * Returns the language menu.
+     * Returns the path of a language flag.
      *
-     * @access public
+     * @access private
+     *
+     * @global array  The paths of system files and folders.
+     * @param  string $language  The language code.
+     * @return string
+     */
+    function _languageFlag($language)
+    {
+        global $pth;
+
+        $res = $pth['folder']['flags'] . $language . '.gif"';
+        return $res;
+    }
+
+    /**
+     * Returns the URL to another language.
+     *
+     * @access private
      *
      * @global int  The index of the current page.
      * @global array  The paths of system files and folders.
-     * @global array  The configuration of the core.
      * @global array  The page data of the current page.
-     * @return string  The (X)HTML.
+     * @param  string $language  A language code.
+     * @return string
      */
-    function languageMenu()
+    function _languageURL($language)
     {
-        global $s, $pth, $cf, $pd_current;
+        global $s, $pth, $pd_current;
 
         if ($s >= 0) {
             $tag = isset($pd_current['polyglott_tag'])
@@ -182,16 +199,29 @@ class Polyglott_Controller
         } else {
             $polyglott = '';
         }
-        $languages = $this->_languageLabels();
-        $bag = array();
-        foreach ($this->_model->otherLanguages() as $lang) {
-            $href = $pth['folder']['base']
-                . ($lang == $cf['language']['default'] ? '' : $lang . '/')
-                . $polyglott;
-            $src = $pth['folder']['flags'] . $lang . '.gif"';
-            $alt = isset($languages[$lang]) ? $languages[$lang] : $lang;
-            $bag[$lang] = compact('href', 'src', 'alt');
+        $res = $pth['folder']['base']
+            . ($language == $this->_model->_defaultLanguage ? '' : $language . '/')
+            . $polyglott;
+        return $res;
+    }
+
+    /**
+     * Returns the language menu.
+     *
+     * @access public
+     *
+     * @return string  The (X)HTML.
+     */
+    function languageMenu()
+    {
+        $labels = $this->_languageLabels();
+        $languages = array();
+        foreach ($this->_model->otherLanguages() as $language) {
+            $href = $this->_languageURL($language);
+            $src = $this->_languageFlag($language);
+            $alt = isset($labels[$language]) ? $labels[$language] : $language;
+            $languages[$language] = compact('href', 'src', 'alt');
         }
-        return $this->_render('languagemenu', array('languages' => $bag));
+        return $this->_render('languagemenu', compact('languages'));
     }
 }

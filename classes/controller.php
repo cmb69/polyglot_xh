@@ -16,6 +16,7 @@ class Polyglott_Controller
      *
      * @access public
      *
+     * @global bool  Whether the user is logged in as admin.
      * @global string  The current language.
      * @global array  The paths of system files and folders.
      * @global array  The "URLs" of the pages.
@@ -25,7 +26,7 @@ class Polyglott_Controller
      */
     function Polyglott_Controller()
     {
-        global $sl, $pth, $u, $cf, $pd_router;
+        global $adm, $sl, $pth, $u, $cf, $pd_router;
 
         $dataFolder = $pth['folder']['plugins'] . 'polyglott/data/';
         $this->_model = new Polyglott_Model(
@@ -44,6 +45,41 @@ class Polyglott_Controller
             }
         } else {
             e('cntopen', 'file', $this->_model->tagsFile());
+        }
+        if ($adm) {
+            $pd_router->add_tab(
+                'Polyglott',
+                $pth['folder']['plugins'] . 'polyglott/polyglott_view.php'
+            );
+            $this->_dispatch();
+        }
+    }
+
+    /**
+     * Dispatches according to request.
+     *
+     * @access private
+     *
+     * @global string  The value of the GET/POST parameter 'admin'.
+     * @global string  The value of the GET/POST parameter 'action'.
+     * @return void
+     */
+    function _dispatch()
+    {
+        global $admin, $action, $o, $polyglott;
+
+        if (isset($polyglott) && $polyglott == 'true') {
+            $o .= print_plugin_admin('on');
+            switch ($admin) {
+                case '':
+                    $o .= $this->_info();
+                    break;
+                case 'plugin_main':
+                    $o .= $this->_administration();
+                    break;
+                default:
+                    $o .= plugin_admin_common($action, $admin, 'polyglott');
+            }
         }
     }
 

@@ -139,4 +139,25 @@ class Polyglott_Controller
         return $this->_render('info', $bag);
     }
 
+    /**
+     * Returns a dictionary from lanugage codes to labels.
+     *
+     * @global array  The configuration of the plugins.
+     * @return array
+     */
+    function _languageLabels()
+    {
+        global $plugin_cf;
+
+        $pcf = $plugin_cf['polyglott'];
+        $languages = explode(';', $pcf['languages']);
+        $res = array();
+        foreach ($languages as $language) {
+            list($key, $value) = explode('=', $language);
+            $res[$key] = $value;
+        }
+        return $res;
+    }
+
+
 }

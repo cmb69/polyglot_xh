@@ -65,27 +65,6 @@ function Polyglott_selectPage($tag)
 
 
 /**
- * Returns a dictionary from lanugage codes to labels.
- *
- * @global array  The configuration of the plugins.
- * @return
- */
-function Polyglott_languageLabels()
-{
-    global $plugin_cf;
-
-    $pcf = $plugin_cf['polyglott'];
-    $langs = explode(';', $pcf['languages']);
-    $res = array();
-    foreach ($langs as $lang) {
-	list($key, $value) = explode('=', $lang);
-	$res[$key] = $value;
-    }
-    return $res;
-}
-
-
-/**
  * Returns the language menu.
  *
  * @access public
@@ -109,7 +88,7 @@ function Polyglott_languageMenu()
     } else {
 	$polyglott = '';
     }
-    $languages = Polyglott_languageLabels();
+    $languages = $_Polyglott->_languageLabels();
     $o = '';
     foreach ($_Polyglott->_model->otherLanguages() as $lang) {
 	$url = $pth['folder']['base']

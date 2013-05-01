@@ -32,15 +32,18 @@ class Polyglott_Controller
             $sl, $cf['language']['default'], $pth['folder']['base'],
             $dataFolder
         );
-        if (!$this->_model->init()) {
-            e('cntopen', 'file', $this->_model->tagsFile());
-        }
         $contentLastMod = filemtime($pth['file']['content']);
         $pageDataLastMod = filemtime($pth['file']['pagedata']);
-        if ($this->_model->lastMod() < max($contentLastMod, $pageDataLastMod)) {
-            if (!$this->_model->update($pd_router->find_all(), $u)) {
-                e('cntsave', 'file', $this->_model->tagsFile());
+        $tagsLastMod = $this->_model->lastMod();
+        $needsUpdate = $tagsLastMod < max($contentLastMod, $pageDataLastMod);
+        if ($this->_model->init($needsUpdate)) {
+            if ($needsUpdate) {
+                if (!$this->_model->update($pd_router->find_all(), $u)) {
+                    e('cntsave', 'file', $this->_model->tagsFile());
+                }
             }
+        } else {
+            e('cntopen', 'file', $this->_model->tagsFile());
         }
     }
 

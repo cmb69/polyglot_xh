@@ -39,6 +39,15 @@ class Polyglott_Model
     var $_dataFolder;
 
     /**
+     * The handle of the lock file.
+     *
+     * @access private
+     *
+     * @var resource
+     */
+    var $_lockHandle;
+
+    /**
      * The polyglott tags.
      *
      * @access private
@@ -66,10 +75,22 @@ class Polyglott_Model
     }
 
     /**
+     * Returns the path of the lock file.
+     *
+     * @access private
+     *
+     * @return string
+     */
+    function _lockFile()
+    {
+        return $this->_dataFolder . '.lck';
+    }
+
+    /**
      * Returns the path of the tags file.
      *
      * @access public
-     * 
+     *
      * @return string
      */
     function tagsFile()
@@ -133,10 +154,17 @@ class Polyglott_Model
      *
      * @access public
      *
+     * @param  bool $needsUpdate  If tags file has to be updated.
      * @return bool
      */
-    function init()
+    function init($needsUpdate)
     {
+        $lockFile = $this->_lockFile();
+        if (!touch($lockFile)) {
+            return false;
+        }
+        $this->_lockHandle = fopen($lockFile, 'r');
+        flock($this->_lockHandle, $needsUpdate ? LOCK_EX : LOCK_SH);
         $contents = file_get_contents($this->tagsFile());
         if ($contents === false) {
             $contents = serialize(array());
@@ -145,6 +173,10 @@ class Polyglott_Model
             }
         }
         $this->_tags = unserialize($contents);
+        if (!$needsUpdate) {
+            flock($this->_lockHandle, LOCK_UN);
+            fclose($this->_lockHandle);
+        }
         return $this->_tags !== false;
 
     }
@@ -168,7 +200,10 @@ class Polyglott_Model
             }
         }
         $contents = serialize($this->_tags);
-        return !!file_put_contents($this->tagsFile(), $contents);
+        $ok = !!file_put_contents($this->tagsFile(), $contents);
+        flock($this->_lockHandle, LOCK_UN);
+        fclose($this->_lockHandle);
+        return $ok;
     }
 
     /**

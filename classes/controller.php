@@ -183,17 +183,15 @@ class Polyglott_Controller
             $polyglott = '';
         }
         $languages = $this->_languageLabels();
-        $o = '';
+        $bag = array();
         foreach ($this->_model->otherLanguages() as $lang) {
-            $url = $pth['folder']['base']
+            $href = $pth['folder']['base']
                 . ($lang == $cf['language']['default'] ? '' : $lang . '/')
                 . $polyglott;
+            $src = $pth['folder']['flags'] . $lang . '.gif"';
             $alt = isset($languages[$lang]) ? $languages[$lang] : $lang;
-            $o .= '<a href="' . $url . '">'
-                . tag('img src="' . $pth['folder']['flags'] . $lang . '.gif"'
-                      . ' alt="' . $alt . '" title="' . $alt . '"')
-                . '</a>';
+            $bag[$lang] = compact('href', 'src', 'alt');
         }
-        return $o;
+        return $this->_render('languagemenu', array('languages' => $bag));
     }
 }

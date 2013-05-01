@@ -14,28 +14,15 @@
 /**
  * Returns the page data tab view.
  *
- * @global string  The script name.
- * @global string  The "URL" of the current page.
- * @global array  The localization of the core.
+ * @global object  The polyglott controller.
  * @param  array $page  The page data of the current page.
+ * @return string  The (X)HTML.
  */
 function Polyglott_view($page)
 {
-    global $sn, $su, $tx;
+    global $_Polyglott;
 
-    $url = $sn . '?' . $su;
-    $o = '<form id="polyglott_pagedata" action="' . $url . '" method="post">'
-	. '<div>'
-	. '<label for="polyglott_tag">Tag</label>' . tag('br')
-	. tag('input id="polyglott_tag" type="text" name="polyglott_tag"'
-	      . ' value="' . $page['polyglott_tag'] . '"')
-	. tag('input type="hidden" name="save_page_data"')
-	. '</div>'
-	. '<div style="text-align:right">'
-	. tag('input type="submit" value="' . ucfirst($tx['action']['save']) . '"')
-	. '</div>'
-	. '</form>';
-    return $o;
+    return $_Polyglott->pageDataTab($page);
 }
 
 ?>

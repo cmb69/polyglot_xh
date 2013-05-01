@@ -273,6 +273,28 @@ class Polyglott_Controller
     }
 
     /**
+     * Returns the page data tab view.
+     *
+     * @access public
+     *
+     * @global string  The script name.
+     * @global string  The "URL" of the current page.
+     * @global array  The localization of the core.
+     * @global object  The polyglott controller.
+     * @param  array $page  The page data of the current page.
+     */
+    function pageDataTab($page)
+    {
+        global $sn, $su, $tx;
+
+        $action = $sn . '?' . $su;
+        $tag = $page['polyglott_tag'];
+        $submit = ucfirst($tx['action']['save']);
+        $bag = compact('action', 'tag', 'submit');
+        return $this->_render('tab', $bag);
+    }
+
+    /**
      * Returns the main administration view.
      *
      * @global string  The script name.

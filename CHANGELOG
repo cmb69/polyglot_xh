@@ -1,4 +1,10 @@
-Version 1dev2 - internally released 2012-04-23
+Version 1alpha1 - internally released 2013-05-02
+cmb     implemented direct linking to translations
+cmb     added configurable alt texts for the flags
+cmb     added function to insert alternate hreflang links in the "head" element
+cmb     refactored to MVC architecture
+
+Version 1dev2 - internally released 2013-04-23
 cmb     made some improvements regarding SEO
 
 Version 1dev1 -- internally released 2012-04-25

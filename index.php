@@ -34,37 +34,6 @@ define('POLYGLOTT_VERSION', '1dev2');
 
 
 /**
- * Redirect to the translated page.
- * If page is not translated, redirect to start page.
- *
- * @global string  The script name.
- * @global array  The "URLs" of the pages.
- * @global array  The localization of the plugins.
- * @global object  The page data router.
- */
-function Polyglott_selectPage($tag)
-{
-    global $sn, $u, $plugin_tx, $pd_router;
-
-    $s = -1;
-    if (!empty($tag)) {
-	$pd = $pd_router->find_all();
-	foreach ($pd as $i => $d) {
-	    if (isset($d['polyglott_tag']) && $d['polyglott_tag'] == $tag) {
-		$s = $i;
-		break;
-	    }
-	}
-    }
-    $url = 'http'
-	. (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '')
-	. '://' . $_SERVER['SERVER_NAME'] . $sn . ($s >= 0 ? '?' . $u[$s] : '');
-    header('Location: '.$url);
-    exit;
-}
-
-
-/**
  * Procedural wrapper for $_Polyglott->languageMenu().
  *
  * @global object  The polyglott controller.
@@ -89,12 +58,5 @@ $_Polyglott = new Polyglott_Controller();
  */
 $pd_router->add_interest('polyglott_tag');
 
-
-/**
- * Handle switching to another language.
- */
-if (isset($_GET['polyglott']) && $polyglott != 'true') {
-    Polyglott_selectPage(stsl($_GET['polyglott']));
-}
 
 ?>

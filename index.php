@@ -24,6 +24,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
  * The model class.
  */
 require $pth['folder']['plugin_classes'] . 'model.php';
+require $pth['folder']['plugin_classes'] . 'controller.php';
 
 
 /**
@@ -64,7 +65,7 @@ function Polyglott_selectPage($tag)
 
 
 /**
- * Returns a dictionary from lanuage codes to labels.
+ * Returns a dictionary from lanugage codes to labels.
  *
  * @global array  The configuration of the plugins.
  * @return
@@ -93,7 +94,7 @@ function Polyglott_languageLabels()
  * @global array  The paths of system files and folders.
  * @global array  The configuration of the core.
  * @global array  The page data of the current page.
- * @global object  The polyglott model.
+ * @global object  The polyglott controller.
  * @return string  The (X)HTML.
  */
 function Polyglott_languageMenu()
@@ -110,7 +111,7 @@ function Polyglott_languageMenu()
     }
     $languages = Polyglott_languageLabels();
     $o = '';
-    foreach ($_Polyglott->otherLanguages() as $lang) {
+    foreach ($_Polyglott->_model->otherLanguages() as $lang) {
 	$url = $pth['folder']['base']
 	    . ($lang == $cf['language']['default'] ? '' : $lang . '/')
 	    . $polyglott;
@@ -127,7 +128,7 @@ function Polyglott_languageMenu()
 /*
  * Instanciate the model.
  */
-$_Polyglott = new Polyglott_Model($sl, $cf['language']['default'], $pth['folder']['base']);
+$_Polyglott = new Polyglott_Controller();
 
 
 /**

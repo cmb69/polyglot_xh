@@ -182,7 +182,7 @@ class Polyglott_Controller
         global $pth, $tx, $plugin_tx;
 
         $ptx = $plugin_tx['polyglott'];
-        $phpVersion = '4.0.7';
+        $phpVersion = '5.0.0';
         $checks = array();
         $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)] =
             version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'ok' : 'fail';

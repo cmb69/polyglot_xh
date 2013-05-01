@@ -30,7 +30,7 @@ require $pth['folder']['plugin_classes'] . 'controller.php';
 /**
  * The plugin version.
  */
-define('POLYGLOTT_VERSION', '1dev2');
+define('POLYGLOTT_VERSION', '1alpha1');
 
 
 /**

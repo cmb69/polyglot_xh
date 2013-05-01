@@ -101,6 +101,31 @@ class Polyglott_Controller
     }
 
     /**
+     * Returns the alternate hreflang links.
+     *
+     * @access public
+     *
+     * @return void
+     */
+    function alternateLinks()
+    {
+        global $s;
+
+        $res = '';
+        $languages = $this->_model->languages();
+        foreach ($languages as $language) {
+            $tag = $this->_pageTag($s);
+            $href = $this->_model->languageURL($language, $tag);
+            $res .= tag(
+                'link rel="alternate" hreflang="' . $this->_hsc($language)
+                . '" href="' . $this->_hsc($href) . '"'
+            );
+            $res .= PHP_EOL;
+        }
+        return $res;
+    }
+
+    /**
      * Returns a string with special HTML characters escaped.
      *
      * @access private
@@ -110,7 +135,7 @@ class Polyglott_Controller
      */
     function _hsc($str)
     {
-        return htmlspecialchars($str, ENT_COMPAT, 'UTF_8');
+        return htmlspecialchars($str, ENT_COMPAT, 'UTF-8');
     }
 
     /**

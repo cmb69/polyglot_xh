@@ -47,6 +47,20 @@ function Polyglott_languageMenu()
 }
 
 
+/**
+ * Procedural wrapper for $_Polyglott->alternateLinks().
+ *
+ * @global object  The polyglott controller.
+ * @return string  The (X)HTML.
+ */
+function Polyglott_alternateLinks()
+{
+    global $_Polyglott;
+
+    return $_Polyglott->alternateLinks();
+}
+
+
 /*
  * Instanciate the model.
  */

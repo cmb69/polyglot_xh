@@ -117,11 +117,11 @@ class Polyglott_Model
     /**
      * Returns all available languages.
      *
-     * @access private
+     * @access public
      *
      * @return array
      */
-    function _languages()
+    function languages()
     {
         $languages = array($this->_defaultLanguage);
         $dh = opendir($this->_baseFolder);
@@ -143,7 +143,7 @@ class Polyglott_Model
     function otherLanguages()
     {
         $res = array();
-        $languages = $this->_languages();
+        $languages = $this->languages();
         foreach ($languages as $language) {
             if ($language != $this->_language) {
                 $res[] = $language;

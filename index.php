@@ -1,26 +1,46 @@
 <?php
 
 /**
- * Front-End of Polyglott_XH
+ * Index of Polyglott_XH.
  *
- * Copyright (c) 2012 Christoph M. Becker (see README.txt)
+ * @package    Polyglott
+ * @copyright  Copyright (c) 2012-2013 Christoph M. Becker <http://3-magi.net/>
+ * @license    http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
+ * @version    $Id$
+ * @link       http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
 
 
+/*
+ * Prevent direct access.
+ */
+if (!defined('CMSIMPLE_XH_VERSION')) {
+    header('HTTP/1.0 403 Forbidden');
+    exit;
+}
+
+
+/**
+ * The plugin version.
+ */
 define('POLYGLOTT_VERSION', '1dev2');
 
 
 /**
  * Returns all available languages other than the current one.
  *
+ * @global string $sl  The current language.
+ * @global array  The paths of system files and folders.
+ * @global array $cf  The configuration of the core.
  * @return array
  */
-function polyglott_other_languages() {
-    global $sl, $cf, $pth;
+function Polyglott_otherLanguages()
+{
+    global $sl, $pth, $cf;
 
     $langs = array($cf['language']['default']);
     $dh = opendir($pth['folder']['base']);
-    while (($dir = readdir($dh)) !== FALSE) {
+    while (($dir = readdir($dh)) !== false) {
 	if (preg_match('/^[A-z]{2}$/', $dir)) {
 	    $langs[] = $dir;
 	}
@@ -31,35 +51,42 @@ function polyglott_other_languages() {
 
 
 /**
- * Redirect to the translated page, if it's been already translated.
- * Otherwise output appropriate message.
+ * Redirect to the translated page.
+ * If page is not translated, redirect to start page.
  *
- * @return void
+ * @global string  The script name.
+ * @global array  The "URLs" of the pages.
+ * @global array  The localization of the plugins.
+ * @global object  The page data router.
  */
-function polyglott_select_page($tag) {
-    global $sn, $o, $u, $pd_router, $plugin_tx;
+function Polyglott_selectPage($tag)
+{
+    global $sn, $u, $plugin_tx, $pd_router;
 
     $s = -1;
     if (!empty($tag)) {
 	$pd = $pd_router->find_all();
 	foreach ($pd as $i => $d) {
 	    if (isset($d['polyglott_tag']) && $d['polyglott_tag'] == $tag) {
-		$s = $i; break;
+		$s = $i;
+		break;
 	    }
 	}
     }
-    //if ($s >= 0) {
-	$url = 'http'.(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '').'://'
-		.$_SERVER['SERVER_NAME'].$sn.($s >= 0 ? '?'.$u[$s] : '');
-	//header('HTTP/1.1 301 Moved Permanently'); // TODO: as config option? at least: document! DO NOT 301!
-	header('Location: '.$url);
-	exit;
-//    } else {
-//	$o .=  $plugin_tx['polyglott']['not_translated'];
-    //}
+    $url = 'http'
+	. (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '')
+	. '://' . $_SERVER['SERVER_NAME'] . $sn . ($s >= 0 ? '?' . $u[$s] : '');
+    header('Location: '.$url);
+    exit;
 }
 
 
+/**
+ * Returns a dictionary from lanuage codes to labels.
+ *
+ * @global array  The configuration of the plugins.
+ * @return
+ */
 function Polyglott_languageLabels()
 {
     global $plugin_cf;
@@ -79,32 +106,43 @@ function Polyglott_languageLabels()
  * Returns the language menu.
  *
  * @access public
+ *
+ * @global int  The index of the current page.
+ * @global array  The paths of system files and folders.
+ * @global array  The configuration of the core.
+ * @global array  The page data of the current page.
  * @return string  The (X)HTML.
  */
-function polyglott_languagemenu() {
-    global $s, $cf, $pth, $pd_current;
+function Polyglott_languageMenu()
+{
+    global $s, $pth, $cf, $pd_current;
 
     if ($s >= 0) {
-	$tag = isset($pd_current['polyglott_tag']) ? $pd_current['polyglott_tag'] : FALSE;
-	$polyglott = $tag ? '?polyglott='.$tag : ''; // TODO: ?polyglott=
+	$tag = isset($pd_current['polyglott_tag'])
+	    ? $pd_current['polyglott_tag']
+	    : false;
+	$polyglott = $tag ? '?polyglott=' . $tag : '';
     } else {
-	$polyglott = '';//(!empty($_SERVER['QUERY_STRING']) ? '?' : '').$_SERVER['QUERY_STRING'];
+	$polyglott = '';
     }
     $languages = Polyglott_languageLabels();
     $o = '';
-    foreach (polyglott_other_languages() as $lang) {
-	$url = $pth['folder']['base'].($lang == $cf['language']['default'] ? '' : $lang.'/').$polyglott;
+    foreach (Polyglott_otherLanguages() as $lang) {
+	$url = $pth['folder']['base']
+	    . ($lang == $cf['language']['default'] ? '' : $lang . '/')
+	    . $polyglott;
 	$alt = isset($languages[$lang]) ? $languages[$lang] : $lang;
-	$o .= '<a href="'.$url.'">'
-		.tag('img src="'.$pth['folder']['flags'].$lang.'.gif" alt="'.$alt.'"'
-		    .' title="'.$alt.'"').'</a>';
+	$o .= '<a href="' . $url . '">'
+	    . tag('img src="' . $pth['folder']['flags'] . $lang . '.gif"'
+		  . ' alt="' . $alt . '" title="' . $alt . '"')
+	    . '</a>';
     }
     return $o;
 }
 
 
 /**
- * Register page data field.
+ * Register the page data field.
  */
 $pd_router->add_interest('polyglott_tag');
 
@@ -113,7 +151,7 @@ $pd_router->add_interest('polyglott_tag');
  * Handle switching to another language.
  */
 if (isset($_GET['polyglott']) && $polyglott != 'true') {
-    polyglott_select_page(stsl($_GET['polyglott']));
+    Polyglott_selectPage(stsl($_GET['polyglott']));
 }
 
 ?>

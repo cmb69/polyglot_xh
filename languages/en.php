@@ -11,4 +11,6 @@ $plugin_tx['polyglott']['syscheck_encoding']="Encoding 'UTF-8' configured";
 $plugin_tx['polyglott']['syscheck_magic_quotes']="Magic quotes runtime off";
 $plugin_tx['polyglott']['syscheck_writable']="Folder '%s' writable";
 
+$plugin_tx['polyglott']['about']="About Polyglott_XH";
+
 ?>

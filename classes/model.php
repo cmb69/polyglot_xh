@@ -226,6 +226,11 @@ class Polyglott_Model
         }
         return $res;
     }
+
+    function isTranslated($tag, $language)
+    {
+        return isset($this->_tags[$tag][$language]);
+    }
 }
 
 ?>

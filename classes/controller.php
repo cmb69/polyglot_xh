@@ -198,28 +198,78 @@ class Polyglott_Controller
     }
 
     /**
+     * Returns a polyglott tag.
+     *
+     * @access private
+     *
+     * @global object  The page data router.
+     * @param  int $index  The index of the page.
+     * @return string
+     */
+    function _pageTag($index)
+    {
+        global $pd_router;
+
+        $pageData = $pd_router->find_page($index);
+        $res = isset($pageData['polyglott_tag'])
+            ? $pageData['polyglott_tag']
+            : null;
+        return $res;
+    }
+
+    /**
      * Returns the URL to another language.
      *
      * @access private
      *
      * @global int  The index of the current page.
-     * @global array  The page data of the current page.
      * @param  string $language  A language code.
      * @return string
      */
     function _languageURL($language)
     {
-        global $s, $pd_current;
+        global $s;
 
-        if ($s >= 0) {
-            $tag = isset($pd_current['polyglott_tag'])
-                ? $pd_current['polyglott_tag']
-                : null;
-        } else {
-            $tag = null;
-        }
+        $tag = $s > 0 ? $this->_pageTag($s) : null;
         $res = $this->_model->languageURL($language, $tag);
         return $res;
+    }
+
+    /**
+     * Returns the main administration view.
+     *
+     * @global string  The script name.
+     * @global int  The number of pages.
+     * @global array  The headings of the pages.
+     * @global array  The levels of the pages.
+     * @global array  The "URLs" of the pages.
+     * @global array  The paths of system files and folders.
+     * @global array  The configuration of the core.
+     * @global object  The page data router.
+     * @return string  The (X)HTML.
+     */
+    function _administration()
+    {
+        global $sn, $cl, $h, $l, $u, $pth, $cf, $pd_router;
+
+        $languages = $this->_model->otherLanguages();
+        $pages = array();
+        for ($i = 0; $i < $cl; $i++) {
+            $heading = $h[$i];
+            $url = $sn . '?' . $u[$i];
+            $indent = $l[$i] - 1;
+            $tag = $this->_pageTag($i);
+            $translations = array();
+            foreach ($languages as $language) {
+                $translations[$language] =
+                    $this->_model->isTranslated($tag, $language)
+                    ? $this->_model->languageURL($language, $tag)
+                    : null;
+            }
+            $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
+        }
+        $bag = compact('languages', 'pages');
+        return $this->_render('admin', $bag);
     }
 
     /**

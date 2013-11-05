@@ -14,7 +14,6 @@
  * @link      http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
 
-
 /**
  * The model class.
  *

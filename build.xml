@@ -31,7 +31,7 @@
         <phpunit haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <batchtest>
-                <fileset dir="tests/unit">
+                <fileset dir="tests">
                     <include name="*Test.php"/>
                 </fileset>
             </batchtest>

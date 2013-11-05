@@ -50,10 +50,10 @@
         </phpunit>
     </target>
 -->
-<!--    <target name="all-tests" depends="unit-tests,attack-tests"/>
--->
+    <target name="tests" depends="unit-tests"/>
+
     <target name="coverage">
-        <exec command="phpunit --coverage-html tests/coverage tests/unit"/>
+        <exec command="phpunit --coverage-html tests/coverage tests"/>
     </target>
 
     <!-- Documentation -->
@@ -74,8 +74,8 @@
         <exec command="jsdoc -destination doc/js pagemanager.js" checkreturn="true"/>
     </target>
 -->
-<!--    <target name="doc" depends="php-doc"/>
--->
+    <target name="doc" depends="php-doc"/>
+
     <!-- Build -->
 
     <target name="build">

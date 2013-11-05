@@ -3,13 +3,16 @@
 /**
  * Index of Polyglott_XH.
  *
- * @package    Polyglott
- * @copyright  Copyright (c) 2012-2013 Christoph M. Becker <http://3-magi.net/>
- * @license    http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @version    $Id$
- * @link       http://3-magi.net/?CMSimple_XH/Polyglott_XH
+ * PHP version 5
+ *
+ * @category  CMSimple_XH
+ * @package   Polyglott
+ * @author    Christoph M. Becker <cmbecker69@gmx.de>
+ * @copyright 2012-2013 Christoph M. Becker <http://3-magi.net/>
+ * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
+ * @version   SVN: $Id$
+ * @link      http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
-
 
 /*
  * Prevent direct access.
@@ -19,13 +22,15 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
     exit;
 }
 
-
 /**
  * The model class.
  */
-require $pth['folder']['plugin_classes'] . 'model.php';
-require $pth['folder']['plugin_classes'] . 'controller.php';
+require $pth['folder']['plugin_classes'] . 'Model.php';
 
+/**
+ * The controller class.
+ */
+require $pth['folder']['plugin_classes'] . 'Controller.php';
 
 /**
  * The plugin version.
@@ -36,8 +41,9 @@ define('POLYGLOTT_VERSION', '1alpha1');
 /**
  * Procedural wrapper for $_Polyglott->languageMenu().
  *
- * @global object  The polyglott controller.
- * @return string  The (X)HTML.
+ * @return string (X)HTML.
+ *
+ * @global object The polyglott controller.
  */
 function Polyglott_languageMenu()
 {
@@ -46,12 +52,12 @@ function Polyglott_languageMenu()
     return $_Polyglott->languageMenu();
 }
 
-
 /**
  * Procedural wrapper for $_Polyglott->alternateLinks().
  *
- * @global object  The polyglott controller.
- * @return string  The (X)HTML.
+ * @return string (X)HTML.
+ *
+ * @global object The polyglott controller.
  */
 function Polyglott_alternateLinks()
 {
@@ -60,9 +66,8 @@ function Polyglott_alternateLinks()
     return $_Polyglott->alternateLinks();
 }
 
-
 /*
- * Instanciate the model.
+ * Instanciate the controller.
  */
 $_Polyglott = new Polyglott_Controller();
 

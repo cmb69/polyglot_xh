@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id$ -->
+
+<project name="Polyglott" default="default">
+
+    <!-- Filesets -->
+
+    <fileset id="php-sources" dir=".">
+        <include name="index.php"/>
+        <include name="admin.php"/>
+        <include name="classes/*.php"/>
+    </fileset>
+
+    <!-- Checks -->
+
+    <target name="sniff">
+        <phpcodesniffer standard="PEAR">
+            <fileset refid="php-sources"/>
+        </phpcodesniffer>
+    </target>
+
+    <target name="compat">
+        <exec command="pci --dir . --ignore-dirs pcidirs.txt --tab 12,12,20 --summarize"
+              logoutput="true"/>
+    </target>
+
+    <!-- Tests -->
+
+    <target name="unit-tests">
+        <phpunit haltonerror="true" haltonfailure="true">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset dir="tests/unit">
+                    <include name="*Test.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit>
+    </target>
+
+<!--    <target name="attack-tests">
+        <fail unless="env.CMSIMPLEDIR" message="CMSIMPLEDIR undefined!"/>
+        <phpunit haltonerror="true" haltonfailure="true">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset dir="tests/attack">
+                    <include name="*Test.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit>
+    </target>
+-->
+<!--    <target name="all-tests" depends="unit-tests,attack-tests"/>
+-->
+    <target name="coverage">
+        <exec command="phpunit --coverage-html tests/coverage tests/unit"/>
+    </target>
+
+    <!-- Documentation -->
+
+    <target name="php-doc">
+        <phpdoc title="Polyglott_XH Developer Documentation" destdir="doc/php"
+                output="HTML:frames:default" defaultpackagename="Polyglott"
+                defaultcategoryname="CMSimple_XH">
+            <fileset refid="php-sources"/>
+            <projdocfileset dir=".">
+               <include name="README"/>
+               <include name="CHANGELOG"/>
+            </projdocfileset>
+        </phpdoc>
+    </target>
+
+<!--    <target name="js-doc">
+        <exec command="jsdoc -destination doc/js pagemanager.js" checkreturn="true"/>
+    </target>
+-->
+<!--    <target name="doc" depends="php-doc"/>
+-->
+    <!-- Build -->
+
+    <target name="build">
+        <fail unless="version" message="version is not defined!"/>
+        <svnexport revision="" repositoryurl="." todir="export"/>
+        <move todir="dist">
+            <fileset dir="export">
+                <include name="index.php"/>
+                <include name="version.nfo"/>
+            </fileset>
+            <filterchain>
+                <replacetokens>
+                    <token key="POLYGLOTT_VERSION" value="${version}"/>
+                </replacetokens>
+            </filterchain>
+        </move>
+        <move todir="dist">
+            <fileset dir="export">
+                <exclude name="build.xml"/>
+                <exclude name="pcidirs.txt"/>
+            </fileset>
+        </move>
+        <delete dir="export"/>
+        <copy file="dist/config/config.php" tofile="dist/config/defaultconfig.php"/>
+        <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
+        <zip destfile="Polyglott_XH-${version}.zip" basedir="dist" prefix="polyglott/"/>
+        <delete dir="dist"/>
+    </target>
+
+</project>

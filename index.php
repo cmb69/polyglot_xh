@@ -35,8 +35,7 @@ require $pth['folder']['plugin_classes'] . 'Controller.php';
 /**
  * The plugin version.
  */
-define('POLYGLOTT_VERSION', '1alpha1');
-
+define('POLYGLOTT_VERSION', '@POLYGLOTT_VERSION@');
 
 /**
  * Procedural wrapper for $_Polyglott->languageMenu().

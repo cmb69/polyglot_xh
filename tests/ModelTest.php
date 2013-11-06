@@ -2,10 +2,9 @@
 
 require './classes/model.php';
 
-
 class ModelTest extends PHPUnit_Framework_TestCase
 {
-    private $model;
+    protected $model;
 
     public function setUp()
     {
@@ -19,6 +18,5 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $actual);
     }
 }
-
 
 ?>

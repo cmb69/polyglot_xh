@@ -29,55 +29,43 @@ class Polyglott_Model
      * The current language.
      *
      * @var string
-     *
-     * @access protected
      */
-    var $language;
+    protected $language;
 
     /**
      * The default language.
      *
      * @var string
-     *
-     * @access protected
      */
-    var $defaultLanguage;
+    protected $defaultLanguage;
 
     /**
      * The relative path of the base folder.
      *
      * @var string
-     *
-     * @access protected
      */
-    var $baseFolder;
+    protected $baseFolder;
 
     /**
      * The relative path of the data folder.
      *
      * @var string
-     *
-     * @access protected
      */
-    var $dataFolder;
+    protected $dataFolder;
 
     /**
      * The handle of the lock file.
      *
      * @var resource
-     *
-     * @access protected
      */
-    var $lockHandle;
+    protected $lockHandle;
 
     /**
      * The polyglott tags.
      *
      * @var array
-     *
-     * @access protected
      */
-    var $tags;
+    protected $tags;
 
     /**
      * Initializes a newly created instance.
@@ -86,10 +74,8 @@ class Polyglott_Model
      * @param string $defaultLanguage The default language.
      * @param string $baseFolder      The relative path of the base folder.
      * @param string $dataFolder      The relative path of the data folder.
-     *
-     * @access public
      */
-    function Polyglott_Model($language, $defaultLanguage, $baseFolder, $dataFolder)
+    public function Polyglott_Model($language, $defaultLanguage, $baseFolder, $dataFolder)
     {
         $this->language = $language;
         $this->defaultLanguage = $defaultLanguage;
@@ -101,10 +87,8 @@ class Polyglott_Model
      * Returns the path of the lock file.
      *
      * @return string
-     *
-     * @access protected
      */
-    function lockFile()
+    protected function lockFile()
     {
         return $this->dataFolder . '.lck';
     }
@@ -113,10 +97,8 @@ class Polyglott_Model
      * Returns the path of the tags file.
      *
      * @return string
-     *
-     * @access public
      */
-    function tagsFile()
+    public function tagsFile()
     {
         return $this->dataFolder . 'tags.dat';
     }
@@ -125,10 +107,8 @@ class Polyglott_Model
      * Returns all available languages.
      *
      * @return array
-     *
-     * @access public
      */
-    function languages()
+    public function languages()
     {
         $languages = array($this->defaultLanguage);
         $dh = opendir($this->baseFolder);
@@ -144,10 +124,8 @@ class Polyglott_Model
      * Returns all available languages other than the current one.
      *
      * @return array
-     *
-     * @access public
      */
-    function otherLanguages()
+    public function otherLanguages()
     {
         $res = array();
         $languages = $this->languages();
@@ -163,10 +141,8 @@ class Polyglott_Model
      * Returns the timestamp of the last modification of the cache file.
      *
      * @return int
-     *
-     * @access public
      */
-    function lastMod()
+    public function lastMod()
     {
         $res = filemtime($this->tagsFile());
         return $res;
@@ -178,10 +154,8 @@ class Polyglott_Model
      * @param bool $needsUpdate If tags file has to be updated.
      *
      * @return bool
-     *
-     * @access public
      */
-    function init($needsUpdate)
+    public function init($needsUpdate)
     {
         $lockFile = $this->lockFile();
         if (!touch($lockFile)) {
@@ -213,10 +187,8 @@ class Polyglott_Model
      * @param array $urls     The URLs of the pages.
      *
      * @return bool
-     *
-     * @access public
      */
-    function update($pageData, $urls)
+    public function update($pageData, $urls)
     {
         foreach ($pageData as $i => $data) {
             if (!empty($data['polyglott_tag'])) {
@@ -238,10 +210,8 @@ class Polyglott_Model
      * @param string $tag      The polyglott tag.
      *
      * @return string
-     *
-     * @access public
      */
-    function languageURL($language, $tag)
+    public function languageURL($language, $tag)
     {
         $res = $this->baseFolder;
         if ($language != $this->defaultLanguage) {
@@ -260,10 +230,8 @@ class Polyglott_Model
      * @param string $language The language code.
      *
      * @return bool
-     *
-     * @access public
      */
-    function isTranslated($tag, $language)
+    public function isTranslated($tag, $language)
     {
         return isset($this->tags[$tag][$language]);
     }

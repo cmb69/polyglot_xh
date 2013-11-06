@@ -29,10 +29,8 @@ class Polyglott_Controller
      * The model instance.
      *
      * @var object
-     *
-     * @access protected
      */
-    var $model;
+    protected $model;
 
     /**
      * Initialize a newly created instance.
@@ -43,10 +41,8 @@ class Polyglott_Controller
      * @global array  The URLs of the pages.
      * @global array  The configuration of the core.
      * @global object The page data router.
-     *
-     * @access public
      */
-    function Polyglott_Controller()
+    public function Polyglott_Controller()
     {
         global $adm, $sl, $pth, $u, $cf, $pd_router;
 
@@ -87,10 +83,8 @@ class Polyglott_Controller
      * @global string The value of the GET/POST parameter <var>action</var>.
      * @global string The (X)HTML for the contents area.
      * @global string Whether Polyglott's administration is requested.
-     *
-     * @access protected
      */
-    function dispatch()
+    protected function dispatch()
     {
         global $admin, $action, $o, $polyglott;
 
@@ -116,7 +110,7 @@ class Polyglott_Controller
      *
      * @global int The index of the requested page.
      */
-    function alternateLinks()
+    public function alternateLinks()
     {
         global $s;
 
@@ -141,11 +135,9 @@ class Polyglott_Controller
      *
      * @return string
      *
-     * @access protected
-     *
      * @todo Use XH_hsc if available.
      */
-    function hsc($str)
+    protected function hsc($str)
     {
         return htmlspecialchars($str, ENT_COMPAT, 'UTF-8');
     }
@@ -160,10 +152,8 @@ class Polyglott_Controller
      *
      * @global array The paths of system files and folders.
      * @global array The configuration of the core.
-     *
-     * @access protected
      */
-    function render($_template, $_bag)
+    protected function render($_template, $_bag)
     {
         global $pth, $cf;
 
@@ -189,10 +179,8 @@ class Polyglott_Controller
      * @global array The paths of system files and folders.
      * @global array The localization of the core.
      * @global array The localization of the plugins.
-     *
-     * @access private
      */
-    function systemChecks() // RELEASE-TODO
+    protected function systemChecks() // RELEASE-TODO
     {
         global $pth, $tx, $plugin_tx;
 
@@ -227,10 +215,8 @@ class Polyglott_Controller
      *
      * @global array The paths of system files and folders.
      * @global array The localization of the plugins.
-     *
-     * @access protected
      */
-    function info()
+    protected function info()
     {
         global $pth, $plugin_tx;
 
@@ -253,15 +239,13 @@ class Polyglott_Controller
     }
 
     /**
-     * Returns a dictionary from lanugage codes to labels.
+     * Returns a dictionary from language codes to labels.
      *
      * @return array
      *
      * @global array The configuration of the plugins.
-     *
-     * @access protected
      */
-    function languageLabels()
+    protected function languageLabels()
     {
         global $plugin_cf;
 
@@ -283,10 +267,8 @@ class Polyglott_Controller
      * @return string
      *
      * @global array The paths of system files and folders.
-     *
-     * @access protected
      */
-    function languageFlag($language)
+    protected function languageFlag($language)
     {
         global $pth;
 
@@ -302,10 +284,8 @@ class Polyglott_Controller
      * @return string
      *
      * @global object The page data router.
-     *
-     * @access protected
      */
-    function pageTag($index)
+    protected function pageTag($index)
     {
         global $pd_router;
 
@@ -324,10 +304,8 @@ class Polyglott_Controller
      * @return string
      *
      * @global int The index of the current page.
-     *
-     * @access protected
      */
-    function languageURL($language)
+    protected function languageURL($language)
     {
         global $s;
 
@@ -346,10 +324,8 @@ class Polyglott_Controller
      * @global string The script name.
      * @global string The URL of the current page.
      * @global array  The localization of the core.
-     *
-     * @access public
      */
-    function pageDataTab($page)
+    public function pageDataTab($page)
     {
         global $sn, $su, $tx;
 
@@ -373,10 +349,8 @@ class Polyglott_Controller
      * @global array  The paths of system files and folders.
      * @global array  The configuration of the core.
      * @global object The page data router.
-     *
-     * @access protected
      */
-    function administration()
+    protected function administration()
     {
         global $sn, $cl, $h, $l, $u, $pth, $cf, $pd_router;
 
@@ -404,10 +378,8 @@ class Polyglott_Controller
      * Returns the language menu.
      *
      * @return string  (X)HTML.
-     *
-     * @access public
      */
-    function languageMenu()
+    public function languageMenu()
     {
         $labels = $this->languageLabels();
         $languages = array();

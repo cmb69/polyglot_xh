@@ -75,8 +75,9 @@ class Polyglott_Model
      * @param string $baseFolder      The relative path of the base folder.
      * @param string $dataFolder      The relative path of the data folder.
      */
-    public function Polyglott_Model($language, $defaultLanguage, $baseFolder, $dataFolder)
-    {
+    public function Polyglott_Model(
+        $language, $defaultLanguage, $baseFolder, $dataFolder
+    ) {
         $this->language = $language;
         $this->defaultLanguage = $defaultLanguage;
         $this->baseFolder = $baseFolder;

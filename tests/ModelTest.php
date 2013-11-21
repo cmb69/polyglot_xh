@@ -1,5 +1,6 @@
 <?php
 
+require_once 'vfsStream/vfsStream.php';
 require './classes/model.php';
 
 class ModelTest extends PHPUnit_Framework_TestCase
@@ -8,7 +9,12 @@ class ModelTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->model = new Polyglott_Model('en', 'en', './tests/data/', './tests/data/');
+        vfsStreamWrapper::register();
+        vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
+        mkdir(vfsStream::url('test/de'));
+        $this->model = new Polyglott_Model(
+            'en', 'en', vfsStream::url('test'), vfsStream::url('test')
+        );
     }
 
     public function testOtherLanguages()

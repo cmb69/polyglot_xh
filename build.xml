@@ -7,8 +7,9 @@
     <!-- Filesets -->
 
     <fileset id="php-sources" dir=".">
-        <include name="index.php"/>
         <include name="admin.php"/>
+        <include name="index.php"/>
+        <include name="polyglott_view.php"/>
         <include name="classes/*.php"/>
     </fileset>
 
@@ -21,7 +22,7 @@
     </target>
 
     <target name="compat">
-        <exec command="pci --dir . --ignore-dirs pcidirs.txt --tab 12,12,20 --summarize"
+        <exec command="phpcompatinfo --configuration phpcompatinfo.xml print --exclude-pattern polyglott ."
               logoutput="true"/>
     </target>
 
@@ -94,8 +95,10 @@
         </move>
         <move todir="dist">
             <fileset dir="export">
+                <exclude name=".komodotools"/>
                 <exclude name="build.xml"/>
-                <exclude name="pcidirs.txt"/>
+                <exclude name="phpcompatinfo.xml"/>
+                <exclude name="polyglott.komodoproject"/>
             </fileset>
         </move>
         <delete dir="export"/>

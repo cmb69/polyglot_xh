@@ -80,8 +80,8 @@ class Polyglott_Model
     ) {
         $this->language = $language;
         $this->defaultLanguage = $defaultLanguage;
-        $this->baseFolder = $baseFolder;
-        $this->dataFolder = $dataFolder;
+        $this->baseFolder = rtrim($baseFolder, '/');
+        $this->dataFolder = rtrim($dataFolder, '/');
     }
 
     /**
@@ -91,7 +91,7 @@ class Polyglott_Model
      */
     protected function lockFile()
     {
-        return $this->dataFolder . '.lck';
+        return $this->dataFolder . '/.lck';
     }
 
     /**
@@ -101,7 +101,7 @@ class Polyglott_Model
      */
     public function tagsFile()
     {
-        return $this->dataFolder . 'tags.dat';
+        return $this->dataFolder . '/tags.dat';
     }
 
     /**

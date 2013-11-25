@@ -16,6 +16,13 @@ class ModelTest extends PHPUnit_Framework_TestCase
             'en', 'en', vfsStream::url('test'), vfsStream::url('test')
         );
     }
+    
+    public function testTagsFile()
+    {
+        $expected = vfsStream::url('test/tags.dat');
+        $actual = $this->model->tagsFile();
+        $this->assertEquals($expected, $actual);
+    }
 
     public function testOtherLanguages()
     {

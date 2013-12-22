@@ -5,7 +5,7 @@
 <project name="Polyglott" default="default">
 
     <!-- Properties -->
-    
+
     <property name="styledir" value="C:\xampp\php\data\phing\etc"/>
 
     <!-- Filesets -->
@@ -117,6 +117,7 @@
                 <exclude name="build.xml"/>
                 <exclude name="phpcompatinfo.xml"/>
                 <exclude name="polyglott.komodoproject"/>
+                <exclude name="TODO"/>
             </fileset>
         </move>
         <delete dir="export"/>

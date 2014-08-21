@@ -1,0 +1,18 @@
+/*
+ * Translation table
+ */
+
+.polyglott_translations {
+    overflow-x: auto;
+    margin: 1em 0;
+}
+.polyglott_translations table {
+    border-collapse: collapse;
+    width: 99%;
+}
+.polyglott_translations td {
+    border: 1px solid #888;
+}
+.polyglott_translations td {
+    padding: 0 0.2em;
+}

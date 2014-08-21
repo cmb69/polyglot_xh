@@ -1,7 +1,8 @@
 * update manual and CHANGELOG
 * german manual
-* style translations table
 * fix initial caching problem
+* add i18n for translation table
+* link translation table to edit mode
 
 * automatic language selection
   <http://www.cmsimpleforum.com/viewtopic.php?f=5&t=5905&p=34437#p34437>

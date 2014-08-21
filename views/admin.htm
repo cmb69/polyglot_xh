@@ -1,29 +1,32 @@
 <!-- Polyglott_XH: administration -->
-<table>
-    <thead>
-        <tr>
-            <th>Heading</th>
-            <th>Tag</th>
+<h1>Polyglott &ndash; Translations</h1>
+<div class="polyglott_translations">
+    <table>
+        <thead>
+            <tr>
+                <th>Page</th>
+                <th>Tag</th>
 <?php foreach ($languages as $language):?>
-            <th><?php echo $language;?></th>
+                <th><?php echo $language;?></th>
 <?php endforeach;?>
-        </tr>
-    </thead>
-    <tbody>
+            </tr>
+        </thead>
+        <tbody>
 <?php foreach ($pages as $page):?>
-        <tr>
-            <td>
-                <a href="<?php echo $page['url'];?>" style="padding-left: <?php echo $page['indent'];?>em"><?php echo $page['heading'];?></a>
-            </td>
-            <td><?php echo $page['tag'];?></td>
+            <tr>
+                <td>
+                    <a href="<?php echo $page['url'];?>" style="padding-left: <?php echo $page['indent'];?>em"><?php echo $page['heading'];?></a>
+                </td>
+                <td><?php echo $page['tag'];?></td>
 <?php foreach ($page['translations'] as $translation):?>
-            <td>
+                <td>
 <?php if (isset($translation)):?>
-                <a href="<?php echo $translation;?>">+</a>
+                    <a href="<?php echo $translation;?>">&#10003;</a>
 <?php endif;?>
-            </td>
+                </td>
 <?php endforeach;?>
-        </tr>
+            </tr>
 <?php endforeach;?>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

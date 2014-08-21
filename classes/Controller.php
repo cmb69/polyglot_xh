@@ -304,11 +304,11 @@ class Polyglott_Controller
         global $plugin_cf;
 
         $pcf = $plugin_cf['polyglott'];
-        $languages = explode(';', $pcf['languages']);
+        $languages = preg_split('/\r\n|\r|\n/', $pcf['languages_labels']);
         $res = array();
         foreach ($languages as $language) {
             list($key, $value) = explode('=', $language);
-            $res[$key] = $value;
+            $res[$key] = explode(';', $value);
         }
         return $res;
     }
@@ -432,19 +432,45 @@ class Polyglott_Controller
     /**
      * Returns the language menu.
      *
-     * @return string  (X)HTML.
+     * @return string (X)HTML.
      */
     public function languageMenu()
     {
-        $labels = $this->languageLabels();
         $languages = array();
         foreach ($this->model->otherLanguages() as $language) {
-            $href = $this->languageURL($language);
+            $href = $this->hsc($this->languageURL($language));
             $src = $this->languageFlag($language);
-            $alt = isset($labels[$language]) ? $labels[$language] : $language;
+            $alt = $this->hsc($this->getAltAttribute($language));
             $languages[$language] = compact('href', 'src', 'alt');
         }
         return $this->render('languagemenu', compact('languages'));
+    }
+
+    /**
+     * Returns the alt attribute for a language flag.
+     *
+     * @return string
+     *
+     * @global int The current page index.
+     */
+    protected function getAltAttribute($language)
+    {
+        global $s;
+
+        $tag = $this->pageTag($s);
+        $labels = $this->languageLabels();
+        if (isset($labels[$language])) {
+            if ($this->model->hasTag($tag, $language)
+                || !isset($labels[$language][1])
+            ) {
+                $alt = $labels[$language][0];
+            } else {
+                $alt = $labels[$language][1];
+            }
+        } else {
+            $alt = $language;
+        }
+        return $alt;
     }
 }
 

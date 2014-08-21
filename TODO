@@ -2,7 +2,8 @@
 * german manual
 * style translations table
 * fix initial caching problem
-* improve flag title: "English Translation of this page/English Website"
+* check when proper escaping of plugin config was introduced; require respective
+  XH version
 
 * automatic language selection
   <http://www.cmsimpleforum.com/viewtopic.php?f=5&t=5905&p=34437#p34437>

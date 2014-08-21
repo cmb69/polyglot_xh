@@ -50,18 +50,21 @@ define('POLYGLOTT_VERSION', '@POLYGLOTT_VERSION@');
  *
  * @return string (X)HTML.
  *
- * @global object The polyglott controller.
+ * @global Polyglott_Controller The polyglott controller.
  */
 function Polyglott_languageMenu()
 {
-    global $_Polyglott;
+    global $_Polyglott_controller;
 
-    return $_Polyglott->languageMenu();
+    return $_Polyglott_controller->languageMenu();
 }
 
-/*
- * Instanciate the controller.
+/**
+ * The plugin controller.
+ *
+ * @var Polyglott_Controller
  */
-$_Polyglott = new Polyglott_Controller();
+$_Polyglott_controller = new Polyglott_Controller();
+$_Polyglott_controller->dispatch();
 
 ?>

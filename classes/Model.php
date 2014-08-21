@@ -68,30 +68,20 @@ class Polyglott_Model
     protected $tags;
 
     /**
-     * Initializes a newly created instance.
+     * Initializes a new instance.
      *
      * @param string $language        The current langage.
      * @param string $defaultLanguage The default language.
      * @param string $baseFolder      The relative path of the base folder.
      * @param string $dataFolder      The relative path of the data folder.
      */
-    public function Polyglott_Model(
+    public function __construct(
         $language, $defaultLanguage, $baseFolder, $dataFolder
     ) {
-        $this->language = $language;
-        $this->defaultLanguage = $defaultLanguage;
-        $this->baseFolder = $baseFolder;
-        $this->dataFolder = $dataFolder;
-    }
-
-    /**
-     * Returns the path of the lock file.
-     *
-     * @return string
-     */
-    protected function lockFile()
-    {
-        return $this->dataFolder . '.lck';
+        $this->language = (string) $language;
+        $this->defaultLanguage = (string) $defaultLanguage;
+        $this->baseFolder = (string) $baseFolder;
+        $this->dataFolder = (string) $dataFolder;
     }
 
     /**
@@ -178,6 +168,16 @@ class Polyglott_Model
         }
         return $this->tags !== false;
 
+    }
+
+    /**
+     * Returns the path of the lock file.
+     *
+     * @return string
+     */
+    protected function lockFile()
+    {
+        return $this->dataFolder . '.lck';
     }
 
     /**

@@ -33,24 +33,63 @@ class Polyglott_Controller
     protected $model;
 
     /**
-     * Initialize a newly created instance.
+     * Initializes a new instance.
      *
-     * @global string The (X)HTML to insert into the head element.
-     * @global string The current language.
      * @global array  The paths of system files and folders.
-     * @global array  The URLs of the pages.
+     * @global string The current language.
      * @global array  The configuration of the core.
-     * @global object The page data router.
      */
-    public function Polyglott_Controller()
+    public function __construct()
     {
-        global $hjs, $sl, $pth, $u, $cf, $pd_router;
+        global $pth, $sl, $cf;
 
-        $dataFolder = $pth['folder']['plugins'] . 'polyglott/data/';
         $this->model = new Polyglott_Model(
             $sl, $cf['language']['default'], $pth['folder']['base'],
-            $dataFolder
+            $pth['folder']['plugins'] . 'polyglott/data/'
         );
+    }
+
+    /**
+     * Dispatches according to request.
+     *
+     * @return void
+     *
+     * @global string The (X)HTML to insert into the head element.
+     * @global array  The paths of system files and folders.
+     * @global object The page data router.
+     * @global string Whether the plugin administration is requested.
+     */
+    public function dispatch()
+    {
+        global $hjs, $pth, $pd_router, $polyglott;
+
+        $this->updateCache();
+        $pd_router->add_interest('polyglott_tag');
+        if (XH_ADM) {
+            $pd_router->add_tab(
+                'Polyglott',
+                $pth['folder']['plugins'] . 'polyglott/polyglott_view.php'
+            );
+            if (isset($polyglott) && $polyglott == 'true') {
+                $this->handleAdministration();
+            }
+        }
+        $hjs .= $this->alternateLinks();
+    }
+
+    /**
+     * Updates the cache.
+     *
+     * @return void
+     *
+     * @global array  The paths of system files and folders.
+     * @global array  The URLs of the pages.
+     * @global object The page data router.
+     */
+    protected function updateCache()
+    {
+        global $pth, $u, $pd_router;
+
         $contentLastMod = filemtime($pth['file']['content']);
         $pageDataLastMod = file_exists($pth['file']['pagedata'])
             ? filemtime($pth['file']['pagedata'])
@@ -66,43 +105,31 @@ class Polyglott_Controller
         } else {
             e('cntopen', 'file', $this->model->tagsFile());
         }
-        $pd_router->add_interest('polyglott_tag');
-        if (XH_ADM) {
-            $pd_router->add_tab(
-                'Polyglott',
-                $pth['folder']['plugins'] . 'polyglott/polyglott_view.php'
-            );
-            $this->dispatch();
-        }
-        $hjs .= $this->alternateLinks();
     }
 
     /**
-     * Dispatches according to request.
+     * Handles the plugin administration.
      *
      * @return void
      *
      * @global string The value of the GET/POST parameter <var>admin</var>.
      * @global string The value of the GET/POST parameter <var>action</var>.
      * @global string The (X)HTML for the contents area.
-     * @global string Whether Polyglott's administration is requested.
      */
-    protected function dispatch()
+    protected function handleAdministration()
     {
-        global $admin, $action, $o, $polyglott;
+        global $admin, $action, $o;
 
-        if (isset($polyglott) && $polyglott == 'true') {
-            $o .= print_plugin_admin('on');
-            switch ($admin) {
-            case '':
-                $o .= $this->info();
-                break;
-            case 'plugin_main':
-                $o .= $this->administration();
-                break;
-            default:
-                $o .= plugin_admin_common($action, $admin, 'polyglott');
-            }
+        $o .= print_plugin_admin('on');
+        switch ($admin) {
+        case '':
+            $o .= $this->info();
+            break;
+        case 'plugin_main':
+            $o .= $this->administration();
+            break;
+        default:
+            $o .= plugin_admin_common($action, $admin, 'polyglott');
         }
     }
 

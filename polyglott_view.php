@@ -21,13 +21,13 @@
  *
  * @return string The (X)HTML.
  *
- * @global object The polyglott controller.
+ * @global Polyglott_Controller The plugin controller.
  */
 function Polyglott_view($page)
 {
-    global $_Polyglott;
+    global $_Polyglott_controller;
 
-    return $_Polyglott->pageDataTab($page);
+    return $_Polyglott_controller->pageDataTab($page);
 }
 
 ?>

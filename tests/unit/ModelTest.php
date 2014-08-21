@@ -1,7 +1,11 @@
 <?php
 
-require_once 'vfsStream/vfsStream.php';
-require './classes/model.php';
+require_once './vendor/autoload.php';
+require_once './classes/model.php';
+
+use org\bovigo\vfs\vfsStreamWrapper;
+use org\bovigo\vfs\vfsStreamDirectory;
+use org\bovigo\vfs\vfsStream;
 
 class ModelTest extends PHPUnit_Framework_TestCase
 {
@@ -16,7 +20,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             'en', 'en', vfsStream::url('test'), vfsStream::url('test')
         );
     }
-    
+
     public function testTagsFile()
     {
         $expected = vfsStream::url('test/tags.dat');

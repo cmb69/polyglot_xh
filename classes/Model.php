@@ -207,10 +207,23 @@ class Polyglott_Model
             }
         }
         $contents = serialize($this->tags);
-        $ok = !!file_put_contents($this->tagsFile(), $contents);
+        $ok = (bool) file_put_contents($this->tagsFile(), $contents);
         flock($this->lockHandle, LOCK_UN);
         fclose($this->lockHandle);
         return $ok;
+    }
+
+    /**
+     * Returns whether a certain language has a certain tag.
+     *
+     * @param string $tag      A polyglott tag.
+     * @param string $language A language code.
+     *
+     * @return bool
+     */
+    public function hasTag($tag, $language)
+    {
+        return isset($this->tags[$tag][$language]);
     }
 
     /**

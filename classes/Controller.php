@@ -165,15 +165,17 @@ class Polyglott_Controller
         global $s;
 
         $res = '';
+        $tag = $this->pageTag($s);
         $languages = $this->model->languages();
         foreach ($languages as $language) {
-            $tag = $this->pageTag($s);
-            $href = $this->model->languageURL($language, $tag);
-            $res .= tag(
-                'link rel="alternate" hreflang="' . $this->hsc($language)
-                . '" href="' . $this->hsc($href) . '"'
-            );
-            $res .= PHP_EOL;
+            if ($this->model->hasTag($tag, $language)) {
+                $href = $this->model->languageURL($language, $tag);
+                $res .= tag(
+                    'link rel="alternate" hreflang="' . $this->hsc($language)
+                    . '" href="' . $this->hsc($href) . '"'
+                );
+                $res .= PHP_EOL;
+            }
         }
         return $res;
     }

@@ -36,7 +36,6 @@ class Polyglott_Controller
      * Initialize a newly created instance.
      *
      * @global string The (X)HTML to insert into the head element.
-     * @global bool   Whether the user is logged in as admin.
      * @global string The current language.
      * @global array  The paths of system files and folders.
      * @global array  The URLs of the pages.
@@ -45,7 +44,7 @@ class Polyglott_Controller
      */
     public function Polyglott_Controller()
     {
-        global $hjs, $adm, $sl, $pth, $u, $cf, $pd_router;
+        global $hjs, $sl, $pth, $u, $cf, $pd_router;
 
         $dataFolder = $pth['folder']['plugins'] . 'polyglott/data/';
         $this->model = new Polyglott_Model(
@@ -68,7 +67,7 @@ class Polyglott_Controller
             e('cntopen', 'file', $this->model->tagsFile());
         }
         $pd_router->add_interest('polyglott_tag');
-        if ($adm) {
+        if (XH_ADM) {
             $pd_router->add_tab(
                 'Polyglott',
                 $pth['folder']['plugins'] . 'polyglott/polyglott_view.php'

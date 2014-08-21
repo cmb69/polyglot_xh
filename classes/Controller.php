@@ -414,15 +414,15 @@ class Polyglott_Controller
         $pages = array();
         for ($i = 0; $i < $cl; $i++) {
             $heading = $h[$i];
-            $url = $sn . '?' . $u[$i];
+            $url = $sn . '?' . $u[$i] . '&edit';
             $indent = $l[$i] - 1;
             $tag = $this->pageTag($i);
             $translations = array();
             foreach ($languages as $language) {
                 $translations[$language]
                     = $this->model->isTranslated($tag, $language)
-                    ? $this->model->languageURL($language, $tag)
-                    : null;
+                        ? $this->model->languageURL($language, $tag) . '&edit'
+                        : null;
             }
             $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
         }

@@ -449,6 +449,8 @@ class Polyglott_Controller
     /**
      * Returns the alt attribute for a language flag.
      *
+     * @param string $language A language code.
+     *
      * @return string
      *
      * @global int The current page index.

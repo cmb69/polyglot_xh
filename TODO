@@ -1,7 +1,6 @@
 * update manual and CHANGELOG
 * german manual
 * fix initial caching problem
-* add i18n for translation table
 * link translation table to edit mode
 
 * automatic language selection

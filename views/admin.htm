@@ -1,11 +1,11 @@
 <!-- Polyglott_XH: administration -->
-<h1>Polyglott &ndash; Translations</h1>
+<h1>Polyglott &ndash; <?php echo $lang['label_translations'];?></h1>
 <div class="polyglott_translations">
     <table>
         <thead>
             <tr>
-                <th>Page</th>
-                <th>Tag</th>
+                <th><?php echo $lang['label_page'];?></th>
+                <th><?php echo $lang['label_tag'];?></th>
 <?php foreach ($languages as $language):?>
                 <th><?php echo $language;?></th>
 <?php endforeach;?>
@@ -21,7 +21,7 @@
 <?php foreach ($page['translations'] as $translation):?>
                 <td>
 <?php if (isset($translation)):?>
-                    <a href="<?php echo $translation;?>">&#10003;</a>
+                    <a href="<?php echo $translation;?>"><?php echo $lang['label_ok'];?></a>
 <?php endif;?>
                 </td>
 <?php endforeach;?>

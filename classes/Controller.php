@@ -403,11 +403,12 @@ class Polyglott_Controller
      * @global array  The URLs of the pages.
      * @global array  The paths of system files and folders.
      * @global array  The configuration of the core.
+     * @global array  The localization of the plugins.
      * @global object The page data router.
      */
     protected function administration()
     {
-        global $sn, $cl, $h, $l, $u, $pth, $cf, $pd_router;
+        global $sn, $cl, $h, $l, $u, $pth, $cf, $plugin_tx, $pd_router;
 
         $languages = $this->model->otherLanguages();
         $pages = array();
@@ -425,8 +426,8 @@ class Polyglott_Controller
             }
             $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
         }
-        $bag = compact('languages', 'pages');
-        return $this->render('admin', $bag);
+        $lang = $plugin_tx['polyglott'];
+        return $this->render('admin', compact('languages', 'pages', 'lang'));
     }
 
     /**

@@ -51,20 +51,6 @@ function Polyglott_languageMenu()
     return $_Polyglott->languageMenu();
 }
 
-/**
- * Procedural wrapper for $_Polyglott->alternateLinks().
- *
- * @return string (X)HTML.
- *
- * @global object The polyglott controller.
- */
-function Polyglott_alternateLinks()
-{
-    global $_Polyglott;
-
-    return $_Polyglott->alternateLinks();
-}
-
 /*
  * Instanciate the controller.
  */

@@ -35,6 +35,7 @@ class Polyglott_Controller
     /**
      * Initialize a newly created instance.
      *
+     * @global string The (X)HTML to insert into the head element.
      * @global bool   Whether the user is logged in as admin.
      * @global string The current language.
      * @global array  The paths of system files and folders.
@@ -44,7 +45,7 @@ class Polyglott_Controller
      */
     public function Polyglott_Controller()
     {
-        global $adm, $sl, $pth, $u, $cf, $pd_router;
+        global $hjs, $adm, $sl, $pth, $u, $cf, $pd_router;
 
         $dataFolder = $pth['folder']['plugins'] . 'polyglott/data/';
         $this->model = new Polyglott_Model(
@@ -74,6 +75,7 @@ class Polyglott_Controller
             );
             $this->dispatch();
         }
+        $hjs .= $this->alternateLinks();
     }
 
     /**
@@ -112,7 +114,7 @@ class Polyglott_Controller
      *
      * @global int The index of the requested page.
      */
-    public function alternateLinks()
+    protected function alternateLinks()
     {
         global $s;
 

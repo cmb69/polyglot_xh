@@ -57,20 +57,22 @@ class Polyglott_Controller
      * @global string The (X)HTML to insert into the head element.
      * @global array  The paths of system files and folders.
      * @global object The page data router.
-     * @global string Whether the plugin administration is requested.
      */
     public function dispatch()
     {
-        global $hjs, $pth, $pd_router, $polyglott;
+        global $hjs, $pth, $pd_router;
 
         $this->updateCache();
         $pd_router->add_interest('polyglott_tag');
         if (XH_ADM) {
+            if (function_exists('XH_registerStandardPluginMenuItems')) {
+                XH_registerStandardPluginMenuItems(true);
+            }
             $pd_router->add_tab(
                 'Polyglott',
                 $pth['folder']['plugins'] . 'polyglott/polyglott_view.php'
             );
-            if (isset($polyglott) && $polyglott == 'true') {
+            if ($this->wantsPluginAdministration()) {
                 $this->handleAdministration();
             }
         }
@@ -105,6 +107,24 @@ class Polyglott_Controller
         } else {
             e('cntopen', 'file', $this->model->tagsFile());
         }
+    }
+
+    /**
+     * Returns whether the plugin administration is requested.
+     *
+     * @return bool
+     *
+     * @global string Whether the plugin administration is requested.
+     *
+     * @todo Remove fallback for XH < 1.6.3.
+     */
+    protected function wantsPluginAdministration()
+    {
+        global $polyglott;
+
+        return function_exists('XH_wantsPluginAdministration')
+            && XH_wantsPluginAdministration('polyglott')
+            || isset($polyglott) && $polyglott == 'true';
     }
 
     /**
@@ -165,11 +185,13 @@ class Polyglott_Controller
      *
      * @return string
      *
-     * @todo Use XH_hsc if available.
+     * @todo Remove fallback for XH < 1.6.
      */
     protected function hsc($str)
     {
-        return htmlspecialchars($str, ENT_COMPAT, 'UTF-8');
+        return function_exists('XH_hsc')
+            ? XH_hsc($str)
+            : htmlspeci1alchars($str, ENT_COMPAT, 'UTF-8');
     }
 
     /**

@@ -70,14 +70,13 @@ class Polyglott_Model
     /**
      * Initializes a new instance.
      *
-     * @param string $language        The current langage.
-     * @param string $defaultLanguage The default language.
-     * @param string $baseFolder      The relative path of the base folder.
-     * @param string $dataFolder      The relative path of the data folder.
+     * @param string $language    The current langage.
+     * @param string $defaultLang The default language.
+     * @param string $baseFolder  The relative path of the base folder.
+     * @param string $dataFolder  The relative path of the data folder.
      */
-    public function __construct(
-        $language, $defaultLanguage, $baseFolder, $dataFolder
-    ) {
+    public function __construct($language, $defaultLang, $baseFolder, $dataFolder)
+    {
         $this->language = (string) $language;
         $this->defaultLanguage = (string) $defaultLanguage;
         $this->baseFolder = (string) $baseFolder;
@@ -98,16 +97,26 @@ class Polyglott_Model
      * Returns all available languages.
      *
      * @return array
+     *
+     * @todo Remove fallback for XH < 1.6.
      */
     public function languages()
     {
-        $languages = array($this->defaultLanguage);
-        $dh = opendir($this->baseFolder);
-        while (($dir = readdir($dh)) !== false) {
-            if (preg_match('/^[A-z]{2}$/', $dir)) {
-                $languages[] = $dir;
+        if (function_exists('XH_secondLanguages')) {
+            $languages = XH_secondLanguages();
+            $languages[] = $this->defaultLanguage;
+        } else {
+            $languages = array($this->defaultLanguage);
+            $dh = opendir($this->baseFolder);
+            if ($dh) {
+                while (($dir = readdir($dh)) !== false) {
+                    if (preg_match('/^[A-z]{2}$/', $dir)) {
+                        $languages[] = $dir;
+                    }
+                }
             }
         }
+        sort($languages);
         return $languages;
     }
 

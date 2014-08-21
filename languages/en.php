@@ -13,4 +13,7 @@ $plugin_tx['polyglott']['syscheck_writable']="Folder '%s' writable";
 
 $plugin_tx['polyglott']['about']="About Polyglott_XH";
 
+$plugin_tx['polyglott']['cf_languages_labels']="The labels of the flag icons in the language menu. Note that you <em>may</em> specify different texts (separated by semicolons) for translated pages and untranslated pages.";
+$plugin_tx['polyglott']['cf_flags_extension']="The file extension of the flag icons.";
+
 ?>

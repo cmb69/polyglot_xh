@@ -13,4 +13,7 @@ $plugin_tx['polyglott']['syscheck_writable']="Ordner '%s' beschreibbar";
 
 $plugin_tx['polyglott']['about']="Über Polyglott_XH";
 
+$plugin_tx['polyglott']['cf_languages_labels']="Die Beschriftungen der Fahnen-Icons des Sprachmenüs. Beachten Sie, dass Sie unterschiedliche Texte (getrennt durch Strichpunkte) für übersetzte und unübersetzte Seiten angeben <em>können</em>.";
+$plugin_tx['polyglott']['cf_flags_extension']="Die Dateiendung der Fahnen-Icons.";
+
 ?>

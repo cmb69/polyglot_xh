@@ -2,7 +2,6 @@
 * german manual
 * registerStandardPluginMenuItems, XH_wantsPluginAdministration, XH_hsc, more?
 * style translations table
-* rename data/ to cache/
 * fix initial caching problem
 
 * add hreflang="x-default" (insp. by meltemi

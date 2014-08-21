@@ -45,7 +45,7 @@ class Polyglott_Controller
 
         $this->model = new Polyglott_Model(
             $sl, $cf['language']['default'], $pth['folder']['base'],
-            $pth['folder']['plugins'] . 'polyglott/data/'
+            $pth['folder']['plugins'] . 'polyglott/cache/'
         );
     }
 

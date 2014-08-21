@@ -17,7 +17,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
         mkdir(vfsStream::url('test/de'));
         $this->model = new Polyglott_Model(
-            'en', 'en', vfsStream::url('test'), vfsStream::url('test')
+            'en', 'en', vfsStream::url('test/'), vfsStream::url('test/')
         );
     }
 

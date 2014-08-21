@@ -78,7 +78,7 @@ class Polyglott_Model
     public function __construct($language, $defaultLang, $baseFolder, $dataFolder)
     {
         $this->language = (string) $language;
-        $this->defaultLanguage = (string) $defaultLanguage;
+        $this->defaultLanguage = (string) $defaultLang;
         $this->baseFolder = (string) $baseFolder;
         $this->dataFolder = (string) $dataFolder;
     }
@@ -223,7 +223,7 @@ class Polyglott_Model
      */
     public function languageURL($language, $tag)
     {
-        $res = $this->baseFolder;
+        $res = $this->getInstallationUrl();
         if ($language != $this->defaultLanguage) {
             $res .= $language . '/';
         }
@@ -231,6 +231,30 @@ class Polyglott_Model
             $res .= '?' . $this->tags[$tag][$language];
         }
         return $res;
+    }
+
+    /**
+     * Returns the URL of the CMSimple installation.
+     *
+     * @return string
+     *
+     * @global string The script name.
+     */
+    protected function getInstallationUrl()
+    {
+        global $sn;
+
+        if (defined('CMSIMPLE_URL')) {
+            $baseUrl = CMSIMPLE_URL;
+        } else {
+            $baseUrl = 'http'
+                . (!empty($_SERVER['HTTPS'])
+                    && $_SERVER['HTTPS'] != 'off' ? 's' : '')
+                . '://' . $_SERVER['HTTP_HOST'] . $sn;
+        }
+        return preg_replace(
+            array('/index\.php$/', '/' . $this->language . '\/$/'), '', $baseUrl
+        );
     }
 
     /**

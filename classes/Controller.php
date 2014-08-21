@@ -52,7 +52,9 @@ class Polyglott_Controller
             $dataFolder
         );
         $contentLastMod = filemtime($pth['file']['content']);
-        $pageDataLastMod = filemtime($pth['file']['pagedata']);
+        $pageDataLastMod = file_exists($pth['file']['pagedata'])
+            ? filemtime($pth['file']['pagedata'])
+            : 0;
         $tagsLastMod = $this->model->lastMod();
         $needsUpdate = $tagsLastMod < max($contentLastMod, $pageDataLastMod);
         if ($this->model->init($needsUpdate)) {

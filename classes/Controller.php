@@ -321,13 +321,14 @@ class Polyglott_Controller
      * @return string
      *
      * @global array The paths of system files and folders.
+     * @global array The configuration of the plugins.
      */
     protected function languageFlag($language)
     {
-        global $pth;
+        global $pth, $plugin_cf;
 
-        $res = $pth['folder']['flags'] . $language . '.gif"';
-        return $res;
+        return $pth['folder']['flags'] . $language . '.'
+            . $plugin_cf['polyglott']['flags_extension'] . '"';
     }
 
     /**

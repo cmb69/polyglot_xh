@@ -2,12 +2,10 @@
 * german manual
 * style translations table
 * fix initial caching problem
+* improve flag title: "English Translation of this page/English Website"
 
 * automatic language selection
   <http://www.cmsimpleforum.com/viewtopic.php?f=5&t=5905&p=34437#p34437>
   <http://forum.cmsimple-xh.dk/?f=1&t=754>
-* image extension configurable
-* configurable data folder?
 * report outdated translation in back-end (PD: last_update)
-* improve flag title: "English Translation of this page/English Website"
 * remove deleted tags from tags file!!

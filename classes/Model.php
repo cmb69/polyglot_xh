@@ -214,19 +214,6 @@ class Polyglott_Model
     }
 
     /**
-     * Returns whether a certain language has a certain tag.
-     *
-     * @param string $tag      A polyglott tag.
-     * @param string $language A language code.
-     *
-     * @return bool
-     */
-    public function hasTag($tag, $language)
-    {
-        return isset($this->tags[$tag][$language]);
-    }
-
-    /**
      * Returns the URL to another language.
      *
      * @param string $language The language to link to.

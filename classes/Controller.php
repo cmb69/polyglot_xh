@@ -168,7 +168,7 @@ class Polyglott_Controller
         $tag = $this->pageTag($s);
         $languages = $this->model->languages();
         foreach ($languages as $language) {
-            if ($this->model->hasTag($tag, $language)) {
+            if ($this->model->isTranslated($tag, $language)) {
                 $href = $this->model->languageURL($language, $tag);
                 $res .= tag(
                     'link rel="alternate" hreflang="' . $this->hsc($language)
@@ -463,7 +463,7 @@ class Polyglott_Controller
         $tag = $this->pageTag($s);
         $labels = $this->languageLabels();
         if (isset($labels[$language])) {
-            if ($this->model->hasTag($tag, $language)
+            if ($this->model->isTranslated($tag, $language)
                 || !isset($labels[$language][1])
             ) {
                 $alt = $labels[$language][0];

@@ -1,18 +1,25 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-    "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>Polyglott_XH - Manual</title>
+<title>Polyglott_XH &ndash; Manual</title>
 <link rel="stylesheet" type="text/css" href="./stylesheet.css">
 </head>
 
 <body>
 
 <h1>Polyglott_XH - a CMSimple_XH Plugin</h1>
-<p style="text-align: justify"><img src="../polyglott.png" style="float: left;
-margin: 0 16px 16px 0" alt="Plugin Icon"></p>
+<img src="../polyglott.png" style="float: left; margin-right: 16px" alt="Globe
+of flags">
+<p>Polyglott_XH offers advanced features for multilingual CMSimple_XH websites.
+The main point is that it allows to mark individual pages of different languages
+as actual translations, so visitors as well as the admin can quickly switch
+between the translations of a certain page.</p>
+<p>Furthermore the plugin automatically emits information mainly for search
+engines regarding available translations of the current page (so called <a
+href="https://support.google.com/webmasters/answer/189077?hl=en">hreflang
+links</a>).</p>
 
 <ul id="nav">
 <li><a href="#notice">Important Notice</a></li>
@@ -30,64 +37,84 @@ margin: 0 16px 16px 0" alt="Plugin Icon"></p>
 <p><strong>Please do read this documentation, <em>before</em> you encounter any
 problems!</strong></p>
 
-<h2><a name="notice">Important Notice</a></h2>
+<h2 id="notice">Important Notice</h2>
 <p><strong>Polyglott_XH couldn't be tested so far in various environments. It
-is a so called BETA version. Use with caution!</strong></p>
+is a so called beta version. Use with caution!</strong></p>
 <div class="toplink"><a href="#">back to top</a></div>
 
-<h2><a name="requirements">Requirements</a></h2>
+<h2 id="requirements">Requirements</h2>
 <p>Polyglott_XH is a plugin for CMSimple_XH. It requires PHP &ge; 5.0.0 and
 CMSimple_XH &ge; 1.5.6.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
-<h2><a name="installation">Installation</a></h2>
+<h2 id="installation">Installation</h2>
 <p>The installation is done as with many other CMSimple_XH plugins. See the <a
 href="http://www.cmsimple-xh.org/wiki/doku.php/installation"> CMSimple_XH
 wiki</a> for further details.</p>
 <ol>
-<li><strong>Backup the data on your server.</strong></li>
+<li>Backup the data on your server.</li>
 <li>Unzip the distribution on your computer.</li>
-<li>Upload the whole directory polyglott/ to your server to CMSimple_XH's
+<li>Upload the whole directory polyglott/ to your server into CMSimple_XH's
 plugins directory.</li>
-<li>Set write permissions to the subdirectories config/ and languages/.</li>
-<li><strong>Switch to "Polyglott" in the back-end to check if all
-requirements are fulfilled.</strong></li>
+<li>Give write permissions to the subdirectories cache/, config/, css/ and
+languages/.</li>
+<li>Switch to Plugins &rarr; Polyglott to check if all requirements are
+fulfilled.</li>
 </ol>
 <div class="toplink"><a href="#">back to top</a></div>
 
-<h2><a name="settings">Settings</a></h2>
+<h2 id="settings">Settings</h2>
 <p>The plugin's configuration is done as with many other CMSimple_XH plugins in
-the website's back-end. Select "Polyglott" from "Plugins".</p>
-<p>You can change the default settings of Polyglott_XH in "Config". Hints for
+the website's back-end. Select Plugins &rarr; Polyglott.</p>
+<p>You can change the default settings of Polyglott_XH under "Config". Hints for
 the options will be displayed when hovering over the help icon with your
 mouse.</p>
-<p>Localization is done in "Language". You can translate the character strings
-to your own language, or customize them according to your needs.</p>
+<p>Localization is done under "Language". You can translate the character
+strings to your own language (if there is no appropriate language file
+available), or customize them according to your needs.</p>
+<p>The look of Polyglott_XH can be customized under "Stylesheet".</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
-<h2><a name="usage">Usage</a></h2>
+<h2 id="usage">Usage</h2>
+<p>To use the advanced language menu of Polyglott_XH replace the call to
+languagemenu() in your template(s) with:</p>
+<pre>&lt;?php echo polyglott_languagemenu();?&gt;</pre>
+<p>To make this actually work, you have to tag individual pages of different
+languages appropriately. You can do this in the tab "Polyglott" above the
+content editor; simply set the same unique tag for the original page and for its
+translations.</p>
+<p>In the plugin administration (Plugins &rarr; Polyglott &rarr; Translations)
+you can get an overview of which pages are already translated. The page headings
+as well as the translations are linked to the respective pages in edit mode, so
+you can quickly repair possibly missing Polyglott_XH tags.</p>
+<p>Note that the relations between pages of different languages are cached in
+plugins/polyglott/cache/ for performance reasons. If you have to clear this
+cache for whatever reason, you have to save at least one page of <em>every</em>
+language to rebuilt it properly.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
-<!--<h2><a name="limitations">Limitations</a></h2>
+<!--<h2 id="limitations">Limitations</h2>
 <div class="toplink"><a href="#">back to top</a></div>
 -->
-<h2><a name="license">License</a></h2>
+<h2 id="license">License</h2>
 <p>Polyglott_XH is licensed under <a
 href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>.</p>
 <p>&copy; 2012-2014 Christoph M. Becker</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
-<h2><a name="credits">Credits</a></h2>
+<h2 id="credits">Credits</h2>
 <p>Polyglott_XH was inspired by <a
-href="http://cmsimplewiki.com/doku.php/plugins/multilang_xh">Multilang_XH</a>.</p>
+href="http://cmsimplewiki.com/doku.php/plugins/multilang_xh">Multilang_XH</a> by
+<a href="http://www.zedlitz.de/">Jesper Zedlitz</a>.</p>
 <p>The plugin icon is designed by Lakshman Poonyth. Many thanks for publishing
 this icon on <a
 href="http://openclipart.org/detail/13039/globe-of-flags-by-anonymous-13039">openclipart.org</a>.</p>
 <p>This plugin uses free applications icons from <a
 href="http://www.aha-soft.com/">Aha-Soft</a>. Many thanks for making these icons
 freely available.</p>
-<!--<p>Many thanks to the community at the <a href="http://www.cmsimpleforum.com">CMSimple forum</a>-->
-<!--for tips, suggestions and testing.</p>-->
+<p>Many thanks to the community at the <a
+href="http://www.cmsimpleforum.com">CMSimple forum</a> for tips and suggestions.
+<!--and testing--></p>
 <p>And last but not least many thanks to <a href="http://harteg.dk/">Peter
 Harteg</a>, the father of CMSimple, and all developers of <a
 href="http://www.cmsimple-xh.org/">CMSimple_XH</a> without whom this amazing CMS

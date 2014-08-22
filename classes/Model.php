@@ -144,8 +144,10 @@ class Polyglott_Model
      */
     public function lastMod()
     {
-        $res = filemtime($this->tagsFile());
-        return $res;
+        $filename = $this->tagsFile();
+        return file_exists($filename)
+            ? filemtime($filename)
+            : 0;
     }
 
     /**
@@ -163,7 +165,10 @@ class Polyglott_Model
         }
         $this->lockHandle = fopen($lockFile, 'r');
         flock($this->lockHandle, $needsUpdate ? LOCK_EX : LOCK_SH);
-        $contents = file_get_contents($this->tagsFile());
+        $filename = $this->tagsFile();
+        $contents = is_readable($filename)
+            ? file_get_contents($filename)
+            : false;
         if ($contents === false) {
             $contents = serialize(array());
             if (!file_put_contents($this->tagsFile(), $contents)) {

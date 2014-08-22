@@ -1,7 +1,5 @@
-* update CHANGELOG
-
 * automatic language selection
   <http://www.cmsimpleforum.com/viewtopic.php?f=5&t=5905&p=34437#p34437>
   <http://forum.cmsimple-xh.dk/?f=1&t=754>
-* report outdated translation in back-end (PD: last_update)
+* report outdated translations in back-end (PD: last_update)
 * remove deleted tags from tags file!!

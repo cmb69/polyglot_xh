@@ -26,8 +26,7 @@
     </target>
 
     <target name="compat">
-        <exec command="phpcompatinfo --configuration phpcompatinfo.xml print --exclude-pattern polyglott ."
-              logoutput="true"/>
+        <exec command="phpcompatinfo analyser:run ." logoutput="true"/>
     </target>
 
     <!-- tests -->

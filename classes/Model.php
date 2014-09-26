@@ -244,6 +244,8 @@ class Polyglott_Model
      * @return string
      *
      * @global string The script name.
+     *
+     * @todo Remove workaround for CMSIMPLE_URL (XH < 1.6).
      */
     protected function getInstallationUrl()
     {
@@ -258,7 +260,8 @@ class Polyglott_Model
                 . '://' . $_SERVER['HTTP_HOST'] . $sn;
         }
         return preg_replace(
-            array('/index\.php$/', '/' . $this->language . '\/$/'), '', $baseUrl
+            array('/index\.php$/', '/(?<=\/)' . $this->language . '\/$/'),
+            '', $baseUrl
         );
     }
 

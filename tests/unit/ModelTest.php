@@ -77,6 +77,22 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $actual = $this->model->otherLanguages();
         $this->assertEquals($expected, $actual);
     }
+
+    /**
+     * Tests that the language URL contains the TLD, even if this is the same
+     * as the language.
+     *
+     * @link email://C824A36AF8B46744B2AC8F8F671C5ED945D6468116@VServer-02
+     *
+     * @return void
+     */
+    public function testLanguageUrlContainsTld()
+    {
+        define('CMSIMPLE_URL', 'http://foo.en/');
+        $this->assertEquals(
+            'http://foo.en/de/', $this->model->languageURL('de', 'unknown')
+        );
+    }
 }
 
 ?>

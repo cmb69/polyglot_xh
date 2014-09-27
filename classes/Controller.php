@@ -158,11 +158,12 @@ class Polyglott_Controller
      *
      * @return void
      *
-     * @global int The index of the requested page.
+     * @global int   The index of the requested page.
+     * @global array The configuration of the core.
      */
     protected function alternateLinks()
     {
-        global $s;
+        global $s, $cf;
 
         $res = '';
         $tag = $this->pageTag($s);
@@ -170,6 +171,13 @@ class Polyglott_Controller
         foreach ($languages as $language) {
             if ($this->model->isTranslated($tag, $language)) {
                 $href = $this->model->languageURL($language, $tag);
+                if ($language == $cf['language']['default']) {
+                    $res .= tag(
+                        'link rel="alternate" hreflang="x-default" href="'
+                        . $this->hsc($href). '"'
+                    );
+                    $res .= PHP_EOL;
+                }
                 $res .= tag(
                     'link rel="alternate" hreflang="' . $this->hsc($language)
                     . '" href="' . $this->hsc($href) . '"'

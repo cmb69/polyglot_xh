@@ -1,3 +1,8 @@
+Version 1.0beta2 -- released 2014-09-27
+* fixed bug, where hreflang link was sometimes wrong (reported by olape)
+* added alternate x-default link pointing to the default language page (sugg. by
+  olape)
+
 Version 1.0beta1 -- released 2014-08-22
 * lifted requirements to CMSimple_XH 1.5.6 and PHP 5.0.0
 * changed config option languages_labels to be able to distinguish between

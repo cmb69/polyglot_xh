@@ -102,7 +102,7 @@
                 <exclude name="build.xml"/>
                 <exclude name="composer.*"/>
                 <exclude name="coverage.xml"/>
-                <exclude name="phpcompatinfo.xml"/>
+                <exclude name="phpcompatinfo.*"/>
                 <exclude name="polyglott.komodoproject"/>
                 <exclude name="tests/**"/>
                 <exclude name="TODO"/>

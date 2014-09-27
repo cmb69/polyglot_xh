@@ -46,6 +46,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->defineConstant('CMSIMPLE_URL', 'http://foo.en/');
         vfsStreamWrapper::register();
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
         mkdir(vfsStream::url('test/de'));
@@ -88,10 +89,26 @@ class ModelTest extends PHPUnit_Framework_TestCase
      */
     public function testLanguageUrlContainsTld()
     {
-        define('CMSIMPLE_URL', 'http://foo.en/');
         $this->assertEquals(
             'http://foo.en/de/', $this->model->languageURL('de', 'unknown')
         );
+    }
+
+    /**
+     * (Re)defines a global constant.
+     *
+     * @param string $name  A name.
+     * @param string $value A value.
+     *
+     * @return void
+     */
+    protected function defineConstant($name, $value)
+    {
+        if (!defined($name)) {
+            define($name, $value);
+        } else {
+            runkit_constant_redefine($name, $value);
+        }
     }
 }
 

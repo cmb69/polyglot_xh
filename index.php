@@ -31,24 +31,27 @@ EOT
 }
 
 /**
- * The model class.
- */
-require_once $pth['folder']['plugin_classes'] . 'Model.php';
-
-/**
- * The view class.
- */
-require_once $pth['folder']['plugin_classes'] . 'View.php';
-
-/**
- * The controller class.
- */
-require_once $pth['folder']['plugin_classes'] . 'Controller.php';
-
-/**
  * The plugin version.
  */
 define('POLYGLOTT_VERSION', '@POLYGLOTT_VERSION@');
+
+/**
+ * Autoloads a plugin class.
+ *
+ * @param string $class A class name.
+ *
+ * @return void
+ */
+function Polyglott_autoload($class)
+{
+    global $pth;
+
+    $parts = explode('_', $class, 2);
+    if ($parts[0] == 'Polyglott') {
+        include_once $pth['folder']['plugins'] . 'polyglott/classes/'
+            . $parts[1] . '.php';
+    }
+}
 
 /**
  * Procedural wrapper for $_Polyglott->languageMenu().
@@ -63,6 +66,8 @@ function Polyglott_languageMenu()
 
     return $_Polyglott_controller->languageMenu();
 }
+
+spl_autoload_register('Polyglott_autoload');
 
 /**
  * The plugin controller.

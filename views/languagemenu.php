@@ -1,3 +1,4 @@
+<?php $this->preventAccess()?>
 <!-- Polyglott_XH: language menu -->
 <?php foreach($languages as $language):?>
 <a href="<?php echo $language['href'];?>">

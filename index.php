@@ -33,12 +33,17 @@ EOT
 /**
  * The model class.
  */
-require $pth['folder']['plugin_classes'] . 'Model.php';
+require_once $pth['folder']['plugin_classes'] . 'Model.php';
+
+/**
+ * The view class.
+ */
+require_once $pth['folder']['plugin_classes'] . 'View.php';
 
 /**
  * The controller class.
  */
-require $pth['folder']['plugin_classes'] . 'Controller.php';
+require_once $pth['folder']['plugin_classes'] . 'Controller.php';
 
 /**
  * The plugin version.

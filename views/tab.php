@@ -1,3 +1,4 @@
+<?php $this->preventAccess()?>
 <!-- Polyglott_XH: page data tab -->
 <form id="polyglott_pagedata" action="<?php echo $action;?>" method="post" onsubmit="return true">
     <div>

@@ -1,3 +1,4 @@
+<?php $this->preventAccess()?>
 <!-- Polyglott_XH: info -->
 <h4><?php echo $labels['syscheck'];?></h4>
 <ul style="list-style: none">

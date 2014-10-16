@@ -1,3 +1,4 @@
+<?php $this->preventAccess()?>
 <!-- Polyglott_XH: administration -->
 <h1>Polyglott &ndash; <?php echo $lang['label_translations'];?></h1>
 <div class="polyglott_translations">

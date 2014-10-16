@@ -55,12 +55,11 @@ class Polyglott_Controller
      * @return void
      *
      * @global string The (X)HTML to insert into the head element.
-     * @global array  The paths of system files and folders.
      * @global object The page data router.
      */
     public function dispatch()
     {
-        global $hjs, $pth, $pd_router;
+        global $hjs, $pd_router;
 
         $this->updateCache();
         $pd_router->add_interest('polyglott_tag');
@@ -68,10 +67,7 @@ class Polyglott_Controller
             if (function_exists('XH_registerStandardPluginMenuItems')) {
                 XH_registerStandardPluginMenuItems(true);
             }
-            $pd_router->add_tab(
-                'Polyglott',
-                $pth['folder']['plugins'] . 'polyglott/polyglott_view.php'
-            );
+            $this->addPageDataTab();
             if ($this->wantsPluginAdministration()) {
                 $this->handleAdministration();
             }
@@ -80,24 +76,37 @@ class Polyglott_Controller
     }
 
     /**
-     * Updates the cache.
+     * Returns whether the cache is stale.
      *
-     * @return void
+     * @return bool
      *
      * @global array  The paths of system files and folders.
-     * @global array  The URLs of the pages.
-     * @global object The page data router.
      */
-    protected function updateCache()
+    protected function isCacheStale()
     {
-        global $pth, $u, $pd_router;
+        global $pth;
 
         $contentLastMod = filemtime($pth['file']['content']);
         $pageDataLastMod = file_exists($pth['file']['pagedata'])
             ? filemtime($pth['file']['pagedata'])
             : 0;
         $tagsLastMod = $this->model->lastMod();
-        $needsUpdate = $tagsLastMod < max($contentLastMod, $pageDataLastMod);
+        return $tagsLastMod < max($contentLastMod, $pageDataLastMod);
+    }
+
+    /**
+     * Updates the cache.
+     *
+     * @return void
+     *
+     * @global array  The URLs of the pages.
+     * @global object The page data router.
+     */
+    protected function updateCache()
+    {
+        global $u, $pd_router;
+
+        $needsUpdate = $this->isCacheStale();
         if ($this->model->init($needsUpdate)) {
             if ($needsUpdate) {
                 if (!$this->model->update($pd_router->find_all(), $u)) {
@@ -107,6 +116,24 @@ class Polyglott_Controller
         } else {
             e('cntopen', 'file', $this->model->tagsFile());
         }
+    }
+
+    /**
+     * Adds the page data tab.
+     *
+     * @return void
+     *
+     * @global array  The paths of system files and folders.
+     * @global object The page data router.
+     */
+    protected function addPageDataTab()
+    {
+        global $pth, $pd_router;
+
+        $pd_router->add_tab(
+            'Polyglott',
+            $pth['folder']['plugins'] . 'polyglott/polyglott_view.php'
+        );
     }
 
     /**
@@ -156,36 +183,61 @@ class Polyglott_Controller
     /**
      * Returns the alternate hreflang links.
      *
-     * @return void
+     * @return string (X)HTML.
      *
-     * @global int   The index of the requested page.
-     * @global array The configuration of the core.
+     * @global int The index of the requested page.
      */
     protected function alternateLinks()
     {
-        global $s, $cf;
+        global $s;
 
         $res = '';
         $tag = $this->pageTag($s);
-        $languages = $this->model->languages();
-        foreach ($languages as $language) {
+        foreach ($this->model->languages() as $language) {
             if ($this->model->isTranslated($tag, $language)) {
-                $href = $this->model->languageURL($language, $tag);
-                if ($language == $cf['language']['default']) {
-                    $res .= tag(
-                        'link rel="alternate" hreflang="x-default" href="'
-                        . $this->hsc($href). '"'
-                    );
-                    $res .= PHP_EOL;
-                }
-                $res .= tag(
-                    'link rel="alternate" hreflang="' . $this->hsc($language)
-                    . '" href="' . $this->hsc($href) . '"'
-                );
-                $res .= PHP_EOL;
+                $res .= $this->alternateLinksFor($language, $tag);
             }
         }
         return $res;
+    }
+
+    /**
+     * Returns the alternate hreflang links for a single language.
+     *
+     * @param string $language An ISO 639-1 language code.
+     * @param string $tag      A polyglott tag.
+     *
+     * @return string (X)HTML.
+     *
+     * @global array The configuration of the core.
+     */
+    protected function alternateLinksFor($language, $tag)
+    {
+        global $cf;
+
+        $html = '';
+        $href = $this->model->languageURL($language, $tag);
+        if ($language == $cf['language']['default']) {
+            $html .= $this->renderAlternateLink('x-default', $href) . PHP_EOL;
+        }
+        $html .= $this->renderAlternateLink($language, $href) . PHP_EOL;
+        return $html;
+    }
+
+    /**
+     * Renders an alternate hreflang link.
+     *
+     * @param string $hreflang A hreflang value.
+     * @param string $href     A href value.
+     *
+     * @return string (X)HTML.
+     */
+    protected function renderAlternateLink($hreflang, $href)
+    {
+        return tag(
+            'link rel="alternate" hreflang="' . $this->hsc($hreflang)
+            . '" href="' . $this->hsc($href) . '"'
+        );
     }
 
     /**
@@ -205,35 +257,6 @@ class Polyglott_Controller
     }
 
     /**
-     * Renders a template.
-     *
-     * @param string $_template The name of the template.
-     * @param array  $_bag      Variables available in the template.
-     *
-     * @return string
-     *
-     * @global array The paths of system files and folders.
-     * @global array The configuration of the core.
-     */
-    protected function render($_template, $_bag)
-    {
-        global $pth, $cf;
-
-        $_template = $pth['folder']['plugins'] . 'polyglott/views/'
-            . $_template . '.htm';
-        $_xhtml = $cf['xhtml']['endtags'];
-        unset($pth, $cf);
-        extract($_bag);
-        ob_start();
-        include $_template;
-        $o = ob_get_clean();
-        if (!$_xhtml) {
-            $o = str_replace('/>', '>', $o);
-        }
-        return $o;
-    }
-
-    /**
      * Returns the system checks.
      *
      * @return array
@@ -242,7 +265,7 @@ class Polyglott_Controller
      * @global array The localization of the core.
      * @global array The localization of the plugins.
      */
-    protected function systemChecks() // RELEASE-TODO
+    protected function systemChecks()
     {
         global $pth, $tx, $plugin_tx;
 
@@ -297,7 +320,7 @@ class Polyglott_Controller
         $bag = compact(
             'labels', 'images', 'checks', 'icon', 'version'
         );
-        return $this->render('info', $bag);
+        return Polyglott_View::make('info', $bag)->render();
     }
 
     /**
@@ -396,7 +419,7 @@ class Polyglott_Controller
         $tag = $page['polyglott_tag'];
         $submit = ucfirst($tx['action']['save']);
         $bag = compact('action', 'tag', 'submit');
-        return $this->render('tab', $bag);
+        return Polyglott_View::make('tab', $bag)->render();
     }
 
     /**
@@ -435,7 +458,8 @@ class Polyglott_Controller
             $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
         }
         $lang = $plugin_tx['polyglott'];
-        return $this->render('admin', compact('languages', 'pages', 'lang'));
+        $bag = compact('languages', 'pages', 'lang');
+        return Polyglott_View::make('admin', $bag)->render();
     }
 
     /**
@@ -452,7 +476,7 @@ class Polyglott_Controller
             $alt = $this->hsc($this->getAltAttribute($language));
             $languages[$language] = compact('href', 'src', 'alt');
         }
-        return $this->render('languagemenu', compact('languages'));
+        return Polyglott_View::make('languagemenu', compact('languages'))->render();
     }
 
     /**

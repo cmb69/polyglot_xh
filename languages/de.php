@@ -6,6 +6,7 @@ $plugin_tx['polyglott']['not_translated']="Bedaure &ndash; diese Seite wurde noc
 
 $plugin_tx['polyglott']['label_translations']="Übersetzungen";
 $plugin_tx['polyglott']['label_page']="Seite";
+$plugin_tx['polyglott']['label_tab']="Polyglott";
 $plugin_tx['polyglott']['label_tag']="Schlagwort";
 $plugin_tx['polyglott']['label_ok']="&#10003;";
 

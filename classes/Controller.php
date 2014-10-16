@@ -125,13 +125,14 @@ class Polyglott_Controller
      *
      * @global array  The paths of system files and folders.
      * @global object The page data router.
+     * @global array  The localization of the plugins.
      */
     protected function addPageDataTab()
     {
-        global $pth, $pd_router;
+        global $pth, $pd_router, $plugin_tx;
 
         $pd_router->add_tab(
-            'Polyglott',
+            $plugin_tx['polyglott']['label_tab'],
             $pth['folder']['plugins'] . 'polyglott/polyglott_view.php'
         );
     }

@@ -6,6 +6,7 @@ $plugin_tx['polyglott']['not_translated']="Sorry &ndash; this page had not been 
 
 $plugin_tx['polyglott']['label_translations']="Translations";
 $plugin_tx['polyglott']['label_page']="Page";
+$plugin_tx['polyglott']['label_tab']="Polyglott";
 $plugin_tx['polyglott']['label_tag']="Tag";
 $plugin_tx['polyglott']['label_ok']="&#10003;";
 

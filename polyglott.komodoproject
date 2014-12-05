@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Komodo Project File - DO NOT EDIT -->
-<project id="954540de-86a1-4d1a-98dd-f99db16a7bf6" kpf_version="5" name="polyglott.komodoproject">
-<preference-set idref="954540de-86a1-4d1a-98dd-f99db16a7bf6" id="project" preftype="project">
-  <string relative="path" id="import_dirname"></string>
-  <string id="import_exclude_matches">*.*~;*.bak;*.tmp;CVS;.#*;*.pyo;*.pyc;.svn;_svn;.git;.hg;.bzr;*%25*;tmp*.html;.DS_Store;*.swp;*.kpf;*.komodoproject;.komodotools;__pycache__;doc;coverage;vendor</string>
-</preference-set>
-</project>

@@ -104,7 +104,6 @@
                 <exclude name="coverage.xml"/>
                 <exclude name="phpcompatinfo.*"/>
                 <exclude name="tests/**"/>
-                <exclude name="TODO"/>
             </fileset>
         </move>
         <delete dir="export"/>

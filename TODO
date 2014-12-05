@@ -1,8 +1,0 @@
-* add hreflang for homepage (reported by olape)
-* add proper hreflang for sitemap and mailform (reported by olape)
-* remove deleted tags from tags file!!
-* prohibit same tag to be used multiple times
-* automatic language selection
-  <http://www.cmsimpleforum.com/viewtopic.php?f=5&t=5905&p=34437#p34437>
-  <http://forum.cmsimple-xh.dk/?f=1&t=754>
-* report outdated translations in back-end (PD: last_update)

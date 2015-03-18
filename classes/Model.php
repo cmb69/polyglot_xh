@@ -96,25 +96,11 @@ class Polyglott_Model
      * Returns all available languages.
      *
      * @return array
-     *
-     * @todo Remove fallback for XH < 1.6.
      */
     public function languages()
     {
-        if (function_exists('XH_secondLanguages')) {
-            $languages = XH_secondLanguages();
-            $languages[] = $this->defaultLanguage;
-        } else {
-            $languages = array($this->defaultLanguage);
-            $dh = opendir($this->baseFolder);
-            if ($dh) {
-                while (($dir = readdir($dh)) !== false) {
-                    if (preg_match('/^[A-z]{2}$/', $dir)) {
-                        $languages[] = $dir;
-                    }
-                }
-            }
-        }
+        $languages = XH_secondLanguages();
+        $languages[] = $this->defaultLanguage;
         sort($languages);
         return $languages;
     }
@@ -243,24 +229,12 @@ class Polyglott_Model
      * @return string
      *
      * @global string The script name.
-     *
-     * @todo Remove workaround for CMSIMPLE_URL (XH < 1.6).
      */
     protected function getInstallationUrl()
     {
-        global $sn;
-
-        if (defined('CMSIMPLE_URL')) {
-            $baseUrl = CMSIMPLE_URL;
-        } else {
-            $baseUrl = 'http'
-                . (!empty($_SERVER['HTTPS'])
-                    && $_SERVER['HTTPS'] != 'off' ? 's' : '')
-                . '://' . $_SERVER['HTTP_HOST'] . $sn;
-        }
         return preg_replace(
             array('/index\.php$/', '/(?<=\/)' . $this->language . '\/$/'),
-            '', $baseUrl
+            '', CMSIMPLE_URL
         );
     }
 

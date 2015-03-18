@@ -31,12 +31,7 @@ function Polyglott_languageMenu()
     return ob_get_clean();
 }
 
-/**
- * The plugin controller.
- *
- * @var Polyglott_Controller
- */
-$_Polyglott_controller = new Polyglott_Controller();
-$_Polyglott_controller->dispatch();
+$temp = new Polyglott_Controller();
+$temp->dispatch();
 
 ?>

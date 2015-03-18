@@ -16,17 +16,16 @@
 /**
  * Returns the page data tab view.
  *
- * @param array $page The page data of the current page.
+ * @param array $pageData The page data of the current page.
  *
  * @return string The (X)HTML.
- *
- * @global Polyglott_Controller The plugin controller.
  */
-function Polyglott_view($page)
+function Polyglott_view(array $pageData)
 {
-    global $_Polyglott_controller;
-
-    return $_Polyglott_controller->pageDataTab($page);
+    $command = new Polyglott_PageDataTabCommand($pageData);
+    ob_start();
+    $command->execute();
+    return ob_get_clean();
 }
 
 ?>

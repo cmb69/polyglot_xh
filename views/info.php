@@ -1,15 +1,9 @@
 <?php $this->preventAccess()?>
 <!-- Polyglott_XH: info -->
 <h4><?php echo $labels['syscheck'];?></h4>
-<ul style="list-style: none">
 <?php foreach ($checks as $check => $state):?>
-    <li>
-        <img src="<?php echo $images[$state];?>" alt="<?php echo $images[$state];?>"
-             style="margin: 0; height: 1em; padding-right: 1em"/>
-        <span><?php echo $check;?></span>
-    </li>
+<?php echo XH_message($state, $check)?>
 <?php endforeach;?>
-</ul>
 <h4><?php echo $labels['about'];?></h4>
 <img src="<?php echo $icon;?>" alt="Plugin Icon"
      style="float: left; width: 128px; height: 128px; margin-right: 16px"/>

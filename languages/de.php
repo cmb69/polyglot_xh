@@ -11,7 +11,7 @@ $plugin_tx['polyglott']['label_tag']="Schlagwort";
 $plugin_tx['polyglott']['label_ok']="&#10003;";
 
 $plugin_tx['polyglott']['syscheck_title']="System-Prüfung";
-$plugin_tx['polyglott']['syscheck_phpversion']="PHP-Version &ge; %s";
+$plugin_tx['polyglott']['syscheck_phpversion']="PHP-Version ≥ %s";
 $plugin_tx['polyglott']['syscheck_extension']="Erweiterung '%s' geladen";
 $plugin_tx['polyglott']['syscheck_encoding']="UTF-8 Kodierung eingestellt";
 $plugin_tx['polyglott']['syscheck_magic_quotes']="magic_quotes_runtime off";

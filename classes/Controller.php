@@ -294,8 +294,7 @@ class Polyglott_Controller
 
         $ptx = $plugin_tx['polyglott'];
         $labels = array(
-            'syscheck' => $ptx['syscheck_title'],
-            'about' => $ptx['about']
+            'syscheck' => $ptx['syscheck_title']
         );
         foreach (array('ok', 'warn', 'fail') as $state) {
             $images[$state] = $pth['folder']['plugins']

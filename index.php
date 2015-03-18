@@ -19,17 +19,16 @@
 define('POLYGLOTT_VERSION', '@POLYGLOTT_VERSION@');
 
 /**
- * Procedural wrapper for $_Polyglott->languageMenu().
+ * Returns the language menu.
  *
  * @return string (X)HTML.
- *
- * @global Polyglott_Controller The polyglott controller.
  */
 function Polyglott_languageMenu()
 {
-    global $_Polyglott_controller;
-
-    return $_Polyglott_controller->languageMenu();
+    $command = new Polyglott_LanguageMenuCommand();
+    ob_start();
+    $command->execute();
+    return ob_get_clean();
 }
 
 /**

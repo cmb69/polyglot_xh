@@ -235,25 +235,9 @@ class Polyglott_Controller
     protected function renderAlternateLink($hreflang, $href)
     {
         return tag(
-            'link rel="alternate" hreflang="' . $this->hsc($hreflang)
-            . '" href="' . $this->hsc($href) . '"'
+            'link rel="alternate" hreflang="' . XH_hsc($hreflang)
+            . '" href="' . XH_hsc($href) . '"'
         );
-    }
-
-    /**
-     * Returns a string with special HTML characters escaped.
-     *
-     * @param string $str A string.
-     *
-     * @return string
-     *
-     * @todo Remove fallback for XH < 1.6.
-     */
-    protected function hsc($str)
-    {
-        return function_exists('XH_hsc')
-            ? XH_hsc($str)
-            : htmlspeci1alchars($str, ENT_COMPAT, 'UTF-8');
     }
 
     /**
@@ -325,45 +309,6 @@ class Polyglott_Controller
             'labels', 'images', 'checks', 'icon', 'version'
         );
         return Polyglott_View::make('info', $bag)->render();
-    }
-
-    /**
-     * Returns a dictionary from language codes to labels.
-     *
-     * @return array
-     *
-     * @global array The configuration of the plugins.
-     */
-    protected function languageLabels()
-    {
-        global $plugin_cf;
-
-        $pcf = $plugin_cf['polyglott'];
-        $languages = preg_split('/\r\n|\r|\n/', $pcf['languages_labels']);
-        $res = array();
-        foreach ($languages as $language) {
-            list($key, $value) = explode('=', $language);
-            $res[$key] = explode(';', $value);
-        }
-        return $res;
-    }
-
-    /**
-     * Returns the path of a language flag.
-     *
-     * @param string $language The language code.
-     *
-     * @return string
-     *
-     * @global array The paths of system files and folders.
-     * @global array The configuration of the plugins.
-     */
-    protected function languageFlag($language)
-    {
-        global $pth, $plugin_cf;
-
-        return $pth['folder']['flags'] . $language . '.'
-            . $plugin_cf['polyglott']['flags_extension'];
     }
 
     /**
@@ -464,52 +409,6 @@ class Polyglott_Controller
         $lang = $plugin_tx['polyglott'];
         $bag = compact('languages', 'pages', 'lang');
         return Polyglott_View::make('admin', $bag)->render();
-    }
-
-    /**
-     * Returns the language menu.
-     *
-     * @return string (X)HTML.
-     */
-    public function languageMenu()
-    {
-        $languages = array();
-        foreach ($this->model->otherLanguages() as $language) {
-            $href = $this->hsc($this->languageURL($language));
-            $src = $this->languageFlag($language);
-            $alt = $this->hsc($this->getAltAttribute($language));
-            $languages[$language] = compact('href', 'src', 'alt');
-        }
-        return Polyglott_View::make('languagemenu', compact('languages'))->render();
-    }
-
-    /**
-     * Returns the alt attribute for a language flag.
-     *
-     * @param string $language A language code.
-     *
-     * @return string
-     *
-     * @global int The current page index.
-     */
-    protected function getAltAttribute($language)
-    {
-        global $s;
-
-        $tag = $this->pageTag($s);
-        $labels = $this->languageLabels();
-        if (isset($labels[$language])) {
-            if ($this->model->isTranslated($tag, $language)
-                || !isset($labels[$language][1])
-            ) {
-                $alt = $labels[$language][0];
-            } else {
-                $alt = $labels[$language][1];
-            }
-        } else {
-            $alt = $language;
-        }
-        return $alt;
     }
 }
 

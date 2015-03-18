@@ -271,6 +271,7 @@ class Polyglott_Controller
 
         $ptx = $plugin_tx['polyglott'];
         $phpVersion = '5.1.2';
+        $xhVersion = '1.6';
         $checks = array();
         $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)]
             = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
@@ -280,9 +281,11 @@ class Polyglott_Controller
         }
         $checks[$ptx['syscheck_magic_quotes']]
             = !get_magic_quotes_runtime() ? 'success' : 'fail';
-        $checks[$ptx['syscheck_encoding']]
-            = strtoupper($tx['meta']['codepage']) == 'UTF-8'
-                ? 'success' : 'warning';
+        $checks[sprintf($ptx['syscheck_xhversion'], $xhVersion)]
+            = defined('CMSIMPLE_XH_VERSION')
+                && strpos(CMSIMPLE_XH_VERSION, 'CMSimple_XH') === 0
+                && version_compare(CMSIMPLE_XH_VERSION, 'CMSimple_XH 1.6', 'gt')
+                ? 'success' : 'fail';
         $folders = array();
         foreach (array('config/', 'languages/') as $folder) {
             $folders[] = $pth['folder']['plugins'] . 'polyglott/' . $folder;

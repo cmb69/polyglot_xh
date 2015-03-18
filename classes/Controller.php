@@ -62,7 +62,7 @@ class Polyglott_Controller
 
         $this->updateCache();
         $pd_router->add_interest('polyglott_tag');
-        if (XH_ADM) {
+        if (defined('XH_ADM') && XH_ADM) {
             if (function_exists('XH_registerStandardPluginMenuItems')) {
                 XH_registerStandardPluginMenuItems(true);
             }

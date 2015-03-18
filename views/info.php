@@ -1,10 +1,6 @@
 <?php $this->preventAccess()?>
 <!-- Polyglott_XH: info -->
-<h4><?php echo $labels['syscheck'];?></h4>
-<?php foreach ($checks as $check => $state):?>
-<?php echo XH_message($state, $check)?>
-<?php endforeach;?>
-<h4><?php echo $labels['about'];?></h4>
+<h1>Polyglott</h1>
 <img src="<?php echo $icon;?>" alt="Plugin Icon"
      style="float: left; width: 128px; height: 128px; margin-right: 16px"/>
 <p>Version: <?php echo $version;?></p>
@@ -14,9 +10,13 @@ redistribute it and/or modify it under the terms of the GNU General Public
 License as published by the Free Software Foundation, either version 3 of the
 License, or (at your option) any later version.</p>
 <p style="text-align: justify">This program is distributed in the hope that it
-will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHAN&shy;TABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.</p>
+will be useful, but <em>without any warranty</em>; without even the implied
+warranty of <em>merchantability</em> or <em>fitness for a particular
+purpose</em>. See the GNU General Public License for more details.</p>
 <p style="text-align: justify">You should have received a copy of the GNU
 General Public License along with this program. If not, see
 <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+<h4><?php echo $labels['syscheck'];?></h4>
+<?php foreach ($checks as $check => $state):?>
+<?php echo XH_message($state, $check)?>
+<?php endforeach;?>

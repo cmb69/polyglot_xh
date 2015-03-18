@@ -246,12 +246,11 @@ class Polyglott_Controller
      * @return array
      *
      * @global array The paths of system files and folders.
-     * @global array The localization of the core.
      * @global array The localization of the plugins.
      */
     protected function systemChecks()
     {
-        global $pth, $tx, $plugin_tx;
+        global $pth, $plugin_tx;
 
         $ptx = $plugin_tx['polyglott'];
         $phpVersion = '5.1.2';
@@ -381,14 +380,11 @@ class Polyglott_Controller
      * @global array  The headings of the pages.
      * @global array  The levels of the pages.
      * @global array  The URLs of the pages.
-     * @global array  The paths of system files and folders.
-     * @global array  The configuration of the core.
      * @global array  The localization of the plugins.
-     * @global object The page data router.
      */
     protected function administration()
     {
-        global $sn, $cl, $h, $l, $u, $pth, $cf, $plugin_tx, $pd_router;
+        global $sn, $cl, $h, $l, $u, $plugin_tx;
 
         $languages = $this->model->otherLanguages();
         $pages = array();

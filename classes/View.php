@@ -61,7 +61,7 @@ class Polyglott_View
      */
     protected function __construct($template, $data)
     {
-        global $pth, $cf;
+        global $pth;
 
         $this->template = $pth['folder']['plugins'] . 'polyglott/views/'
             . $template . '.php';

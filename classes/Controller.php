@@ -278,22 +278,6 @@ class Controller
     }
 
     /**
-     * Returns the URL to another language.
-     *
-     * @param string $language A language code.
-     *
-     * @return string
-     */
-    protected function languageURL($language)
-    {
-        global $s;
-
-        $tag = $s > 0 ? $this->pageTag($s) : null;
-        $res = $this->model->languageURL($language, $tag);
-        return $res;
-    }
-
-    /**
      * Returns the main administration view.
      *
      * @return string (X)HTML.

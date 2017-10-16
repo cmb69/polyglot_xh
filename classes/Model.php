@@ -228,8 +228,6 @@ class Model
      * Returns the URL of the CMSimple installation.
      *
      * @return string
-     *
-     * @global string The script name.
      */
     protected function getInstallationUrl()
     {

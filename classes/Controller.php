@@ -35,10 +35,6 @@ class Controller
 
     /**
      * Initializes a new instance.
-     *
-     * @global array  The paths of system files and folders.
-     * @global string The current language.
-     * @global array  The configuration of the core.
      */
     public function __construct()
     {
@@ -56,9 +52,6 @@ class Controller
      * Dispatches according to request.
      *
      * @return void
-     *
-     * @global string The (X)HTML to insert into the head element.
-     * @global object The page data router.
      */
     public function dispatch()
     {
@@ -82,8 +75,6 @@ class Controller
      * Returns whether the cache is stale.
      *
      * @return bool
-     *
-     * @global array  The paths of system files and folders.
      */
     protected function isCacheStale()
     {
@@ -101,9 +92,6 @@ class Controller
      * Updates the cache.
      *
      * @return void
-     *
-     * @global array  The URLs of the pages.
-     * @global object The page data router.
      */
     protected function updateCache()
     {
@@ -125,10 +113,6 @@ class Controller
      * Adds the page data tab.
      *
      * @return void
-     *
-     * @global array  The paths of system files and folders.
-     * @global object The page data router.
-     * @global array  The localization of the plugins.
      */
     protected function addPageDataTab()
     {
@@ -145,8 +129,6 @@ class Controller
      *
      * @return bool
      *
-     * @global string Whether the plugin administration is requested.
-     *
      * @todo Remove fallback for XH < 1.6.3.
      */
     protected function wantsPluginAdministration()
@@ -162,10 +144,6 @@ class Controller
      * Handles the plugin administration.
      *
      * @return void
-     *
-     * @global string The value of the GET/POST parameter <var>admin</var>.
-     * @global string The value of the GET/POST parameter <var>action</var>.
-     * @global string The (X)HTML for the contents area.
      */
     protected function handleAdministration()
     {
@@ -188,8 +166,6 @@ class Controller
      * Returns the alternate hreflang links.
      *
      * @return string (X)HTML.
-     *
-     * @global int The index of the requested page.
      */
     protected function alternateLinks()
     {
@@ -212,8 +188,6 @@ class Controller
      * @param string $tag      A polyglott tag.
      *
      * @return string (X)HTML.
-     *
-     * @global array The configuration of the core.
      */
     protected function alternateLinksFor($language, $tag)
     {
@@ -248,9 +222,6 @@ class Controller
      * Returns the system checks.
      *
      * @return array
-     *
-     * @global array The paths of system files and folders.
-     * @global array The localization of the plugins.
      */
     protected function systemChecks()
     {
@@ -288,9 +259,6 @@ class Controller
      * Returns the plugin information view.
      *
      * @return string (X)HTML.
-     *
-     * @global array The paths of system files and folders.
-     * @global array The localization of the plugins.
      */
     protected function info()
     {
@@ -317,8 +285,6 @@ class Controller
      * @param int $index The index of the page.
      *
      * @return string
-     *
-     * @global object The page data router.
      */
     protected function pageTag($index)
     {
@@ -337,8 +303,6 @@ class Controller
      * @param string $language A language code.
      *
      * @return string
-     *
-     * @global int The index of the current page.
      */
     protected function languageURL($language)
     {
@@ -353,13 +317,6 @@ class Controller
      * Returns the main administration view.
      *
      * @return string (X)HTML.
-     *
-     * @global string The script name.
-     * @global int    The number of pages.
-     * @global array  The headings of the pages.
-     * @global array  The levels of the pages.
-     * @global array  The URLs of the pages.
-     * @global array  The localization of the plugins.
      */
     protected function administration()
     {

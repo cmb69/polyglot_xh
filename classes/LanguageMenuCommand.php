@@ -35,10 +35,6 @@ class LanguageMenuCommand
 
     /**
      * Initializes a new instance.
-     *
-     * @global array  The paths of system files and folders.
-     * @global string The current language.
-     * @global array  The configuration of the core.
      */
     public function __construct()
     {
@@ -77,9 +73,6 @@ class LanguageMenuCommand
      * @param string $language The language code.
      *
      * @return string
-     *
-     * @global array The paths of system files and folders.
-     * @global array The configuration of the plugins.
      */
     protected function languageFlag($language)
     {
@@ -95,8 +88,6 @@ class LanguageMenuCommand
      * @param string $language A language code.
      *
      * @return string
-     *
-     * @global int The current page index.
      */
     protected function getAltAttribute($language)
     {
@@ -122,8 +113,6 @@ class LanguageMenuCommand
      * Returns a dictionary from language codes to labels.
      *
      * @return array
-     *
-     * @global array The configuration of the plugins.
      */
     protected function languageLabels()
     {
@@ -145,8 +134,6 @@ class LanguageMenuCommand
      * @param string $language A language code.
      *
      * @return string
-     *
-     * @global int The index of the current page.
      */
     protected function languageURL($language)
     {
@@ -163,8 +150,6 @@ class LanguageMenuCommand
      * @param int $index The index of the page.
      *
      * @return string
-     *
-     * @global object The page data router.
      */
     protected function pageTag($index)
     {

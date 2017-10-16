@@ -47,10 +47,6 @@ class PageDataTabCommand
      * Executes the command.
      *
      * @return void
-     *
-     * @global string The script name.
-     * @global string The URL of the current page.
-     * @global array  The localization of the core.
      */
     public function execute()
     {

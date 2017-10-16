@@ -58,8 +58,6 @@ class View
      *
      * @param string $template A template name.
      * @param array  $data     An array of data.
-     *
-     * @global array The paths of system files and folders.
      */
     protected function __construct($template, $data)
     {
@@ -74,8 +72,6 @@ class View
      * Renders the template.
      *
      * @return string (X)HTML.
-     *
-     * @global array The configuration of the core.
      */
     public function render()
     {

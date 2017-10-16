@@ -13,7 +13,6 @@ $plugin_tx['polyglott']['label_ok']="✓";
 $plugin_tx['polyglott']['syscheck_title']="System check";
 $plugin_tx['polyglott']['syscheck_phpversion']="PHP version ≥ %s";
 $plugin_tx['polyglott']['syscheck_extension']="Extension '%s' loaded";
-$plugin_tx['polyglott']['syscheck_magic_quotes']="magic_quotes_runtime off";
 $plugin_tx['polyglott']['syscheck_xhversion']="CMSimple_XH version ≥ %s";
 $plugin_tx['polyglott']['syscheck_writable']="Folder '%s' writable";
 

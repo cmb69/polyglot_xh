@@ -227,8 +227,6 @@ class Controller
             $checks[sprintf($ptx['syscheck_extension'], $ext)]
                 = extension_loaded($ext) ? 'success' : 'fail';
         }
-        $checks[$ptx['syscheck_magic_quotes']]
-            = !get_magic_quotes_runtime() ? 'success' : 'fail';
         $checks[sprintf($ptx['syscheck_xhversion'], $xhVersion)]
             = defined('CMSIMPLE_XH_VERSION')
                 && strpos(CMSIMPLE_XH_VERSION, 'CMSimple_XH') === 0

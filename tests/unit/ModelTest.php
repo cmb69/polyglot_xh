@@ -14,6 +14,7 @@
  */
 
 require_once './vendor/autoload.php';
+require_once '../../cmsimple/functions.php';
 require_once './classes/model.php';
 
 use org\bovigo\vfs\vfsStreamWrapper;
@@ -49,6 +50,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         vfsStreamWrapper::register();
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
         mkdir(vfsStream::url('test/de'));
+        touch(vfsStream::url('test/de/.2lang'));
         $this->model = new Polyglott_Model(
             'en', 'en', vfsStream::url('test/'), vfsStream::url('test/')
         );
@@ -73,9 +75,11 @@ class ModelTest extends PHPUnit_Framework_TestCase
      */
     public function testOtherLanguages()
     {
+        uopz_set_return('XH_secondLanguages', ['de']);
         $expected = array('de');
         $actual = $this->model->otherLanguages();
         $this->assertEquals($expected, $actual);
+        uopz_unset_return('XH_secondLanguages');
     }
 
     /**
@@ -106,7 +110,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         if (!defined($name)) {
             define($name, $value);
         } else {
-            runkit_constant_redefine($name, $value);
+            uopz_redefine($name, $value);
         }
     }
 }

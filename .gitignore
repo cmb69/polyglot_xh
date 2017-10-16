@@ -2,3 +2,4 @@ tests/coverage
 vendor
 /cache/tags.dat
 /cache/.lck
+/classes.svg

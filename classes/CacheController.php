@@ -24,8 +24,6 @@ namespace Polyglott;
 class CacheController extends Controller
 {
     /**
-     * Updates the cache.
-     *
      * @return void
      */
     public function defaultAction()
@@ -45,8 +43,6 @@ class CacheController extends Controller
     }
 
     /**
-     * Returns whether the cache is stale.
-     *
      * @return bool
      */
     private function isCacheStale()

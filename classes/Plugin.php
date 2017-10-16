@@ -24,8 +24,6 @@ namespace Polyglott;
 class Plugin
 {
     /**
-     * Dispatches according to request.
-     *
      * @return void
      */
     public function run()
@@ -47,8 +45,6 @@ class Plugin
     }
 
     /**
-     * Adds the page data tab.
-     *
      * @return void
      */
     private function addPageDataTab()
@@ -62,8 +58,6 @@ class Plugin
     }
 
     /**
-     * Handles the plugin administration.
-     *
      * @return void
      */
     private function handleAdministration()
@@ -86,9 +80,7 @@ class Plugin
     }
 
     /**
-     * Returns the plugin information view.
-     *
-     * @return string (X)HTML.
+     * @return string
      */
     private function info()
     {

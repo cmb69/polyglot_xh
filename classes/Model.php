@@ -24,54 +24,40 @@ namespace Polyglott;
 class Model
 {
     /**
-     * The current language.
-     *
      * @var string
      */
     private $language;
 
     /**
-     * The default language.
-     *
      * @var string
      */
     private $defaultLanguage;
 
     /**
-     * The relative path of the base folder.
-     *
      * @var string
      */
     private $baseFolder;
 
     /**
-     * The relative path of the data folder.
-     *
      * @var string
      */
     private $dataFolder;
 
     /**
-     * The handle of the lock file.
-     *
      * @var resource
      */
     private $lockHandle;
 
     /**
-     * The polyglott tags.
-     *
      * @var array
      */
     private $tags;
 
     /**
-     * Initializes a new instance.
-     *
-     * @param string $language    The current langage.
-     * @param string $defaultLang The default language.
-     * @param string $baseFolder  The relative path of the base folder.
-     * @param string $dataFolder  The relative path of the data folder.
+     * @param string $language
+     * @param string $defaultLang
+     * @param string $baseFolder
+     * @param string $dataFolder
      */
     public function __construct($language, $defaultLang, $baseFolder, $dataFolder)
     {
@@ -82,8 +68,6 @@ class Model
     }
 
     /**
-     * Returns the path of the tags file.
-     *
      * @return string
      */
     public function tagsFile()
@@ -92,8 +76,6 @@ class Model
     }
 
     /**
-     * Returns all available languages.
-     *
      * @return array
      */
     public function languages()
@@ -105,8 +87,6 @@ class Model
     }
 
     /**
-     * Returns all available languages other than the current one.
-     *
      * @return array
      */
     public function otherLanguages()
@@ -122,8 +102,6 @@ class Model
     }
 
     /**
-     * Returns the timestamp of the last modification of the cache file.
-     *
      * @return int
      */
     public function lastMod()
@@ -135,10 +113,7 @@ class Model
     }
 
     /**
-     * Reads the cache file and returns whether that succeeded.
-     *
-     * @param bool $needsUpdate If tags file has to be updated.
-     *
+     * @param bool $needsUpdate
      * @return bool
      */
     public function init($needsUpdate)
@@ -168,8 +143,6 @@ class Model
     }
 
     /**
-     * Returns the path of the lock file.
-     *
      * @return string
      */
     private function lockFile()
@@ -178,15 +151,9 @@ class Model
     }
 
     /**
-     * Updates the cache file for the current language
-     * and returns whether that succeeded.
-     *
-     * @param array $pageData The page data of all pages.
-     * @param array $urls     The URLs of the pages.
-     *
      * @return bool
      */
-    public function update($pageData, $urls)
+    public function update(array $pageData, array $urls)
     {
         foreach ($pageData as $i => $data) {
             if (!empty($data['polyglott_tag'])) {
@@ -202,11 +169,8 @@ class Model
     }
 
     /**
-     * Returns the URL to another language.
-     *
-     * @param string $language The language to link to.
-     * @param string $tag      The polyglott tag.
-     *
+     * @param string $language
+     * @param string $tag
      * @return string
      */
     public function languageURL($language, $tag)
@@ -222,8 +186,6 @@ class Model
     }
 
     /**
-     * Returns the URL of the CMSimple installation.
-     *
      * @return string
      */
     private function getInstallationUrl()
@@ -236,11 +198,8 @@ class Model
     }
 
     /**
-     * Returns whether a page is translated in a certain language.
-     *
-     * @param string $tag      The polyglott tag.
-     * @param string $language The language code.
-     *
+     * @param string $tag
+     * @param string $language
      * @return bool
      */
     public function isTranslated($tag, $language)

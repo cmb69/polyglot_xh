@@ -24,8 +24,6 @@ namespace Polyglott;
 class AlternateLinkController extends Controller
 {
     /**
-     * Returns the alternate hreflang links.
-     *
      * @return void
      */
     public function defaultAction()
@@ -43,12 +41,9 @@ class AlternateLinkController extends Controller
     }
 
     /**
-     * Returns the alternate hreflang links for a single language.
-     *
-     * @param string $language An ISO 639-1 language code.
-     * @param string $tag      A polyglott tag.
-     *
-     * @return string (X)HTML.
+     * @param string $language
+     * @param string $tag
+     * @return string
      */
     private function alternateLinksFor($language, $tag)
     {
@@ -64,12 +59,9 @@ class AlternateLinkController extends Controller
     }
 
     /**
-     * Renders an alternate hreflang link.
-     *
-     * @param string $hreflang A hreflang value.
-     * @param string $href     A href value.
-     *
-     * @return string (X)HTML.
+     * @param string $hreflang
+     * @param string $href
+     * @return string
      */
     private function renderAlternateLink($hreflang, $href)
     {

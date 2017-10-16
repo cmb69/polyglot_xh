@@ -24,8 +24,6 @@ namespace Polyglott;
 class LanguageMenuController extends Controller
 {
     /**
-     * Executes the command.
-     *
      * @return void
      */
     public function defaultAction()
@@ -44,10 +42,7 @@ class LanguageMenuController extends Controller
     }
 
     /**
-     * Returns the path of a language flag.
-     *
-     * @param string $language The language code.
-     *
+     * @param string $language
      * @return string
      */
     private function languageFlag($language)
@@ -59,10 +54,7 @@ class LanguageMenuController extends Controller
     }
 
     /**
-     * Returns the alt attribute for a language flag.
-     *
-     * @param string $language A language code.
-     *
+     * @param string $language
      * @return string
      */
     private function getAltAttribute($language)
@@ -86,8 +78,6 @@ class LanguageMenuController extends Controller
     }
 
     /**
-     * Returns a dictionary from language codes to labels.
-     *
      * @return array
      */
     private function languageLabels()
@@ -105,10 +95,7 @@ class LanguageMenuController extends Controller
     }
 
     /**
-     * Returns the URL to another language.
-     *
-     * @param string $language A language code.
-     *
+     * @param string $language
      * @return string
      */
     private function languageURL($language)

@@ -24,16 +24,12 @@ namespace Polyglott;
 class PageDataTabController extends Controller
 {
     /**
-     * The page data.
-     *
      * @var array
      */
     private $pageData;
 
     /**
-     * Initializes a new instance.
-     *
-     * @param array $pageData The page data of the current page.
+     * @param array $pageData
      */
     public function __construct(array $pageData)
     {
@@ -42,8 +38,6 @@ class PageDataTabController extends Controller
     }
 
     /**
-     * Executes the command.
-     *
      * @return void
      */
     public function defaultAction()

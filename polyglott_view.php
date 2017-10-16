@@ -28,8 +28,8 @@
  */
 function Polyglott_view(array $pageData)
 {
-    $command = new Polyglott\PageDataTabCommand($pageData);
+    $command = new Polyglott\PageDataTabController($pageData);
     ob_start();
-    $command->execute();
+    $command->defaultAction();
     return ob_get_clean();
 }

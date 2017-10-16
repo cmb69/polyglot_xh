@@ -21,7 +21,7 @@
 
 namespace Polyglott;
 
-class AlternateLinkController
+class AlternateLinkController extends Controller
 {
     /**
      * @var Model
@@ -87,23 +87,5 @@ class AlternateLinkController
             'link rel="alternate" hreflang="' . XH_hsc($hreflang)
             . '" href="' . XH_hsc($href) . '"'
         );
-    }
-
-    /**
-     * Returns a polyglott tag.
-     *
-     * @param int $index The index of the page.
-     *
-     * @return string
-     */
-    private function pageTag($index)
-    {
-        global $pd_router;
-
-        $pageData = $pd_router->find_page($index);
-        $res = isset($pageData['polyglott_tag'])
-            ? $pageData['polyglott_tag']
-            : null;
-        return $res;
     }
 }

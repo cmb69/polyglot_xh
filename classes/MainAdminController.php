@@ -21,7 +21,7 @@
 
 namespace Polyglott;
 
-class MainAdminController
+class MainAdminController extends Controller
 {
     /**
      *  @var Model
@@ -60,20 +60,5 @@ class MainAdminController
         $view->languages = $languages;
         $view->pages = $pages;
         $view->render();
-    }
-
-    /**
-     * @param int $index
-     * @return string
-     */
-    private function pageTag($index)
-    {
-        global $pd_router;
-
-        $pageData = $pd_router->find_page($index);
-        $res = isset($pageData['polyglott_tag'])
-            ? $pageData['polyglott_tag']
-            : null;
-        return $res;
     }
 }

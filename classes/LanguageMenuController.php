@@ -30,7 +30,7 @@ namespace Polyglott;
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
-class LanguageMenuController
+class LanguageMenuController extends Controller
 {
     /**
      * The model instance.
@@ -149,24 +149,6 @@ class LanguageMenuController
 
         $tag = $s > 0 ? $this->pageTag($s) : null;
         $res = $this->model->languageURL($language, $tag);
-        return $res;
-    }
-
-    /**
-     * Returns a polyglott tag.
-     *
-     * @param int $index The index of the page.
-     *
-     * @return string
-     */
-    private function pageTag($index)
-    {
-        global $pd_router;
-
-        $pageData = $pd_router->find_page($index);
-        $res = isset($pageData['polyglott_tag'])
-            ? $pageData['polyglott_tag']
-            : null;
         return $res;
     }
 }

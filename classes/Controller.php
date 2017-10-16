@@ -270,12 +270,7 @@ class Controller
     {
         global $pth;
 
-        foreach (array('ok', 'warn', 'fail') as $state) {
-            $images[$state] = $pth['folder']['plugins']
-                . 'polyglott/images/' . $state . '.png';
-        }
         $view = new View('info');
-        $view->images = $images;
         $view->checks = $this->systemChecks();
         $view->icon = $pth['folder']['plugins'] . 'polyglott/polyglott.png';
         $view->version = POLYGLOTT_VERSION;

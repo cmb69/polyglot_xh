@@ -24,6 +24,23 @@ namespace Polyglott;
 abstract class Controller
 {
     /**
+     * @var Model
+     */
+    protected $model;
+
+    public function __construct()
+    {
+        global $pth, $sl, $cf;
+
+        $this->model = new Model(
+            $sl,
+            $cf['language']['default'],
+            $pth['folder']['base'],
+            $pth['folder']['plugins'] . 'polyglott/cache/'
+        );
+    }
+
+    /**
      * @param int $index
      * @return ?string
      */

@@ -24,16 +24,6 @@ namespace Polyglott;
 class MainAdminController extends Controller
 {
     /**
-     *  @var Model
-     */
-    private $model;
-
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-    }
-
-    /**
      * @return void
      */
     public function defaultAction()

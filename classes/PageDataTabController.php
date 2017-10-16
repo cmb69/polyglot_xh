@@ -46,6 +46,7 @@ class PageDataTabController extends Controller
      */
     public function __construct(array $pageData)
     {
+        parent::__construct();
         $this->pageData = $pageData;
     }
 

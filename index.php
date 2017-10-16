@@ -37,5 +37,5 @@ function Polyglott_languageMenu()
     return ob_get_clean();
 }
 
-$temp = new Polyglott\Controller();
+$temp = new Polyglott\Plugin();
 $temp->dispatch();

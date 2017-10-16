@@ -145,7 +145,9 @@ class Controller
                 $o .= $this->info();
                 break;
             case 'plugin_main':
-                $o .= $this->administration();
+                ob_start();
+                (new MainAdminController($this->model))->defaultAction();
+                $o .= ob_get_clean();
                 break;
             default:
                 $o .= plugin_admin_common($action, $admin, 'polyglott');
@@ -240,36 +242,5 @@ class Controller
             ? $pageData['polyglott_tag']
             : null;
         return $res;
-    }
-
-    /**
-     * Returns the main administration view.
-     *
-     * @return string (X)HTML.
-     */
-    private function administration()
-    {
-        global $sn, $cl, $h, $l, $u;
-
-        $languages = $this->model->otherLanguages();
-        $pages = array();
-        for ($i = 0; $i < $cl; $i++) {
-            $heading = $h[$i];
-            $url = $sn . '?' . $u[$i] . '&amp;edit';
-            $indent = $l[$i] - 1;
-            $tag = $this->pageTag($i);
-            $translations = array();
-            foreach ($languages as $language) {
-                $translations[$language]
-                    = $this->model->isTranslated($tag, $language)
-                        ? $this->model->languageURL($language, $tag) . '&amp;edit'
-                        : null;
-            }
-            $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
-        }
-        $view = new View('admin');
-        $view->languages = $languages;
-        $view->pages = $pages;
-        return (string) $view;
     }
 }

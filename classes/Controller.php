@@ -255,12 +255,12 @@ class Controller
         global $pth, $plugin_tx;
 
         $ptx = $plugin_tx['polyglott'];
-        $phpVersion = '5.1.2';
+        $phpVersion = '5.3.0';
         $xhVersion = '1.6';
         $checks = array();
         $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)]
             = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
-        foreach (array('pcre', 'spl') as $ext) {
+        foreach (array() as $ext) {
             $checks[sprintf($ptx['syscheck_extension'], $ext)]
                 = extension_loaded($ext) ? 'success' : 'fail';
         }

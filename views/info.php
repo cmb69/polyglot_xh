@@ -1,5 +1,5 @@
 <h1>Polyglott</h1>
-<img src="<?=$this->icon()?>" alt="Plugin Icon"
+<img src="<?=$this->icon()?>" alt="<?=$this->text('alt_logo')?>"
      style="float: left; width: 128px; height: 128px; margin-right: 16px"/>
 <p>Version: <?=$this->version()?></p>
 <p>Copyright © 2012-2017 <a href="http://3-magi.net/">Christoph M. Becker</a></p>

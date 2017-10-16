@@ -10,6 +10,8 @@ $plugin_tx['polyglott']['label_tab']="Polyglott";
 $plugin_tx['polyglott']['label_tag']="Schlagwort";
 $plugin_tx['polyglott']['label_ok']="✓";
 
+$plugin_tx['polyglott']['alt_logo']="Globus aus Flaggen";
+
 $plugin_tx['polyglott']['syscheck_title']="System-Prüfung";
 $plugin_tx['polyglott']['syscheck_phpversion']="PHP-Version ≥ %s";
 $plugin_tx['polyglott']['syscheck_extension']="Erweiterung '%s' geladen";

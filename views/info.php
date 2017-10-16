@@ -14,7 +14,9 @@ purpose</em>. See the GNU General Public License for more details.</p>
 <p class="polyglott_license">You should have received a copy of the GNU
 General Public License along with Polyglott_XH. If not, see
 <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
-<h4><?=$this->text('syscheck_title')?></h4>
-<?php foreach ($this->checks as $check => $state):?>
-<?=XH_message($state, $check)?>
+<div class="polyglott_syscheck">
+    <h2><?=$this->text('syscheck_title')?></h2>
+<?php foreach ($this->checks as $check):?>
+    <p class="xh_<?=$this->escape($check->state)?>"><?=$this->text('syscheck_message', $check->label, $check->stateLabel)?></p>
 <?php endforeach?>
+</div>

@@ -209,41 +209,6 @@ class Controller
     }
 
     /**
-     * Returns the system checks.
-     *
-     * @return array
-     */
-    private function systemChecks()
-    {
-        global $pth, $plugin_tx;
-
-        $ptx = $plugin_tx['polyglott'];
-        $phpVersion = '5.4.0';
-        $xhVersion = '1.6.3';
-        $checks = array();
-        $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)]
-            = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
-        foreach (array() as $ext) {
-            $checks[sprintf($ptx['syscheck_extension'], $ext)]
-                = extension_loaded($ext) ? 'success' : 'fail';
-        }
-        $checks[sprintf($ptx['syscheck_xhversion'], $xhVersion)]
-            = defined('CMSIMPLE_XH_VERSION')
-                && strpos(CMSIMPLE_XH_VERSION, 'CMSimple_XH') === 0
-                && version_compare(CMSIMPLE_XH_VERSION, 'CMSimple_XH 1.6', 'gt')
-                ? 'success' : 'fail';
-        $folders = array();
-        foreach (array('config/', 'languages/') as $folder) {
-            $folders[] = $pth['folder']['plugins'] . 'polyglott/' . $folder;
-        }
-        foreach ($folders as $folder) {
-            $checks[sprintf($ptx['syscheck_writable'], $folder)]
-                = is_writable($folder) ? 'success' : 'warning';
-        }
-        return $checks;
-    }
-
-    /**
      * Returns the plugin information view.
      *
      * @return string (X)HTML.
@@ -253,7 +218,7 @@ class Controller
         global $pth;
 
         $view = new View('info');
-        $view->checks = $this->systemChecks();
+        $view->checks = (new SystemCheckService)->getChecks();
         $view->icon = $pth['folder']['plugins'] . 'polyglott/polyglott.png';
         $view->version = POLYGLOTT_VERSION;
         return (string) $view;

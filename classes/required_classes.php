@@ -13,15 +13,7 @@
  * @link      http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
 
-/**
- * Autoloads a plugin class.
- *
- * @param string $class A class name.
- *
- * @return void
- */
-function Polyglott_autoload($class)
-{
+spl_autoload_register(function ($class) {
     global $pth;
 
     $parts = explode('\\', $class, 2);
@@ -29,8 +21,6 @@ function Polyglott_autoload($class)
         include_once $pth['folder']['plugins'] . 'polyglott/classes/'
             . $parts[1] . '.php';
     }
-}
-
-spl_autoload_register('Polyglott_autoload');
+});
 
 ?>

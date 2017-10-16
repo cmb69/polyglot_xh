@@ -25,13 +25,13 @@ define('POLYGLOTT_VERSION', '@POLYGLOTT_VERSION@');
  */
 function Polyglott_languageMenu()
 {
-    $command = new Polyglott_LanguageMenuCommand();
+    $command = new Polyglott\LanguageMenuCommand();
     ob_start();
     $command->execute();
     return ob_get_clean();
 }
 
-$temp = new Polyglott_Controller();
+$temp = new Polyglott\Controller();
 $temp->dispatch();
 
 ?>

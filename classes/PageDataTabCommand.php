@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
 
+namespace Polyglott;
+
 /**
  * The page data tab commands.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
-class Polyglott_PageDataTabCommand
+class PageDataTabCommand
 {
     /**
      * The page data.
@@ -58,7 +60,7 @@ class Polyglott_PageDataTabCommand
         $tag = $this->pageData['polyglott_tag'];
         $submit = ucfirst($tx['action']['save']);
         $bag = compact('action', 'tag', 'submit');
-        echo Polyglott_View::make('tab', $bag)->render();
+        echo View::make('tab', $bag)->render();
     }
 }
 

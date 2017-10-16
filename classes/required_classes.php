@@ -24,7 +24,7 @@ function Polyglott_autoload($class)
 {
     global $pth;
 
-    $parts = explode('_', $class, 2);
+    $parts = explode('\\', $class, 2);
     if ($parts[0] == 'Polyglott') {
         include_once $pth['folder']['plugins'] . 'polyglott/classes/'
             . $parts[1] . '.php';

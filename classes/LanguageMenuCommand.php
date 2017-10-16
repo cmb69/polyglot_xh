@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
 
+namespace Polyglott;
+
 /**
  * The language menu commands.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
-class Polyglott_LanguageMenuCommand
+class LanguageMenuCommand
 {
     /**
      * The model instance.
@@ -42,7 +44,7 @@ class Polyglott_LanguageMenuCommand
     {
         global $pth, $sl, $cf;
 
-        $this->model = new Polyglott_Model(
+        $this->model = new Model(
             $sl, $cf['language']['default'], $pth['folder']['base'],
             $pth['folder']['plugins'] . 'polyglott/cache/'
         );
@@ -64,7 +66,7 @@ class Polyglott_LanguageMenuCommand
             $alt = XH_hsc($this->getAltAttribute($language));
             $languages[$language] = compact('href', 'src', 'alt');
         }
-        echo Polyglott_View::make('languagemenu', compact('languages'))->render();
+        echo View::make('languagemenu', compact('languages'))->render();
     }
 
     /**

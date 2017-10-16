@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
 
+namespace Polyglott;
+
 /**
  * The controller class.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
-class Polyglott_Controller
+class Controller
 {
     /**
      * The model instance.
@@ -42,7 +44,7 @@ class Polyglott_Controller
     {
         global $pth, $sl, $cf;
 
-        $this->model = new Polyglott_Model(
+        $this->model = new Model(
             $sl, $cf['language']['default'], $pth['folder']['base'],
             $pth['folder']['plugins'] . 'polyglott/cache/'
         );
@@ -306,7 +308,7 @@ class Polyglott_Controller
         $bag = compact(
             'labels', 'images', 'checks', 'icon', 'version'
         );
-        return Polyglott_View::make('info', $bag)->render();
+        return View::make('info', $bag)->render();
     }
 
     /**
@@ -381,7 +383,7 @@ class Polyglott_Controller
         }
         $lang = $plugin_tx['polyglott'];
         $bag = compact('languages', 'pages', 'lang');
-        return Polyglott_View::make('admin', $bag)->render();
+        return View::make('admin', $bag)->render();
     }
 }
 

@@ -13,10 +13,13 @@
  * @link      http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
 
+namespace Polyglott;
+
 require_once './vendor/autoload.php';
 require_once '../../cmsimple/functions.php';
 require_once './classes/model.php';
 
+use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
@@ -30,12 +33,12 @@ use org\bovigo\vfs\vfsStream;
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Polyglott_XH
  */
-class ModelTest extends PHPUnit_Framework_TestCase
+class ModelTest extends TestCase
 {
     /**
      * The test subject.
      *
-     * @var Polyglott_Model
+     * @var Model
      */
     protected $model;
 
@@ -51,7 +54,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
         mkdir(vfsStream::url('test/de'));
         touch(vfsStream::url('test/de/.2lang'));
-        $this->model = new Polyglott_Model(
+        $this->model = new Model(
             'en', 'en', vfsStream::url('test/'), vfsStream::url('test/')
         );
     }

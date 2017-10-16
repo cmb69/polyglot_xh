@@ -61,7 +61,7 @@ class Controller
      */
     public function dispatch()
     {
-        global $hjs, $pd_router;
+        global $pd_router;
 
         $this->updateCache();
         $pd_router->add_interest('polyglott_tag');
@@ -74,7 +74,7 @@ class Controller
                 $this->handleAdministration();
             }
         }
-        $hjs .= $this->alternateLinks();
+        (new AlternateLinkController($this->model))->defaultAction();
     }
 
     /**
@@ -155,62 +155,6 @@ class Controller
     }
 
     /**
-     * Returns the alternate hreflang links.
-     *
-     * @return string (X)HTML.
-     */
-    private function alternateLinks()
-    {
-        global $s;
-
-        $res = '';
-        $tag = $this->pageTag($s);
-        foreach ($this->model->languages() as $language) {
-            if ($this->model->isTranslated($tag, $language)) {
-                $res .= $this->alternateLinksFor($language, $tag);
-            }
-        }
-        return $res;
-    }
-
-    /**
-     * Returns the alternate hreflang links for a single language.
-     *
-     * @param string $language An ISO 639-1 language code.
-     * @param string $tag      A polyglott tag.
-     *
-     * @return string (X)HTML.
-     */
-    private function alternateLinksFor($language, $tag)
-    {
-        global $cf;
-
-        $html = '';
-        $href = $this->model->languageURL($language, $tag);
-        if ($language == $cf['language']['default']) {
-            $html .= $this->renderAlternateLink('x-default', $href) . PHP_EOL;
-        }
-        $html .= $this->renderAlternateLink($language, $href) . PHP_EOL;
-        return $html;
-    }
-
-    /**
-     * Renders an alternate hreflang link.
-     *
-     * @param string $hreflang A hreflang value.
-     * @param string $href     A href value.
-     *
-     * @return string (X)HTML.
-     */
-    private function renderAlternateLink($hreflang, $href)
-    {
-        return tag(
-            'link rel="alternate" hreflang="' . XH_hsc($hreflang)
-            . '" href="' . XH_hsc($href) . '"'
-        );
-    }
-
-    /**
      * Returns the plugin information view.
      *
      * @return string (X)HTML.
@@ -224,23 +168,5 @@ class Controller
         $view->icon = $pth['folder']['plugins'] . 'polyglott/polyglott.png';
         $view->version = POLYGLOTT_VERSION;
         return (string) $view;
-    }
-
-    /**
-     * Returns a polyglott tag.
-     *
-     * @param int $index The index of the page.
-     *
-     * @return string
-     */
-    private function pageTag($index)
-    {
-        global $pd_router;
-
-        $pageData = $pd_router->find_page($index);
-        $res = isset($pageData['polyglott_tag'])
-            ? $pageData['polyglott_tag']
-            : null;
-        return $res;
     }
 }

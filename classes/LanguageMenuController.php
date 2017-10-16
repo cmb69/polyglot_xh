@@ -70,7 +70,9 @@ class LanguageMenuController
             $alt = XH_hsc($this->getAltAttribute($language));
             $languages[$language] = compact('href', 'src', 'alt');
         }
-        echo View::make('languagemenu', compact('languages'))->render();
+        $view = new View('languagemenu');
+        $view->languages = $languages;
+        $view->render();
     }
 
     /**

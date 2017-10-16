@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2012-2017 Christoph M. Becker
+ * Copyright 2017 Christoph M. Becker
  *
  * This file is part of Polyglott_XH.
  *
@@ -21,95 +21,124 @@
 
 namespace Polyglott;
 
-/**
- * The views.
- *
- * @category CMSimple_XH
- * @package  Polyglott
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Polyglott_XH
- */
 class View
 {
     /**
-     * The path of the template file.
-     *
      * @var string
      */
     private $template;
 
     /**
-     * The data.
-     *
-     * @var array<string, *>
+     * @var array
      */
-    private $data;
+    private $data = array();
 
     /**
-     * Makes a new view object.
-     *
-     * @param string $template A template name.
-     * @param array  $data     An array of data.
-     *
-     * @return Feedview_View
+     * @param string $template
      */
-    public static function make($template, $data)
+    public function __construct($template)
     {
-        return new self($template, $data);
+        $this->template = $template;
     }
 
     /**
-     * Initializes a new instance.
-     *
-     * @param string $template A template name.
-     * @param array  $data     An array of data.
+     * @param string $name
+     * @param mixed $value
      */
-    private function __construct($template, $data)
+    public function __set($name, $value)
     {
-        global $pth;
-
-        $this->template = $pth['folder']['plugins'] . 'polyglott/views/'
-            . $template . '.php';
-        $this->data = $data;
+        $this->data[$name] = $value;
     }
 
     /**
-     * Renders the template.
-     *
-     * @return string (X)HTML.
+     * @param string $name
+     * @return string
+     */
+    public function __get($name)
+    {
+        return $this->data[$name];
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function __isset($name)
+    {
+        return isset($this->data[$name]);
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    public function __call($name, array $args)
+    {
+        return $this->escape($this->data[$name]);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        ob_start();
+        $this->render();
+        return ob_get_clean();
+    }
+    
+    /**
+     * @param string $key
+     * @return string
+     */
+    protected function text($key)
+    {
+        global $plugin_tx;
+
+        $args = func_get_args();
+        array_shift($args);
+        return $this->escape(vsprintf($plugin_tx['polyglott'][$key], $args));
+    }
+
+    /**
+     * @param string $key
+     * @param int $count
+     */
+    protected function plural($key, $count)
+    {
+        global $plugin_tx;
+
+        if ($count == 0) {
+            $key .= '_0';
+        } else {
+            $key .= XH_numberSuffix($count);
+        }
+        $args = func_get_args();
+        array_shift($args);
+        return $this->escape(vsprintf($plugin_tx['polyglott'][$key], $args));
+    }
+
+    /**
+     * @return string
      */
     public function render()
     {
-        global $cf;
+        global $pth;
 
-        $html = $this->doRender();
-        if (!$cf['xhtml']['endtags']) {
-            $html = str_replace(' />', '>', $html);
+        echo "<!-- {$this->template} -->", PHP_EOL;
+        include "{$pth['folder']['plugins']}polyglott/views/{$this->template}.php";
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function escape($value)
+    {
+        if ($value instanceof HtmlString) {
+            return $value;
+        } else {
+            return XH_hsc($value);
         }
-        return $html;
-    }
-
-    /**
-     * Renders the template.
-     *
-     * @return string XHTML.
-     */
-    private function doRender()
-    {
-        extract($this->data);
-        ob_start();
-        include $this->template;
-        return ob_get_clean();
-    }
-
-    /**
-     * Dummy to prevent direct access of template files.
-     *
-     * @return void
-     */
-    protected function preventAccess()
-    {
-        // pass
     }
 }

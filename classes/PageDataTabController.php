@@ -58,10 +58,10 @@ class PageDataTabController
     {
         global $sn, $su, $tx;
 
-        $action = $sn . '?' . $su;
-        $tag = $this->pageData['polyglott_tag'];
-        $submit = ucfirst($tx['action']['save']);
-        $bag = compact('action', 'tag', 'submit');
-        echo View::make('tab', $bag)->render();
+        $view = new View('tab');
+        $view->action = $sn . '?' . $su;
+        $view->tag = $this->pageData['polyglott_tag'];
+        $view->submit = ucfirst($tx['action']['save']);
+        $view->render();
     }
 }

@@ -268,21 +268,18 @@ class Controller
      */
     private function info()
     {
-        global $pth, $plugin_tx;
+        global $pth;
 
-        $ptx = $plugin_tx['polyglott'];
-        $labels = array(
-            'syscheck' => $ptx['syscheck_title']
-        );
         foreach (array('ok', 'warn', 'fail') as $state) {
             $images[$state] = $pth['folder']['plugins']
                 . 'polyglott/images/' . $state . '.png';
         }
-        $checks = $this->systemChecks();
-        $icon = $pth['folder']['plugins'] . 'polyglott/polyglott.png';
-        $version = POLYGLOTT_VERSION;
-        $bag = compact('labels', 'images', 'checks', 'icon', 'version');
-        return View::make('info', $bag)->render();
+        $view = new View('info');
+        $view->images = $images;
+        $view->checks = $this->systemChecks();
+        $view->icon = $pth['folder']['plugins'] . 'polyglott/polyglott.png';
+        $view->version = POLYGLOTT_VERSION;
+        return (string) $view;
     }
 
     /**
@@ -326,7 +323,7 @@ class Controller
      */
     private function administration()
     {
-        global $sn, $cl, $h, $l, $u, $plugin_tx;
+        global $sn, $cl, $h, $l, $u;
 
         $languages = $this->model->otherLanguages();
         $pages = array();
@@ -344,8 +341,9 @@ class Controller
             }
             $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
         }
-        $lang = $plugin_tx['polyglott'];
-        $bag = compact('languages', 'pages', 'lang');
-        return View::make('admin', $bag)->render();
+        $view = new View('admin');
+        $view->languages = $languages;
+        $view->pages = $pages;
+        return (string) $view;
     }
 }

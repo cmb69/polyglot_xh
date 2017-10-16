@@ -8,7 +8,7 @@ $plugin_tx['polyglott']['label_translations']="Übersetzungen";
 $plugin_tx['polyglott']['label_page']="Seite";
 $plugin_tx['polyglott']['label_tab']="Polyglott";
 $plugin_tx['polyglott']['label_tag']="Schlagwort";
-$plugin_tx['polyglott']['label_ok']="&#10003;";
+$plugin_tx['polyglott']['label_ok']="✓";
 
 $plugin_tx['polyglott']['syscheck_title']="System-Prüfung";
 $plugin_tx['polyglott']['syscheck_phpversion']="PHP-Version ≥ %s";

@@ -1,9 +1,7 @@
-<?php $this->preventAccess()?>
-<!-- Polyglott_XH: info -->
 <h1>Polyglott</h1>
-<img src="<?php echo $icon;?>" alt="Plugin Icon"
+<img src="<?php echo $this->icon();?>" alt="Plugin Icon"
      style="float: left; width: 128px; height: 128px; margin-right: 16px"/>
-<p>Version: <?php echo $version;?></p>
+<p>Version: <?php echo $this->version();?></p>
 <p>Copyright &copy; 2012-2017 <a href="http://3-magi.net/">Christoph M. Becker</a></p>
 <p style="text-align: justify">This program is free software: you can
 redistribute it and/or modify it under the terms of the GNU General Public
@@ -16,7 +14,7 @@ purpose</em>. See the GNU General Public License for more details.</p>
 <p style="text-align: justify">You should have received a copy of the GNU
 General Public License along with this program. If not, see
 <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
-<h4><?php echo $labels['syscheck'];?></h4>
-<?php foreach ($checks as $check => $state):?>
+<h4><?php echo $this->text('syscheck_title');?></h4>
+<?php foreach ($this->checks as $check => $state):?>
 <?php echo XH_message($state, $check)?>
 <?php endforeach;?>

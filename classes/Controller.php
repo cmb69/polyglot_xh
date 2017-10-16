@@ -45,7 +45,9 @@ class Controller
         global $pth, $sl, $cf;
 
         $this->model = new Model(
-            $sl, $cf['language']['default'], $pth['folder']['base'],
+            $sl,
+            $cf['language']['default'],
+            $pth['folder']['base'],
             $pth['folder']['plugins'] . 'polyglott/cache/'
         );
     }
@@ -171,14 +173,14 @@ class Controller
 
         $o .= print_plugin_admin('on');
         switch ($admin) {
-        case '':
-            $o .= $this->info();
-            break;
-        case 'plugin_main':
-            $o .= $this->administration();
-            break;
-        default:
-            $o .= plugin_admin_common($action, $admin, 'polyglott');
+            case '':
+                $o .= $this->info();
+                break;
+            case 'plugin_main':
+                $o .= $this->administration();
+                break;
+            default:
+                $o .= plugin_admin_common($action, $admin, 'polyglott');
         }
     }
 
@@ -305,9 +307,7 @@ class Controller
         $checks = $this->systemChecks();
         $icon = $pth['folder']['plugins'] . 'polyglott/polyglott.png';
         $version = POLYGLOTT_VERSION;
-        $bag = compact(
-            'labels', 'images', 'checks', 'icon', 'version'
-        );
+        $bag = compact('labels', 'images', 'checks', 'icon', 'version');
         return View::make('info', $bag)->render();
     }
 
@@ -386,5 +386,3 @@ class Controller
         return View::make('admin', $bag)->render();
     }
 }
-
-?>

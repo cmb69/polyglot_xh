@@ -168,7 +168,6 @@ class Model
             fclose($this->lockHandle);
         }
         return $this->tags !== false;
-
     }
 
     /**
@@ -236,7 +235,8 @@ class Model
     {
         return preg_replace(
             array('/index\.php$/', '/(?<=\/)' . $this->language . '\/$/'),
-            '', CMSIMPLE_URL
+            '',
+            CMSIMPLE_URL
         );
     }
 
@@ -253,5 +253,3 @@ class Model
         return isset($this->tags[$tag][$language]);
     }
 }
-
-?>

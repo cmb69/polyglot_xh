@@ -63,5 +63,3 @@ class PageDataTabCommand
         echo View::make('tab', $bag)->render();
     }
 }
-
-?>

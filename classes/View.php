@@ -48,7 +48,7 @@ class View
      *
      * @return Feedview_View
      */
-    static public function make($template, $data)
+    public static function make($template, $data)
     {
         return new self($template, $data);
     }
@@ -111,5 +111,3 @@ class View
         // pass
     }
 }
-
-?>

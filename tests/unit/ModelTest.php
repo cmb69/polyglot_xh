@@ -54,9 +54,7 @@ class ModelTest extends TestCase
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
         mkdir(vfsStream::url('test/de'));
         touch(vfsStream::url('test/de/.2lang'));
-        $this->model = new Model(
-            'en', 'en', vfsStream::url('test/'), vfsStream::url('test/')
-        );
+        $this->model = new Model('en', 'en', vfsStream::url('test/'), vfsStream::url('test/'));
     }
 
     /**
@@ -95,9 +93,7 @@ class ModelTest extends TestCase
      */
     public function testLanguageUrlContainsTld()
     {
-        $this->assertEquals(
-            'http://foo.en/de/', $this->model->languageURL('de', 'unknown')
-        );
+        $this->assertEquals('http://foo.en/de/', $this->model->languageURL('de', 'unknown'));
     }
 
     /**
@@ -117,5 +113,3 @@ class ModelTest extends TestCase
         }
     }
 }
-
-?>

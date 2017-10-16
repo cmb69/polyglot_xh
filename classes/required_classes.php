@@ -22,5 +22,3 @@ spl_autoload_register(function ($class) {
             . $parts[1] . '.php';
     }
 });
-
-?>

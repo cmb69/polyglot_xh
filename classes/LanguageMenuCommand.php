@@ -45,7 +45,9 @@ class LanguageMenuCommand
         global $pth, $sl, $cf;
 
         $this->model = new Model(
-            $sl, $cf['language']['default'], $pth['folder']['base'],
+            $sl,
+            $cf['language']['default'],
+            $pth['folder']['base'],
             $pth['folder']['plugins'] . 'polyglott/cache/'
         );
         $this->model->init(false);
@@ -175,5 +177,3 @@ class LanguageMenuCommand
         return $res;
     }
 }
-
-?>

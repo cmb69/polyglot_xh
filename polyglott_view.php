@@ -27,5 +27,3 @@ function Polyglott_view(array $pageData)
     $command->execute();
     return ob_get_clean();
 }
-
-?>

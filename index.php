@@ -33,5 +33,3 @@ function Polyglott_languageMenu()
 
 $temp = new Polyglott\Controller();
 $temp->dispatch();
-
-?>

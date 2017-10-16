@@ -234,7 +234,7 @@ class Controller
         global $pth, $plugin_tx;
 
         $ptx = $plugin_tx['polyglott'];
-        $phpVersion = '5.3.0';
+        $phpVersion = '5.4.0';
         $xhVersion = '1.6';
         $checks = array();
         $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)]

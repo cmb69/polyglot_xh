@@ -37,14 +37,14 @@ class View
      *
      * @var string
      */
-    protected $template;
+    private $template;
 
     /**
      * The data.
      *
      * @var array<string, *>
      */
-    protected $data;
+    private $data;
 
     /**
      * Makes a new view object.
@@ -65,7 +65,7 @@ class View
      * @param string $template A template name.
      * @param array  $data     An array of data.
      */
-    protected function __construct($template, $data)
+    private function __construct($template, $data)
     {
         global $pth;
 
@@ -95,7 +95,7 @@ class View
      *
      * @return string XHTML.
      */
-    protected function doRender()
+    private function doRender()
     {
         extract($this->data);
         ob_start();

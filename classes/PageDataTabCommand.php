@@ -37,7 +37,7 @@ class PageDataTabCommand
      *
      * @var array
      */
-    protected $pageData;
+    private $pageData;
 
     /**
      * Initializes a new instance.

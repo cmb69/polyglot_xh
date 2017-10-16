@@ -37,42 +37,42 @@ class Model
      *
      * @var string
      */
-    protected $language;
+    private $language;
 
     /**
      * The default language.
      *
      * @var string
      */
-    protected $defaultLanguage;
+    private $defaultLanguage;
 
     /**
      * The relative path of the base folder.
      *
      * @var string
      */
-    protected $baseFolder;
+    private $baseFolder;
 
     /**
      * The relative path of the data folder.
      *
      * @var string
      */
-    protected $dataFolder;
+    private $dataFolder;
 
     /**
      * The handle of the lock file.
      *
      * @var resource
      */
-    protected $lockHandle;
+    private $lockHandle;
 
     /**
      * The polyglott tags.
      *
      * @var array
      */
-    protected $tags;
+    private $tags;
 
     /**
      * Initializes a new instance.
@@ -181,7 +181,7 @@ class Model
      *
      * @return string
      */
-    protected function lockFile()
+    private function lockFile()
     {
         return $this->dataFolder . '.lck';
     }
@@ -235,7 +235,7 @@ class Model
      *
      * @return string
      */
-    protected function getInstallationUrl()
+    private function getInstallationUrl()
     {
         return preg_replace(
             array('/index\.php$/', '/(?<=\/)' . $this->language . '\/$/'),

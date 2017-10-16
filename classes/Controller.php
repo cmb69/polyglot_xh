@@ -82,7 +82,7 @@ class Controller
      *
      * @return bool
      */
-    protected function isCacheStale()
+    private function isCacheStale()
     {
         global $pth;
 
@@ -99,7 +99,7 @@ class Controller
      *
      * @return void
      */
-    protected function updateCache()
+    private function updateCache()
     {
         global $u, $pd_router;
 
@@ -120,7 +120,7 @@ class Controller
      *
      * @return void
      */
-    protected function addPageDataTab()
+    private function addPageDataTab()
     {
         global $pth, $pd_router, $plugin_tx;
 
@@ -137,7 +137,7 @@ class Controller
      *
      * @todo Remove fallback for XH < 1.6.3.
      */
-    protected function wantsPluginAdministration()
+    private function wantsPluginAdministration()
     {
         global $polyglott;
 
@@ -151,7 +151,7 @@ class Controller
      *
      * @return void
      */
-    protected function handleAdministration()
+    private function handleAdministration()
     {
         global $admin, $action, $o;
 
@@ -173,7 +173,7 @@ class Controller
      *
      * @return string (X)HTML.
      */
-    protected function alternateLinks()
+    private function alternateLinks()
     {
         global $s;
 
@@ -195,7 +195,7 @@ class Controller
      *
      * @return string (X)HTML.
      */
-    protected function alternateLinksFor($language, $tag)
+    private function alternateLinksFor($language, $tag)
     {
         global $cf;
 
@@ -216,7 +216,7 @@ class Controller
      *
      * @return string (X)HTML.
      */
-    protected function renderAlternateLink($hreflang, $href)
+    private function renderAlternateLink($hreflang, $href)
     {
         return tag(
             'link rel="alternate" hreflang="' . XH_hsc($hreflang)
@@ -229,7 +229,7 @@ class Controller
      *
      * @return array
      */
-    protected function systemChecks()
+    private function systemChecks()
     {
         global $pth, $plugin_tx;
 
@@ -266,7 +266,7 @@ class Controller
      *
      * @return string (X)HTML.
      */
-    protected function info()
+    private function info()
     {
         global $pth, $plugin_tx;
 
@@ -292,7 +292,7 @@ class Controller
      *
      * @return string
      */
-    protected function pageTag($index)
+    private function pageTag($index)
     {
         global $pd_router;
 
@@ -324,7 +324,7 @@ class Controller
      *
      * @return string (X)HTML.
      */
-    protected function administration()
+    private function administration()
     {
         global $sn, $cl, $h, $l, $u, $plugin_tx;
 

@@ -37,7 +37,7 @@ class LanguageMenuCommand
      *
      * @var object
      */
-    protected $model;
+    private $model;
 
     /**
      * Initializes a new instance.
@@ -80,7 +80,7 @@ class LanguageMenuCommand
      *
      * @return string
      */
-    protected function languageFlag($language)
+    private function languageFlag($language)
     {
         global $pth, $plugin_cf;
 
@@ -95,7 +95,7 @@ class LanguageMenuCommand
      *
      * @return string
      */
-    protected function getAltAttribute($language)
+    private function getAltAttribute($language)
     {
         global $s;
 
@@ -120,7 +120,7 @@ class LanguageMenuCommand
      *
      * @return array
      */
-    protected function languageLabels()
+    private function languageLabels()
     {
         global $plugin_cf;
 
@@ -141,7 +141,7 @@ class LanguageMenuCommand
      *
      * @return string
      */
-    protected function languageURL($language)
+    private function languageURL($language)
     {
         global $s;
 
@@ -157,7 +157,7 @@ class LanguageMenuCommand
      *
      * @return string
      */
-    protected function pageTag($index)
+    private function pageTag($index)
     {
         global $pd_router;
 

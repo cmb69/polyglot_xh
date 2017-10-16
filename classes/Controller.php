@@ -70,7 +70,7 @@ class Controller
                 XH_registerStandardPluginMenuItems(true);
             }
             $this->addPageDataTab();
-            if ($this->wantsPluginAdministration()) {
+            if (XH_wantsPluginAdministration('polyglott')) {
                 $this->handleAdministration();
             }
         }
@@ -128,22 +128,6 @@ class Controller
             $plugin_tx['polyglott']['label_tab'],
             $pth['folder']['plugins'] . 'polyglott/polyglott_view.php'
         );
-    }
-
-    /**
-     * Returns whether the plugin administration is requested.
-     *
-     * @return bool
-     *
-     * @todo Remove fallback for XH < 1.6.3.
-     */
-    private function wantsPluginAdministration()
-    {
-        global $polyglott;
-
-        return function_exists('XH_wantsPluginAdministration')
-            && XH_wantsPluginAdministration('polyglott')
-            || isset($polyglott) && $polyglott == 'true';
     }
 
     /**
@@ -235,7 +219,7 @@ class Controller
 
         $ptx = $plugin_tx['polyglott'];
         $phpVersion = '5.4.0';
-        $xhVersion = '1.6';
+        $xhVersion = '1.6.3';
         $checks = array();
         $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)]
             = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';

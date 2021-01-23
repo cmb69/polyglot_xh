@@ -22,7 +22,7 @@
 /**
  * The plugin version.
  */
-define('POLYGLOTT_VERSION', '@POLYGLOTT_VERSION@');
+define('POLYGLOTT_VERSION', '1.0beta2');
 
 /**
  * Returns the language menu.

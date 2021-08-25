@@ -1,6 +1,6 @@
 <?php
 
-$plugin_cf['polyglott']['languages_labels']="en=English translation;English website\nde=deutsche Übersetzung;deutsche Website";
-$plugin_cf['polyglott']['flags_extension']="gif";
+$plugin_cf['polyglot']['languages_labels']="en=English translation;English website\nde=deutsche Übersetzung;deutsche Website";
+$plugin_cf['polyglot']['flags_extension']="gif";
 
 ?>

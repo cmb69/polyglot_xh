@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="Polyglott" default="help">
+<project name="Polyglot" default="help">
 
     <fileset id="php-sources" dir=".">
         <include name="index.php"/>
-        <include name="polyglott_view.php"/>
+        <include name="polyglot_view.php"/>
         <include name="classes/*.php"/>
     </fileset>
 
@@ -73,8 +73,8 @@
               tofile="dist/config/defaultconfig.php"/>
         <copy file="dist/languages/en.php"
               tofile="dist/languages/default.php"/>
-        <zip destfile="Polyglott_XH-${version}.zip"
-             basedir="dist" prefix="polyglott/"/>
+        <zip destfile="Polyglot_XH-${version}.zip"
+             basedir="dist" prefix="polyglot/"/>
         <delete dir="dist"/>
     </target>
 

@@ -9,7 +9,7 @@
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">classes</directory>
             <file>index.php</file>
-            <file>polyglott_view.php</file>
+            <file>polyglot_view.php</file>
         </whitelist>
     </filter>
     <logging>

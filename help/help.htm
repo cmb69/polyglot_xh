@@ -3,16 +3,16 @@
 
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>Polyglott_XH &ndash; Manual</title>
+<title>Polyglot_XH &ndash; Manual</title>
 <link rel="stylesheet" type="text/css" href="./stylesheet.css">
 </head>
 
 <body>
 
-<h1>Polyglott_XH &ndash; a CMSimple_XH Plugin</h1>
-<img src="../polyglott.png" style="float: left; margin-right: 16px" alt="Globe
+<h1>Polyglot_XH &ndash; a CMSimple_XH Plugin</h1>
+<img src="../polyglot.png" style="float: left; margin-right: 16px" alt="Globe
 of flags">
-<p>Polyglott_XH offers advanced features for multilingual CMSimple_XH websites.
+<p>Polyglot_XH offers advanced features for multilingual CMSimple_XH websites.
 The main point is that it allows to mark individual pages of different languages
 as actual translations, so visitors as well as the admin can quickly switch
 between the translations of a certain page.</p>
@@ -38,12 +38,12 @@ links</a>).</p>
 problems!</strong></p>
 
 <h2 id="notice">Important Notice</h2>
-<p><strong>Polyglott_XH couldn't be tested so far in various environments. It
+<p><strong>Polyglot_XH couldn't be tested so far in various environments. It
 is a so called beta version. Use with caution!</strong></p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2 id="requirements">Requirements</h2>
-<p>Polyglott_XH requires CMSimple_XH &ge; 1.6.3 and PHP &ge; 5.4.0.</p>
+<p>Polyglot_XH requires CMSimple_XH &ge; 1.6.3 and PHP &ge; 5.4.0.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2 id="installation">Installation</h2>
@@ -53,41 +53,41 @@ wiki</a> for further details.</p>
 <ol>
 <li>Backup the data on your server.</li>
 <li>Unzip the distribution on your computer.</li>
-<li>Upload the whole directory polyglott/ to your server into CMSimple_XH's
+<li>Upload the whole directory polyglot/ to your server into CMSimple_XH's
 plugins directory.</li>
 <li>Give write permissions to the subdirectories cache/, config/, css/ and
 languages/.</li>
-<li>Switch to Plugins &rarr; Polyglott to check if all requirements are
+<li>Switch to Plugins &rarr; Polyglot to check if all requirements are
 fulfilled.</li>
 </ol>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2 id="settings">Settings</h2>
 <p>The plugin's configuration is done as with many other CMSimple_XH plugins in
-the website's back-end. Select Plugins &rarr; Polyglott.</p>
-<p>You can change the default settings of Polyglott_XH under "Config". Hints for
+the website's back-end. Select Plugins &rarr; Polyglot.</p>
+<p>You can change the default settings of Polyglot_XH under "Config". Hints for
 the options will be displayed when hovering over the help icon with your
 mouse.</p>
 <p>Localization is done under "Language". You can translate the character
 strings to your own language (if there is no appropriate language file
 available), or customize them according to your needs.</p>
-<p>The look of Polyglott_XH can be customized under "Stylesheet".</p>
+<p>The look of Polyglot_XH can be customized under "Stylesheet".</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2 id="usage">Usage</h2>
-<p>To use the advanced language menu of Polyglott_XH replace the call to
+<p>To use the advanced language menu of Polyglot_XH replace the call to
 languagemenu() in your template(s) with:</p>
-<pre>&lt;?php echo polyglott_languagemenu();?&gt;</pre>
+<pre>&lt;?php echo polyglot_languagemenu();?&gt;</pre>
 <p>To make this actually work, you have to tag individual pages of different
-languages appropriately. You can do this in the tab "Polyglott" above the
+languages appropriately. You can do this in the tab "Polyglot" above the
 content editor; simply set the same unique tag for the original page and for its
 translations.</p>
-<p>In the plugin administration (Plugins &rarr; Polyglott &rarr; Translations)
+<p>In the plugin administration (Plugins &rarr; Polyglot &rarr; Translations)
 you can get an overview of which pages are already translated. The page headings
 as well as the translations are linked to the respective pages in edit mode, so
-you can quickly repair possibly missing Polyglott_XH tags.</p>
+you can quickly repair possibly missing Polyglot_XH tags.</p>
 <p>Note that the relations between pages of different languages are cached in
-plugins/polyglott/cache/ for performance reasons. If you have to clear this
+plugins/polyglot/cache/ for performance reasons. If you have to clear this
 cache for whatever reason, you have to save at least one page of <em>every</em>
 language to rebuilt it properly.</p>
 <div class="toplink"><a href="#">back to top</a></div>
@@ -96,13 +96,13 @@ language to rebuilt it properly.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 -->
 <h2 id="license">License</h2>
-<p>Polyglott_XH is licensed under <a
+<p>Polyglot_XH is licensed under <a
 href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>.</p>
 <p>&copy; 2012-2017 Christoph M. Becker</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2 id="credits">Credits</h2>
-<p>Polyglott_XH was inspired by <a
+<p>Polyglot_XH was inspired by <a
 href="http://cmsimplewiki.com/doku.php/plugins/multilang_xh">Multilang_XH</a> by
 <a href="http://www.zedlitz.de/">Jesper Zedlitz</a>.</p>
 <p>The plugin logo is designed by Lakshman Poonyth. Many thanks for publishing

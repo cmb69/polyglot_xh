@@ -40,10 +40,10 @@
 <teplad version="1.1">
   <!-- the URL form this xml-file -->
   <!-- full URL with http(s) -->
-  <xml_url>https://raw.githubusercontent.com/cmb69/polyglott_xh/master/teplad.xml</xml_url>
+  <xml_url>https://raw.githubusercontent.com/cmb69/polyglot_xh/master/teplad.xml</xml_url>
   <!-- Attribute type for Data type: plugin, template or addon -->
   <!-- the name of the Plugin -->
-  <name type="plugin">Polyglott_XH</name>
+  <name type="plugin">Polyglot_XH</name>
   <!-- Date this xml-file was updated, yyyy.mm.dd -->
   <date_update>2021.01.23</date_update>
   <!-- version of Plugin -->
@@ -62,7 +62,7 @@
   <url>
     <!-- URL where you can download the plugin -->
     <!-- If there no Download-URL, enter this follows! - <download_url></download_url> -->
-    <download_url>https://github.com/cmb69/polyglott_xh/releases/1.0beta2</download_url>
+    <download_url>https://github.com/cmb69/polyglot_xh/releases/1.0beta2</download_url>
     <!-- URL of the programmer's website -->
     <!-- If there no Website, enter this follows! - <coder_url></coder_url> -->
     <coder_url>https://3-magi.net</coder_url>
@@ -81,7 +81,7 @@
   <descriptions>
     <!-- description of the plugin, ca. 200 characters, you can use <br/>, <ol></ol>, <ul></ul>, <li></li>, <b></b>, <i></i>. -->
     <description lang="en">
-      Polyglott_XH offers advanced features for multilingual CMSimple_XH websites.
+      Polyglot_XH offers advanced features for multilingual CMSimple_XH websites.
       The main point is that it allows to mark individual pages of different languages
       as actual translations, so visitors as well as the admin can quickly switch
       between the translations of a certain page.
@@ -90,7 +90,7 @@
     </description>
     <!-- Beschreibung des Plugins, ca. 200 Zeichen, es können <br/>, <ol></ol>, <ul></ul>, <li></li>, <b></b>, <i></i> genutzt werden. -->
     <description lang="de">
-      Polyglott_XH bietet fortgeschrittene Features für mehrsprachige CMSimple_XH Websites.
+      Polyglot_XH bietet fortgeschrittene Features für mehrsprachige CMSimple_XH Websites.
       Hauptsache ist die Möglichkeit einzelne Seiten verschiedener Sprachen
       als tatsächliche Übersetzungen zu markieren, so dass Besucher wie auch der
       Administrator schnell zwischen den Übersetzungen einer bestimmten Seite
@@ -108,7 +108,7 @@
   <!-- , use only .gif, .jpg, .jpeg, .png or .svg! -->
   <!-- The use of this different image formats is dependent on the configuration of the repository. -->
   <!-- If there no logo, enter this follows! - <logo></logo> -->
-  <logo>https://raw.githubusercontent.com/cmb69/polyglott_xh/master/polyglott.png</logo>
+  <logo>https://raw.githubusercontent.com/cmb69/polyglot_xh/master/polyglot.png</logo>
 </teplad>
 <!-- Ich versichere, dass ich für alle angegebenen Texte und / oder Bilder die Urheberrechte besitze, oder eine entsprechende Nutzungsgenehmigung vorweisen kann. -->
 <!-- I guarantee, that I have the copyright for all texts and / or pictures, or can show a corresponding permission for their use. -->

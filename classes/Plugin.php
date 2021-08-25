@@ -3,23 +3,23 @@
 /**
  * Copyright 2012-2017 Christoph M. Becker
  *
- * This file is part of Polyglott_XH.
+ * This file is part of Polyglot_XH.
  *
- * Polyglott_XH is free software: you can redistribute it and/or modify
+ * Polyglot_XH is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Polyglott_XH is distributed in the hope that it will be useful,
+ * Polyglot_XH is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with Polyglott_XH.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Polyglot_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Polyglott;
+namespace Polyglot;
 
 class Plugin
 {
@@ -31,13 +31,13 @@ class Plugin
         global $pd_router;
 
         (new CacheController)->defaultAction();
-        $pd_router->add_interest('polyglott_tag');
+        $pd_router->add_interest('polyglot_tag');
         if (defined('XH_ADM') && XH_ADM) {
             if (function_exists('XH_registerStandardPluginMenuItems')) {
                 XH_registerStandardPluginMenuItems(true);
             }
             $this->addPageDataTab();
-            if (XH_wantsPluginAdministration('polyglott')) {
+            if (XH_wantsPluginAdministration('polyglot')) {
                 $this->handleAdministration();
             }
         }
@@ -52,8 +52,8 @@ class Plugin
         global $pth, $pd_router, $plugin_tx;
 
         $pd_router->add_tab(
-            $plugin_tx['polyglott']['label_tab'],
-            $pth['folder']['plugins'] . 'polyglott/polyglott_view.php'
+            $plugin_tx['polyglot']['label_tab'],
+            $pth['folder']['plugins'] . 'polyglot/polyglot_view.php'
         );
     }
 
@@ -75,7 +75,7 @@ class Plugin
                 $o .= ob_get_clean();
                 break;
             default:
-                $o .= plugin_admin_common($action, $admin, 'polyglott');
+                $o .= plugin_admin_common($action, $admin, 'polyglot');
         }
     }
 
@@ -88,8 +88,8 @@ class Plugin
 
         $view = new View('info');
         $view->checks = (new SystemCheckService)->getChecks();
-        $view->icon = $pth['folder']['plugins'] . 'polyglott/polyglott.png';
-        $view->version = POLYGLOTT_VERSION;
+        $view->icon = $pth['folder']['plugins'] . 'polyglot/polyglot.png';
+        $view->version = POLYGLOT_VERSION;
         return (string) $view;
     }
 }

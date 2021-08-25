@@ -2,30 +2,30 @@
  * Translation table
  */
 
-.polyglott_translations {
+.polyglot_translations {
     overflow-x: auto;
     margin: 1em 0;
 }
-.polyglott_translations table {
+.polyglot_translations table {
     border-collapse: collapse;
     width: 99%;
 }
-.polyglott_translations td {
+.polyglot_translations td {
     border: 1px solid #888;
 }
-.polyglott_translations td {
+.polyglot_translations td {
     padding: 0 0.2em;
 }
 
 /*
  * Info view
  */
-.polyglott_logo {
+.polyglot_logo {
     float: left;
     width: 128px;
     height: 128px;
     margin: 0 1.5em 0.5em 0;
 }
-.polyglott_license {
+.polyglot_license {
     text-align: justify;
 }

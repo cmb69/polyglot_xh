@@ -1,5 +1,5 @@
-<h1>Polyglott – <?=$this->text('label_translations')?></h1>
-<div class="polyglott_translations">
+<h1>Polyglot – <?=$this->text('label_translations')?></h1>
+<div class="polyglot_translations">
     <table>
         <thead>
             <tr>

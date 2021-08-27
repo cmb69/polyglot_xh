@@ -30,6 +30,13 @@ use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
 
+define('CMSIMPLE_URL', 'http://foo.en/');
+
+function XH_secondLanguages()
+{
+    return ["de"];
+}
+
 /**
  * Testing the model.
  *
@@ -55,7 +62,6 @@ class ModelTest extends TestCase
      */
     public function setUp()
     {
-        $this->defineConstant('CMSIMPLE_URL', 'http://foo.en/');
         vfsStreamWrapper::register();
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
         mkdir(vfsStream::url('test/de'));
@@ -82,11 +88,9 @@ class ModelTest extends TestCase
      */
     public function testOtherLanguages()
     {
-        uopz_set_return('XH_secondLanguages', ['de']);
         $expected = array('de');
         $actual = $this->model->otherLanguages();
         $this->assertEquals($expected, $actual);
-        uopz_unset_return('XH_secondLanguages');
     }
 
     /**
@@ -100,22 +104,5 @@ class ModelTest extends TestCase
     public function testLanguageUrlContainsTld()
     {
         $this->assertEquals('http://foo.en/de/', $this->model->languageURL('de', 'unknown'));
-    }
-
-    /**
-     * (Re)defines a global constant.
-     *
-     * @param string $name  A name.
-     * @param string $value A value.
-     *
-     * @return void
-     */
-    protected function defineConstant($name, $value)
-    {
-        if (!defined($name)) {
-            define($name, $value);
-        } else {
-            uopz_redefine($name, $value);
-        }
     }
 }

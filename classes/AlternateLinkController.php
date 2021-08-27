@@ -24,6 +24,18 @@ namespace Polyglot;
 class AlternateLinkController extends Controller
 {
     /**
+     * @var Model
+     */
+    private $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * Returns the alternate hreflang links.
+     *
      * @return void
      */
     public function defaultAction()

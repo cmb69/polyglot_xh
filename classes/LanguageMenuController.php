@@ -24,6 +24,29 @@ namespace Polyglot;
 class LanguageMenuController extends Controller
 {
     /**
+     * The model instance.
+     *
+     * @var object
+     */
+    private $model;
+
+    /**
+     * Initializes a new instance.
+     */
+    public function __construct()
+    {
+        global $pth, $sl, $cf;
+
+        $this->model = new Model(
+            $sl,
+            $cf['language']['default'],
+            $pth['folder']['base'],
+            $pth['folder']['plugins'] . 'polyglot/cache/'
+        );
+        $this->model->init(false);
+    }
+
+    /**
      * @return void
      */
     public function defaultAction()

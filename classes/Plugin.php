@@ -24,13 +24,37 @@ namespace Polyglot;
 class Plugin
 {
     /**
+     * The model instance.
+     *
+     * @var object
+     */
+    protected $model;
+
+    /**
+     * Initializes a new instance.
+     */
+    public function __construct()
+    {
+        global $pth, $sl, $cf;
+
+        $this->model = new Model(
+            $sl,
+            $cf['language']['default'],
+            $pth['folder']['base'],
+            $pth['folder']['plugins'] . 'polyglot/cache/'
+        );
+    }
+
+    /**
+     * Dispatches according to request.
+     *
      * @return void
      */
     public function run()
     {
         global $pd_router;
 
-        (new CacheController)->defaultAction();
+        $this->updateCache();
         $pd_router->add_interest('polyglot_tag');
         if (defined('XH_ADM') && XH_ADM) {
             if (function_exists('XH_registerStandardPluginMenuItems')) {
@@ -41,10 +65,50 @@ class Plugin
                 $this->handleAdministration();
             }
         }
-        (new AlternateLinkController)->defaultAction();
+        (new AlternateLinkController($this->model))->defaultAction();
     }
 
     /**
+     * Returns whether the cache is stale.
+     *
+     * @return bool
+     */
+    private function isCacheStale()
+    {
+        global $pth;
+
+        $contentLastMod = filemtime($pth['file']['content']);
+        $pageDataLastMod = file_exists($pth['file']['pagedata'])
+            ? filemtime($pth['file']['pagedata'])
+            : 0;
+        $tagsLastMod = $this->model->lastMod();
+        return $tagsLastMod < max($contentLastMod, $pageDataLastMod);
+    }
+
+    /**
+     * Updates the cache.
+     *
+     * @return void
+     */
+    private function updateCache()
+    {
+        global $u, $pd_router;
+
+        $needsUpdate = $this->isCacheStale();
+        if ($this->model->init($needsUpdate)) {
+            if ($needsUpdate) {
+                if (!$this->model->update($pd_router->find_all(), $u)) {
+                    e('cntsave', 'file', $this->model->tagsFile());
+                }
+            }
+        } else {
+            e('cntopen', 'file', $this->model->tagsFile());
+        }
+    }
+
+    /**
+     * Adds the page data tab.
+     *
      * @return void
      */
     private function addPageDataTab()
@@ -71,7 +135,7 @@ class Plugin
                 break;
             case 'plugin_main':
                 ob_start();
-                (new MainAdminController)->defaultAction();
+                (new MainAdminController($this->model))->defaultAction();
                 $o .= ob_get_clean();
                 break;
             default:

@@ -3,3 +3,4 @@ vendor
 /cache/tags.dat
 /cache/.lck
 /classes.svg
+/composer.lock

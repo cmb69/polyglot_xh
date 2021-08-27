@@ -29,10 +29,9 @@
     </target>
 
     <target name="mess" description="detects code flaws">
-        <phpmd rulesets="codesize,unusedcode">
-            <fileset refid="php-sources"/>
-            <fileset refid="unit-tests"/>
-         </phpmd>
+        <exec executable="phpmd" passthru="true" checkreturn="true">
+            <arg line="classes,index.php,polyglot_view.php,tests/unit ansi codesize,unusedcode"/>
+        </exec>
     </target>
 
     <target name="compat" description="checks compatibility with PHP_CompatInfo">

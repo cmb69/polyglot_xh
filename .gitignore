@@ -4,3 +4,4 @@ vendor
 /cache/.lck
 /classes.svg
 /composer.lock
+/.phpunit.result.cache

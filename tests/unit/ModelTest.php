@@ -57,10 +57,8 @@ class ModelTest extends TestCase
 
     /**
      * Sets up the test fixture.
-     *
-     * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         vfsStreamWrapper::register();
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));

@@ -1,0 +1,9 @@
+parameters:
+  level: 0
+  paths:
+    - classes/
+    - index.php
+    - polyglot_view.php
+  scanFiles:
+    - ../../cmsimple/adminfuncs.php
+    - ../../cmsimple/functions.php

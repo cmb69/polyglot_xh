@@ -2,12 +2,6 @@
 
 <project name="Polyglot" default="help">
 
-    <fileset id="php-sources" dir=".">
-        <include name="index.php"/>
-        <include name="polyglot_view.php"/>
-        <include name="classes/*.php"/>
-    </fileset>
-
     <fileset id="unit-tests" dir="tests/unit">
         <include name="*Test.php"/>
     </fileset>

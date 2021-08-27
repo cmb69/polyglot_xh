@@ -55,7 +55,6 @@
     </target>
 
     <target name="build" description="builds distributable ZIP archive">
-        <fail unless="version" message="version is not defined!"/>
         <exec command="git archive -o export.zip HEAD" checkreturn="true"/>
         <unzip file="export.zip" todir="export"/>
         <delete file="export.zip"/>
@@ -73,7 +72,7 @@
               tofile="dist/config/defaultconfig.php"/>
         <copy file="dist/languages/en.php"
               tofile="dist/languages/default.php"/>
-        <zip destfile="Polyglot_XH-${version}.zip"
+        <zip destfile="Polyglot_XH-1.0beta2.zip"
              basedir="dist" prefix="polyglot/"/>
         <delete dir="dist"/>
     </target>

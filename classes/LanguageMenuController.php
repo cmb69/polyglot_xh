@@ -100,7 +100,7 @@ class LanguageMenuController extends Controller
     }
 
     /**
-     * @return array
+     * @return array<string,array>
      */
     private function languageLabels()
     {

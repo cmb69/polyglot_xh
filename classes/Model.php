@@ -49,7 +49,7 @@ class Model
     private $lockHandle;
 
     /**
-     * @var array
+     * @var array<string,array>
      */
     private $tags;
 
@@ -76,7 +76,7 @@ class Model
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function languages()
     {
@@ -87,7 +87,7 @@ class Model
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function otherLanguages()
     {
@@ -151,6 +151,8 @@ class Model
     }
 
     /**
+     * @param array[] $pageData
+     * @param string[] $urls
      * @return bool
      */
     public function update(array $pageData, array $urls)

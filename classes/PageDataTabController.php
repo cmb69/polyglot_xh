@@ -24,12 +24,12 @@ namespace Polyglot;
 class PageDataTabController extends Controller
 {
     /**
-     * @var array
+     * @var array<string,string>
      */
     private $pageData;
 
     /**
-     * @param array $pageData
+     * @param array<string,string> $pageData
      */
     public function __construct(array $pageData)
     {

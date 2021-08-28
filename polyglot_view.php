@@ -22,7 +22,7 @@
 /**
  * Returns the page data tab view.
  *
- * @param array $pageData The page data of the current page.
+ * @param array<string,string> $pageData The page data of the current page.
  *
  * @return string The (X)HTML.
  */

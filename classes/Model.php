@@ -44,11 +44,6 @@ class Model
     private $dataFolder;
 
     /**
-     * @var resource
-     */
-    private $lockHandle;
-
-    /**
      * @var array<string,array>
      */
     private $tags;
@@ -113,41 +108,16 @@ class Model
     }
 
     /**
-     * @param bool $needsUpdate
      * @return bool
      */
-    public function init($needsUpdate)
+    public function init()
     {
-        $lockFile = $this->lockFile();
-        if (!touch($lockFile)) {
-            return false;
-        }
-        $this->lockHandle = fopen($lockFile, 'r');
-        flock($this->lockHandle, $needsUpdate ? LOCK_EX : LOCK_SH);
         $filename = $this->tagsFile();
-        $contents = is_readable($filename)
-            ? file_get_contents($filename)
-            : false;
-        if ($contents === false) {
-            $contents = serialize(array());
-            if (!file_put_contents($this->tagsFile(), $contents)) {
-                return false;
-            }
+        if (!is_readable($filename) || !($contents = XH_readFile($filename))) {
+            $contents = serialize([]);
         }
         $this->tags = unserialize($contents);
-        if (!$needsUpdate) {
-            flock($this->lockHandle, LOCK_UN);
-            fclose($this->lockHandle);
-        }
         return $this->tags !== false;
-    }
-
-    /**
-     * @return string
-     */
-    private function lockFile()
-    {
-        return $this->dataFolder . '.lck';
     }
 
     /**
@@ -164,10 +134,7 @@ class Model
             }
         }
         $contents = serialize($this->tags);
-        $ok = (bool) file_put_contents($this->tagsFile(), $contents);
-        flock($this->lockHandle, LOCK_UN);
-        fclose($this->lockHandle);
-        return $ok;
+        return (bool) XH_writeFile($this->tagsFile(), $contents);
     }
 
     /**

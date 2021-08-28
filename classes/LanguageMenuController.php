@@ -43,7 +43,7 @@ class LanguageMenuController extends Controller
             $pth['folder']['base'],
             $pth['folder']['plugins'] . 'polyglot/cache/'
         );
-        $this->model->init(false);
+        $this->model->init();
     }
 
     /**

@@ -89,9 +89,8 @@ class Plugin
     {
         global $u, $pd_router;
 
-        $needsUpdate = $this->isCacheStale();
-        if ($this->model->init($needsUpdate)) {
-            if ($needsUpdate) {
+        if ($this->model->init()) {
+            if ($this->isCacheStale()) {
                 if (!$this->model->update($pd_router->find_all(), $u)) {
                     e('cntsave', 'file', $this->model->tagsFile());
                 }

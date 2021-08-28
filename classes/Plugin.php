@@ -145,12 +145,9 @@ class Plugin
      */
     private function renderInfo()
     {
-        global $pth;
-
         $view = new View('info');
         $view->render([
             'checks' => (new SystemCheckService)->getChecks(),
-            'icon' => $pth['folder']['plugins'] . 'polyglot/polyglot.png',
             'version' => POLYGLOT_VERSION,
         ]);
     }

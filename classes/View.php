@@ -34,34 +34,6 @@ class View
     private $data = array();
 
     /**
-     * @param string $name
-     * @return string
-     */
-    public function __get($name)
-    {
-        return $this->data[$name];
-    }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function __isset($name)
-    {
-        return isset($this->data[$name]);
-    }
-
-    /**
-     * @param string $name
-     * @param mixed[] $args
-     * @return string
-     */
-    public function __call($name, array $args)
-    {
-        return $this->escape($this->data[$name]);
-    }
-
-    /**
      * @param string $key
      * @return string
      */
@@ -102,10 +74,12 @@ class View
     {
         global $pth;
 
-        $this->template = $template;
+        $this->template = "{$pth['folder']['plugins']}polyglot/views/{$template}.php";
         $this->data = $data;
-        echo "<!-- {$this->template} -->", PHP_EOL;
-        include "{$pth['folder']['plugins']}polyglot/views/{$this->template}.php";
+        echo "<!-- {$template} -->\n";
+        unset($template, $data, $pth);
+        extract($this->data);
+        include $this->template;
     }
 
     /**

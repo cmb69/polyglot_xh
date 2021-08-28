@@ -1,4 +1,4 @@
-<?php foreach($this->languages as $language):?>
+<?php foreach($languages as $language):?>
 <a href="<?=$language['href']?>">
     <img src="<?=$language['src']?>"
          alt="<?=$language['alt']?>"

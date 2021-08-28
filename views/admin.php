@@ -5,13 +5,13 @@
             <tr>
                 <th><?=$this->text('label_page')?></th>
                 <th><?=$this->text('label_tag')?></th>
-<?php foreach ($this->languages as $language):?>
+<?php foreach ($languages as $language):?>
                 <th><?=$language?></th>
 <?php endforeach?>
             </tr>
         </thead>
         <tbody>
-<?php foreach ($this->pages as $page):?>
+<?php foreach ($pages as $page):?>
             <tr>
                 <td>
                     <a href="<?=$page['url']?>" style="padding-left: <?=$page['indent']?>em"><?=$page['heading']?></a>

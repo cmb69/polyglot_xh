@@ -19,9 +19,4 @@
  * along with Polyglot_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * The plugin version.
- */
-define('POLYGLOT_VERSION', '1.0beta2');
-
 Polyglot\Plugin::run();

@@ -23,6 +23,8 @@ namespace Polyglot;
 
 class Plugin
 {
+    const VERSION = "1.0beta2";
+
     /**
      * Dispatches according to request.
      *
@@ -90,7 +92,7 @@ class Plugin
         $view = new View('info');
         $view->render([
             'checks' => (new SystemCheckService)->getChecks(),
-            'version' => POLYGLOT_VERSION,
+            'version' => self::VERSION,
         ]);
     }
 

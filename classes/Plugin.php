@@ -52,7 +52,7 @@ class Plugin
 
         $pd_router->add_tab(
             $plugin_tx['polyglot']['label_tab'],
-            "{$pth['folder']['plugins']}admin.php"
+            "{$pth['folder']['plugins']}polyglot/polyglot_view.php"
         );
     }
 

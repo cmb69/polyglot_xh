@@ -3,7 +3,6 @@ parameters:
   paths:
     - classes/
     - index.php
-    - polyglot_view.php
   bootstrapFiles:
     - phpstan.php
   scanFiles:

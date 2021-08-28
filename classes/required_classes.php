@@ -18,6 +18,15 @@
  * You should have received a copy of the GNU General Public License
  * along with Polyglot_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
+/**
+ * Returns the language menu.
+ *
+ * @return string (X)HTML.
+ */
+function Polyglot_languageMenu()
+{
+    return Polyglot\Plugin::languageMenu();
+}
 
 /**
  * Returns the page data tab view.
@@ -28,8 +37,5 @@
  */
 function Polyglot_view(array $pageData)
 {
-    $command = new Polyglot\PageDataTabController($pageData);
-    ob_start();
-    $command->defaultAction();
-    return (string) ob_get_clean();
+    return Polyglot\Plugin::pageDataView($pageData);
 }

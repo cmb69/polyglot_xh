@@ -24,16 +24,4 @@
  */
 define('POLYGLOT_VERSION', '1.0beta2');
 
-/**
- * Returns the language menu.
- *
- * @return string (X)HTML.
- */
-function Polyglot_languageMenu()
-{
-    ob_start();
-    (new Polyglot\LanguageMenuController)->defaultAction();
-    return (string) ob_get_clean();
-}
-
 Polyglot\Plugin::run();

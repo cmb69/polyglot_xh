@@ -54,7 +54,7 @@ class Plugin
 
         $pd_router->add_tab(
             $plugin_tx['polyglot']['label_tab'],
-            $pth['folder']['plugins'] . 'polyglot/polyglot_view.php'
+            "{$pth['folder']['plugins']}admin.php"
         );
     }
 
@@ -92,6 +92,28 @@ class Plugin
             'checks' => (new SystemCheckService)->getChecks(),
             'version' => POLYGLOT_VERSION,
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public static function languageMenu()
+    {
+        ob_start();
+        (new LanguageMenuController)->defaultAction();
+        return (string) ob_get_clean();
+    }
+
+    /**
+     * @param array<string,string> $pageData
+     * @return string
+     */
+    public static function pageDataView(array $pageData)
+    {
+        $command = new PageDataTabController($pageData);
+        ob_start();
+        $command->defaultAction();
+        return (string) ob_get_clean();
     }
 
     /**

@@ -98,7 +98,7 @@ class Plugin
     public static function languageMenu()
     {
         ob_start();
-        (new LanguageMenuController)->defaultAction();
+        (new LanguageMenuController(self::getModel()))->defaultAction();
         return (string) ob_get_clean();
     }
 

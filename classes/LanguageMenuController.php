@@ -28,18 +28,9 @@ class LanguageMenuController extends Controller
      */
     private $model;
 
-    public function __construct()
+    public function __construct(Model $model)
     {
-        global $pth, $sl, $cf, $pd_router, $u;
-
-        $this->model = new Model(
-            $sl,
-            $cf['language']['default'],
-            $pth['folder']['plugins'] . 'polyglot/cache/',
-            $pd_router,
-            $u,
-            $pth['file']['content']
-        );
+        $this->model = $model;
     }
 
     /**

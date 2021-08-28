@@ -43,15 +43,6 @@ class View
 
     /**
      * @param string $name
-     * @param mixed $value
-     */
-    public function __set($name, $value)
-    {
-        $this->data[$name] = $value;
-    }
-
-    /**
-     * @param string $name
      * @return string
      */
     public function __get($name)
@@ -111,10 +102,11 @@ class View
     /**
      * @return void
      */
-    public function render()
+    public function render(array $data)
     {
         global $pth;
 
+        $this->data = $data;
         echo "<!-- {$this->template} -->", PHP_EOL;
         include "{$pth['folder']['plugins']}polyglot/views/{$this->template}.php";
     }

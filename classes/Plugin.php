@@ -153,9 +153,10 @@ class Plugin
         global $pth;
 
         $view = new View('info');
-        $view->checks = (new SystemCheckService)->getChecks();
-        $view->icon = $pth['folder']['plugins'] . 'polyglot/polyglot.png';
-        $view->version = POLYGLOT_VERSION;
-        $view->render();
+        $view->render([
+            'checks' => (new SystemCheckService)->getChecks(),
+            'icon' => $pth['folder']['plugins'] . 'polyglot/polyglot.png',
+            'version' => POLYGLOT_VERSION,
+        ]);
     }
 }

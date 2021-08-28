@@ -57,8 +57,9 @@ class MainAdminController extends Controller
             $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
         }
         $view = new View('admin');
-        $view->languages = $languages;
-        $view->pages = $pages;
-        $view->render();
+        $view->render([
+            'languages' => $languages,
+            'pages' => $pages,
+        ]);
     }
 }

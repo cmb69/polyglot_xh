@@ -44,9 +44,10 @@ class PageDataTabController extends Controller
         global $sn, $su, $tx;
 
         $view = new View('tab');
-        $view->action = $sn . '?' . $su;
-        $view->tag = $this->pageData['polyglot_tag'];
-        $view->submit = ucfirst($tx['action']['save']);
-        $view->render();
+        $view->render([
+            'action' => $sn . '?' . $su,
+            'tag' => $this->pageData['polyglot_tag'],
+            'submit' => ucfirst($tx['action']['save']),
+        ]);
     }
 }

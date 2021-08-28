@@ -60,8 +60,7 @@ class LanguageMenuController extends Controller
             $languages[$language] = compact('href', 'src', 'alt');
         }
         $view = new View('languagemenu');
-        $view->languages = $languages;
-        $view->render();
+        $view->render(['languages' => $languages]);
     }
 
     /**

@@ -21,6 +21,8 @@
 
 namespace Polyglot;
 
+use XH\PageDataRouter;
+
 class Model
 {
     /**
@@ -43,16 +45,36 @@ class Model
      */
     private $tags;
 
+    /** @var PageDataRouter */
+    private $pageDataRouter;
+
+    /** @var string[] */
+    private $pageUrls;
+
+    /** @var string */
+    private $contentFile;
+
     /**
      * @param string $language
      * @param string $defaultLang
      * @param string $dataFolder
+     * @param string[] $pageUrls
+     * @param string $contentFile
      */
-    public function __construct($language, $defaultLang, $dataFolder)
-    {
+    public function __construct(
+        $language,
+        $defaultLang,
+        $dataFolder,
+        PageDataRouter $pageDataRouter,
+        array $pageUrls,
+        $contentFile
+    ) {
         $this->language = (string) $language;
         $this->defaultLanguage = (string) $defaultLang;
         $this->dataFolder = (string) $dataFolder;
+        $this->pageDataRouter = $pageDataRouter;
+        $this->pageUrls = $pageUrls;
+        $this->contentFile = (string) $contentFile;
     }
 
     /**
@@ -92,7 +114,7 @@ class Model
     /**
      * @return int
      */
-    public function lastMod()
+    private function lastMod()
     {
         $filename = $this->tagsFile();
         return file_exists($filename)
@@ -101,33 +123,53 @@ class Model
     }
 
     /**
-     * @return bool
+     * @return void
      */
     public function init()
     {
         $filename = $this->tagsFile();
-        if (!is_readable($filename) || !($contents = XH_readFile($filename))) {
+        if (!is_readable($filename)) {
+            $this->tags = [];
+            $this->update();
+            return;
+        }
+        if (!($contents = XH_readFile($filename))) {
             $contents = serialize([]);
         }
         $this->tags = unserialize($contents);
-        return $this->tags !== false;
+        if (!is_array($this->tags)) {
+            $this->tags = [];
+            $this->update();
+            return;
+        }
+        if ($this->isCacheStale()) {
+            $this->update();
+        }
     }
 
     /**
-     * @param array[] $pageData
-     * @param string[] $urls
      * @return bool
      */
-    public function update(array $pageData, array $urls)
+    private function isCacheStale()
     {
-        foreach ($pageData as $i => $data) {
+        $contentLastMod = filemtime($this->contentFile);
+        $tagsLastMod = $this->lastMod();
+        return $tagsLastMod < $contentLastMod;
+    }
+
+    /**
+     * @return void
+     */
+    private function update()
+    {
+        foreach ($this->pageDataRouter->find_all() as $i => $data) {
             if (!empty($data['polyglot_tag'])) {
                 $tag = $data['polyglot_tag'];
-                $this->tags[$tag][$this->language] = $urls[$i];
+                $this->tags[$tag][$this->language] = $this->pageUrls[$i];
             }
         }
         $contents = serialize($this->tags);
-        return (bool) XH_writeFile($this->tagsFile(), $contents);
+        XH_writeFile($this->tagsFile(), $contents);
     }
 
     /**

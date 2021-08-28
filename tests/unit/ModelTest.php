@@ -25,6 +25,7 @@ use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
+use XH\PageDataRouter;
 
 define('CMSIMPLE_URL', 'http://foo.en/');
 
@@ -60,7 +61,14 @@ class ModelTest extends TestCase
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
         mkdir(vfsStream::url('test/de'));
         touch(vfsStream::url('test/de/.2lang'));
-        $this->model = new Model('en', 'en', vfsStream::url('test/'), vfsStream::url('test/'));
+        $this->model = new Model(
+            'en',
+            'en',
+            vfsStream::url('test/'),
+            $this->createStub(PageDataRouter::class),
+            [],
+            vfsStream::url("test/content/content.htm")
+        );
     }
 
     /**

@@ -35,12 +35,15 @@ class LanguageMenuController extends Controller
      */
     public function __construct()
     {
-        global $pth, $sl, $cf;
+        global $pth, $sl, $cf, $pd_router, $u;
 
         $this->model = new Model(
             $sl,
             $cf['language']['default'],
-            $pth['folder']['plugins'] . 'polyglot/cache/'
+            $pth['folder']['plugins'] . 'polyglot/cache/',
+            $pd_router,
+            $u,
+            $pth['file']['content']
         );
         $this->model->init();
     }

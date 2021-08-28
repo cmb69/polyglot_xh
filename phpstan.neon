@@ -7,5 +7,6 @@ parameters:
   bootstrapFiles:
     - phpstan.php
   scanFiles:
+    - ../../cmsimple/classes/PageDataRouter.php
     - ../../cmsimple/adminfuncs.php
     - ../../cmsimple/functions.php

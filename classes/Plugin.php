@@ -35,12 +35,15 @@ class Plugin
      */
     public function __construct()
     {
-        global $pth, $sl, $cf;
+        global $pth, $sl, $cf, $pd_router, $u;
 
         $this->model = new Model(
             $sl,
             $cf['language']['default'],
-            $pth['folder']['plugins'] . 'polyglot/cache/'
+            $pth['folder']['plugins'] . 'polyglot/cache/',
+            $pd_router,
+            $u,
+            $pth['file']['content']
         );
     }
 
@@ -53,7 +56,7 @@ class Plugin
     {
         global $pd_router;
 
-        $this->updateCache();
+        $this->model->init();
         $pd_router->add_interest('polyglot_tag');
         if (defined('XH_ADM') && XH_ADM) {
             XH_registerStandardPluginMenuItems(true);
@@ -63,40 +66,6 @@ class Plugin
             }
         }
         (new AlternateLinkController($this->model))->defaultAction();
-    }
-
-    /**
-     * Returns whether the cache is stale.
-     *
-     * @return bool
-     */
-    private function isCacheStale()
-    {
-        global $pth;
-
-        $contentLastMod = filemtime($pth['file']['content']);
-        $tagsLastMod = $this->model->lastMod();
-        return $tagsLastMod < $contentLastMod;
-    }
-
-    /**
-     * Updates the cache.
-     *
-     * @return void
-     */
-    private function updateCache()
-    {
-        global $u, $pd_router;
-
-        if ($this->model->init()) {
-            if ($this->isCacheStale()) {
-                if (!$this->model->update($pd_router->find_all(), $u)) {
-                    e('cntsave', 'file', $this->model->tagsFile());
-                }
-            }
-        } else {
-            e('cntopen', 'file', $this->model->tagsFile());
-        }
     }
 
     /**

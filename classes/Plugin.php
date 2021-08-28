@@ -78,11 +78,8 @@ class Plugin
         global $pth;
 
         $contentLastMod = filemtime($pth['file']['content']);
-        $pageDataLastMod = file_exists($pth['file']['pagedata'])
-            ? filemtime($pth['file']['pagedata'])
-            : 0;
         $tagsLastMod = $this->model->lastMod();
-        return $tagsLastMod < max($contentLastMod, $pageDataLastMod);
+        return $tagsLastMod < $contentLastMod;
     }
 
     /**

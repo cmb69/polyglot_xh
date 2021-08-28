@@ -77,9 +77,7 @@ class AlternateLinkController extends Controller
      */
     private function renderAlternateLink($hreflang, $href)
     {
-        return tag(
-            'link rel="alternate" hreflang="' . XH_hsc($hreflang)
-            . '" href="' . XH_hsc($href) . '"'
-        );
+        return '<link rel="alternate" hreflang="' . XH_hsc($hreflang)
+            . '" href="' . XH_hsc($href) . '">';
     }
 }

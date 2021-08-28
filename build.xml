@@ -41,7 +41,10 @@
     </target>
 
     <target name="coverage" description="generates coverage report">
-        <exec command="phpdbg -qrr vendor/phpunit/phpunit/phpunit --configuration coverage.xml" logoutput="true"/>
+        <exec executable="phpunit" passthru="true" checkreturn="true">
+            <arg value="--configuration"/>
+            <arg file="coverage.xml"/>
+        </exec>
     </target>
 
     <target name="build" description="builds distributable ZIP archive">

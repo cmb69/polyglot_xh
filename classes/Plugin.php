@@ -57,9 +57,7 @@ class Plugin
         $this->updateCache();
         $pd_router->add_interest('polyglot_tag');
         if (defined('XH_ADM') && XH_ADM) {
-            if (function_exists('XH_registerStandardPluginMenuItems')) {
-                XH_registerStandardPluginMenuItems(true);
-            }
+            XH_registerStandardPluginMenuItems(true);
             $this->addPageDataTab();
             if (XH_wantsPluginAdministration('polyglot')) {
                 $this->handleAdministration();

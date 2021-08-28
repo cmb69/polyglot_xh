@@ -23,13 +23,25 @@ namespace Polyglot;
 
 class LanguageMenuController extends Controller
 {
+    /** @var string */
+    private $flagsFolder;
+
+    /** @var array<string,string> */
+    private $conf;
+
     /**
      * @var Model
      */
     private $model;
 
-    public function __construct(Model $model)
+    /**
+     * @param string $flagsFolder
+     * @param array<string,string> $conf
+     */
+    public function __construct($flagsFolder, array $conf, Model $model)
     {
+        $this->flagsFolder = $flagsFolder;
+        $this->conf = $conf;
         $this->model = $model;
     }
 
@@ -56,10 +68,8 @@ class LanguageMenuController extends Controller
      */
     private function languageFlag($language)
     {
-        global $pth, $plugin_cf;
-
-        return $pth['folder']['flags'] . $language . '.'
-            . $plugin_cf['polyglot']['flags_extension'];
+        return $this->flagsFolder . $language . '.'
+            . $this->conf['flags_extension'];
     }
 
     /**
@@ -91,10 +101,7 @@ class LanguageMenuController extends Controller
      */
     private function languageLabels()
     {
-        global $plugin_cf;
-
-        $pcf = $plugin_cf['polyglot'];
-        $languages = preg_split('/\r\n|\r|\n/', $pcf['languages_labels']);
+        $languages = preg_split('/\r\n|\r|\n/', $this->conf['languages_labels']);
         assert(is_array($languages));
         $res = array();
         foreach ($languages as $language) {

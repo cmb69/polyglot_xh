@@ -97,8 +97,11 @@ class Plugin
      */
     public static function languageMenu()
     {
+        global $pth, $plugin_cf;
+
+        $controller = new LanguageMenuController($pth['folder']['flags'], $plugin_cf['polyglot'], self::getModel());
         ob_start();
-        (new LanguageMenuController(self::getModel()))->defaultAction();
+        $controller->defaultAction();
         return (string) ob_get_clean();
     }
 

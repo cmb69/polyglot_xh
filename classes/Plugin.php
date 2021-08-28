@@ -28,19 +28,19 @@ class Plugin
      *
      * @return void
      */
-    public function run()
+    public static function run()
     {
         global $pd_router;
 
         $pd_router->add_interest('polyglot_tag');
         if (defined('XH_ADM') && XH_ADM) {
             XH_registerStandardPluginMenuItems(true);
-            $this->addPageDataTab();
+            self::addPageDataTab();
             if (XH_wantsPluginAdministration('polyglot')) {
-                $this->handleAdministration();
+                self::handleAdministration();
             }
         }
-        (new AlternateLinkController($this->getModel()))->defaultAction();
+        (new AlternateLinkController(self::getModel()))->defaultAction();
     }
 
     /**
@@ -48,7 +48,7 @@ class Plugin
      *
      * @return void
      */
-    private function addPageDataTab()
+    private static function addPageDataTab()
     {
         global $pth, $pd_router, $plugin_tx;
 
@@ -61,7 +61,7 @@ class Plugin
     /**
      * @return void
      */
-    private function handleAdministration()
+    private static function handleAdministration()
     {
         global $admin, $o;
 
@@ -69,12 +69,12 @@ class Plugin
         switch ($admin) {
             case '':
                 ob_start();
-                $this->renderInfo();
+                self::renderInfo();
                 $o .= (string) ob_get_clean();
                 break;
             case 'plugin_main':
                 ob_start();
-                (new MainAdminController($this->getModel()))->defaultAction();
+                (new MainAdminController(self::getModel()))->defaultAction();
                 $o .= ob_get_clean();
                 break;
             default:
@@ -85,7 +85,7 @@ class Plugin
     /**
      * @return void
      */
-    private function renderInfo()
+    private static function renderInfo()
     {
         $view = new View('info');
         $view->render([
@@ -97,7 +97,7 @@ class Plugin
     /**
      * @return Model
      */
-    private function getModel()
+    private static function getModel()
     {
         global $pth, $sl, $cf, $pd_router, $u;
 

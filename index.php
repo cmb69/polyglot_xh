@@ -36,4 +36,4 @@ function Polyglot_languageMenu()
     return (string) ob_get_clean();
 }
 
-(new Polyglot\Plugin)->run();
+Polyglot\Plugin::run();

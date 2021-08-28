@@ -34,15 +34,19 @@ class LanguageMenuController extends Controller
      */
     private $model;
 
+    /** @var View */
+    private $view;
+
     /**
      * @param string $flagsFolder
      * @param array<string,string> $conf
      */
-    public function __construct($flagsFolder, array $conf, Model $model)
+    public function __construct($flagsFolder, array $conf, Model $model, View $view)
     {
         $this->flagsFolder = $flagsFolder;
         $this->conf = $conf;
         $this->model = $model;
+        $this->view = $view;
     }
 
     /**
@@ -58,8 +62,7 @@ class LanguageMenuController extends Controller
             $alt = XH_hsc($this->getAltAttribute($language));
             $languages[$language] = compact('href', 'src', 'alt');
         }
-        $view = new View('languagemenu');
-        $view->render(['languages' => $languages]);
+        $this->view->render('languagemenu', ['languages' => $languages]);
     }
 
     /**

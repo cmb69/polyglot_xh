@@ -72,7 +72,7 @@ class Plugin
                 break;
             case 'plugin_main':
                 ob_start();
-                (new MainAdminController(self::getModel()))->defaultAction();
+                (new MainAdminController(self::getModel(), new View()))->defaultAction();
                 $o .= ob_get_clean();
                 break;
             default:
@@ -85,8 +85,7 @@ class Plugin
      */
     private static function renderInfo()
     {
-        $view = new View('info');
-        $view->render([
+        (new View())->render('info', [
             'checks' => (new SystemCheckService)->getChecks(),
             'version' => self::VERSION,
         ]);
@@ -99,7 +98,12 @@ class Plugin
     {
         global $pth, $plugin_cf;
 
-        $controller = new LanguageMenuController($pth['folder']['flags'], $plugin_cf['polyglot'], self::getModel());
+        $controller = new LanguageMenuController(
+            $pth['folder']['flags'],
+            $plugin_cf['polyglot'],
+            self::getModel(),
+            new View()
+        );
         ob_start();
         $controller->defaultAction();
         return (string) ob_get_clean();
@@ -111,7 +115,7 @@ class Plugin
      */
     public static function pageDataView(array $pageData)
     {
-        $command = new PageDataTabController($pageData);
+        $command = new PageDataTabController($pageData, new View());
         ob_start();
         $command->defaultAction();
         return (string) ob_get_clean();

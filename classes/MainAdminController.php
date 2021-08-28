@@ -28,9 +28,13 @@ class MainAdminController extends Controller
      */
     private $model;
 
-    public function __construct(Model $model)
+    /** @var View */
+    private $view;
+
+    public function __construct(Model $model, View $view)
     {
         $this->model = $model;
+        $this->view = $view;
     }
 
     /**
@@ -56,8 +60,7 @@ class MainAdminController extends Controller
             }
             $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
         }
-        $view = new View('admin');
-        $view->render([
+        $this->view->render('admin', [
             'languages' => $languages,
             'pages' => $pages,
         ]);

@@ -28,12 +28,16 @@ class PageDataTabController extends Controller
      */
     private $pageData;
 
+    /** @var View */
+    private $view;
+
     /**
      * @param array<string,string> $pageData
      */
-    public function __construct(array $pageData)
+    public function __construct(array $pageData, View $view)
     {
         $this->pageData = $pageData;
+        $this->view = $view;
     }
 
     /**
@@ -43,8 +47,7 @@ class PageDataTabController extends Controller
     {
         global $sn, $su, $tx;
 
-        $view = new View('tab');
-        $view->render([
+        $this->view->render('tab', [
             'action' => $sn . '?' . $su,
             'tag' => $this->pageData['polyglot_tag'],
             'submit' => ucfirst($tx['action']['save']),

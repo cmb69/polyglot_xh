@@ -34,14 +34,6 @@ class View
     private $data = array();
 
     /**
-     * @param string $template
-     */
-    public function __construct($template)
-    {
-        $this->template = $template;
-    }
-
-    /**
      * @param string $name
      * @return string
      */
@@ -102,13 +94,15 @@ class View
     }
 
     /**
+     * @param string $template
      * @param array<string,mixed> $data
      * @return void
      */
-    public function render(array $data)
+    public function render($template, array $data)
     {
         global $pth;
 
+        $this->template = $template;
         $this->data = $data;
         echo "<!-- {$this->template} -->", PHP_EOL;
         include "{$pth['folder']['plugins']}polyglot/views/{$this->template}.php";

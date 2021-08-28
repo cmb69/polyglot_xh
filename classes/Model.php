@@ -118,7 +118,7 @@ class Model
     {
         $filename = $this->tagsFile();
         return file_exists($filename)
-            ? filemtime($filename)
+            ? (int) filemtime($filename)
             : 0;
     }
 

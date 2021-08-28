@@ -104,6 +104,7 @@ class LanguageMenuController extends Controller
 
         $pcf = $plugin_cf['polyglot'];
         $languages = preg_split('/\r\n|\r|\n/', $pcf['languages_labels']);
+        assert(is_array($languages));
         $res = array();
         foreach ($languages as $language) {
             list($key, $value) = explode('=', $language);

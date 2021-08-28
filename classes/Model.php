@@ -36,11 +36,6 @@ class Model
     /**
      * @var string
      */
-    private $baseFolder;
-
-    /**
-     * @var string
-     */
     private $dataFolder;
 
     /**
@@ -51,14 +46,12 @@ class Model
     /**
      * @param string $language
      * @param string $defaultLang
-     * @param string $baseFolder
      * @param string $dataFolder
      */
-    public function __construct($language, $defaultLang, $baseFolder, $dataFolder)
+    public function __construct($language, $defaultLang, $dataFolder)
     {
         $this->language = (string) $language;
         $this->defaultLanguage = (string) $defaultLang;
-        $this->baseFolder = (string) $baseFolder;
         $this->dataFolder = (string) $dataFolder;
     }
 

@@ -40,7 +40,6 @@ class Plugin
         $this->model = new Model(
             $sl,
             $cf['language']['default'],
-            $pth['folder']['base'],
             $pth['folder']['plugins'] . 'polyglot/cache/'
         );
     }

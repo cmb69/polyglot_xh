@@ -12,20 +12,5 @@
 }
 .polyglot_translations td {
     border: 1px solid #888;
-}
-.polyglot_translations td {
     padding: 0 0.2em;
-}
-
-/*
- * Info view
- */
-.polyglot_logo {
-    float: left;
-    width: 128px;
-    height: 128px;
-    margin: 0 1.5em 0.5em 0;
-}
-.polyglot_license {
-    text-align: justify;
 }

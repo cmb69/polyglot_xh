@@ -33,7 +33,7 @@ function Polyglot_languageMenu()
 {
     ob_start();
     (new Polyglot\LanguageMenuController)->defaultAction();
-    return ob_get_clean();
+    return (string) ob_get_clean();
 }
 
 (new Polyglot\Plugin)->run();

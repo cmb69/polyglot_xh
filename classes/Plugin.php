@@ -26,7 +26,7 @@ class Plugin
     /**
      * The model instance.
      *
-     * @var object
+     * @var Model
      */
     protected $model;
 

@@ -26,7 +26,7 @@ class LanguageMenuController extends Controller
     /**
      * The model instance.
      *
-     * @var object
+     * @var Model
      */
     private $model;
 

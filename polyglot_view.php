@@ -31,5 +31,5 @@ function Polyglot_view(array $pageData)
     $command = new Polyglot\PageDataTabController($pageData);
     ob_start();
     $command->defaultAction();
-    return ob_get_clean();
+    return (string) ob_get_clean();
 }

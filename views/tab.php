@@ -1,3 +1,14 @@
+<?php
+
+use Polyglot\View;
+
+/**
+ * @var View $this
+ * @var string $action
+ * @var string $tag
+ * @var string $submit
+ */
+?>
 <form id="polyglot_pagedata" action="<?=$this->escape($action)?>" method="post" onsubmit="return true">
     <div>
         <label for="polyglot_tag">Tag</label><br/>

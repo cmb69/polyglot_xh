@@ -1,3 +1,13 @@
+<?php
+
+use Polyglot\View;
+
+/**
+ * @var View $this
+ * @var string[] $languages
+ * @var array<string,mixed> $pages
+ */
+?>
 <h1>Polyglot – <?=$this->text('label_translations')?></h1>
 <div class="polyglot_translations">
     <table>

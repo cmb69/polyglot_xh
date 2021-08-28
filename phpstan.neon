@@ -2,6 +2,7 @@ parameters:
   level: 7
   paths:
     - classes/
+    - views/
     - index.php
   bootstrapFiles:
     - phpstan.php
@@ -9,3 +10,6 @@ parameters:
     - ../../cmsimple/classes/PageDataRouter.php
     - ../../cmsimple/adminfuncs.php
     - ../../cmsimple/functions.php
+  ignoreErrors:
+    - message: '/Call to protected method [a-zA-Z0-9\\_]+\(\) of class Polyglot\\View\./'
+      path: views/

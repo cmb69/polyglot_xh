@@ -21,10 +21,6 @@
 
 namespace Polyglot;
 
-require_once './vendor/autoload.php';
-require_once '../../cmsimple/functions.php';
-require_once './classes/model.php';
-
 use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;

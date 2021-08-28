@@ -24,15 +24,10 @@ namespace Polyglot;
 class LanguageMenuController extends Controller
 {
     /**
-     * The model instance.
-     *
      * @var Model
      */
     private $model;
 
-    /**
-     * Initializes a new instance.
-     */
     public function __construct()
     {
         global $pth, $sl, $cf, $pd_router, $u;

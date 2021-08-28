@@ -34,27 +34,13 @@ function XH_secondLanguages()
     return ["de"];
 }
 
-/**
- * Testing the model.
- *
- * @category Testing
- * @package  Polyglot
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Polyglot_XH
- */
 class ModelTest extends TestCase
 {
     /**
-     * The test subject.
-     *
      * @var Model
      */
     protected $model;
 
-    /**
-     * Sets up the test fixture.
-     */
     public function setUp(): void
     {
         vfsStreamWrapper::register();
@@ -74,8 +60,6 @@ class ModelTest extends TestCase
     }
 
     /**
-     * Tests ::tagsFile().
-     *
      * @return void
      */
     public function testTagsFile()
@@ -86,8 +70,6 @@ class ModelTest extends TestCase
     }
 
     /**
-     * Tests ::otherLanguages().
-     *
      * @return void
      */
     public function testOtherLanguages()
@@ -98,12 +80,8 @@ class ModelTest extends TestCase
     }
 
     /**
-     * Tests that the language URL contains the TLD, even if this is the same
-     * as the language.
-     *
-     * @link email://C824A36AF8B46744B2AC8F8F671C5ED945D6468116@VServer-02
-     *
      * @return void
+     * @link email://C824A36AF8B46744B2AC8F8F671C5ED945D6468116@VServer-02
      */
     public function testLanguageUrlContainsTld()
     {

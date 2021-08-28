@@ -26,8 +26,6 @@ class Plugin
     const VERSION = "1.0beta2";
 
     /**
-     * Dispatches according to request.
-     *
      * @return void
      */
     public static function run()
@@ -46,8 +44,6 @@ class Plugin
     }
 
     /**
-     * Adds the page data tab.
-     *
      * @return void
      */
     private static function addPageDataTab()

@@ -34,8 +34,6 @@ class AlternateLinkController extends Controller
     }
 
     /**
-     * Returns the alternate hreflang links.
-     *
      * @return void
      */
     public function defaultAction()

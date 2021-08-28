@@ -24,30 +24,6 @@ namespace Polyglot;
 class Plugin
 {
     /**
-     * The model instance.
-     *
-     * @var Model
-     */
-    protected $model;
-
-    /**
-     * Initializes a new instance.
-     */
-    public function __construct()
-    {
-        global $pth, $sl, $cf, $pd_router, $u;
-
-        $this->model = new Model(
-            $sl,
-            $cf['language']['default'],
-            $pth['folder']['plugins'] . 'polyglot/cache/',
-            $pd_router,
-            $u,
-            $pth['file']['content']
-        );
-    }
-
-    /**
      * Dispatches according to request.
      *
      * @return void
@@ -64,7 +40,7 @@ class Plugin
                 $this->handleAdministration();
             }
         }
-        (new AlternateLinkController($this->model))->defaultAction();
+        (new AlternateLinkController($this->getModel()))->defaultAction();
     }
 
     /**
@@ -98,7 +74,7 @@ class Plugin
                 break;
             case 'plugin_main':
                 ob_start();
-                (new MainAdminController($this->model))->defaultAction();
+                (new MainAdminController($this->getModel()))->defaultAction();
                 $o .= ob_get_clean();
                 break;
             default:
@@ -116,5 +92,22 @@ class Plugin
             'checks' => (new SystemCheckService)->getChecks(),
             'version' => POLYGLOT_VERSION,
         ]);
+    }
+
+    /**
+     * @return Model
+     */
+    private function getModel()
+    {
+        global $pth, $sl, $cf, $pd_router, $u;
+
+        return new Model(
+            $sl,
+            $cf['language']['default'],
+            $pth['folder']['plugins'] . 'polyglot/cache/',
+            $pd_router,
+            $u,
+            $pth['file']['content']
+        );
     }
 }

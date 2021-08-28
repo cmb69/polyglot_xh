@@ -8,9 +8,9 @@ use Polyglot\View;
  */
 ?>
 <?php foreach($languages as $language):?>
-<a href="<?=$language['href']?>">
-  <img src="<?=$language['src']?>"
-     alt="<?=$language['alt']?>"
-     title="<?=$language['alt']?>"/>
+<a href="<?=$this->escape($language['href'])?>">
+  <img src="<?=$this->escape($language['src'])?>"
+     alt="<?=$this->escape($language['alt'])?>"
+     title="<?=$this->escape($language['alt'])?>"/>
 </a>
 <?php endforeach?>

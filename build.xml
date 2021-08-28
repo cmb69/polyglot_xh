@@ -28,7 +28,11 @@
     </target>
 
     <target name="compat" description="checks compatibility with PHP_CompatInfo">
-        <exec command="phpcompatinfo analyser:run --alias current" logoutput="true"/>
+        <exec executable="phpcompatinfo" passthru="true" checkreturn="true">
+            <arg value="--ansi"/>
+            <arg value="analyser:run"/>
+            <arg file="classes"/>
+        </exec>
     </target>
 
     <target name="unit-tests" description="runs all unit tests">
@@ -56,7 +60,6 @@
                 <exclude name="build.xml"/>
                 <exclude name="composer.*"/>
                 <exclude name="coverage.xml"/>
-                <exclude name="phpcompatinfo.json"/>
                 <exclude name="tests/**"/>
             </fileset>
         </move>

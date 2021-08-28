@@ -56,7 +56,6 @@ class Plugin
     {
         global $pd_router;
 
-        $this->model->init();
         $pd_router->add_interest('polyglot_tag');
         if (defined('XH_ADM') && XH_ADM) {
             XH_registerStandardPluginMenuItems(true);

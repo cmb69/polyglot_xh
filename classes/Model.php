@@ -41,9 +41,9 @@ class Model
     private $dataFolder;
 
     /**
-     * @var array<string,array>
+     * @var array<string,array>|null
      */
-    private $tags;
+    private $tags = null;
 
     /** @var PageDataRouter */
     private $pageDataRouter;
@@ -125,7 +125,7 @@ class Model
     /**
      * @return void
      */
-    public function init()
+    private function init()
     {
         $filename = $this->tagsFile();
         if (!is_readable($filename)) {
@@ -183,6 +183,9 @@ class Model
         if ($language != $this->defaultLanguage) {
             $res .= $language . '/';
         }
+        if ($this->tags === null) {
+            $this->init();
+        }
         if (isset($this->tags[$tag][$language])) {
             $res .= '?' . $this->tags[$tag][$language];
         }
@@ -208,6 +211,9 @@ class Model
      */
     public function isTranslated($tag, $language)
     {
+        if ($this->tags === null) {
+            $this->init();
+        }
         return isset($this->tags[$tag][$language]);
     }
 }

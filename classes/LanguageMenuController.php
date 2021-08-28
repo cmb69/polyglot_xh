@@ -45,7 +45,6 @@ class LanguageMenuController extends Controller
             $u,
             $pth['file']['content']
         );
-        $this->model->init();
     }
 
     /**

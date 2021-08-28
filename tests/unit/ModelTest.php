@@ -61,11 +61,13 @@ class ModelTest extends TestCase
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
         mkdir(vfsStream::url('test/de'));
         touch(vfsStream::url('test/de/.2lang'));
+        $pageDataRouter = $this->createStub(PageDataRouter::class);
+        $pageDataRouter->method('find_all')->willReturn([]);
         $this->model = new Model(
             'en',
             'en',
             vfsStream::url('test/'),
-            $this->createStub(PageDataRouter::class),
+            $pageDataRouter,
             [],
             vfsStream::url("test/content/content.htm")
         );

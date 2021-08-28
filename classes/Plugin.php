@@ -131,7 +131,9 @@ class Plugin
         $o .= print_plugin_admin('on');
         switch ($admin) {
             case '':
-                $o .= $this->info();
+                ob_start();
+                $this->renderInfo();
+                $o .= (string) ob_get_clean();
                 break;
             case 'plugin_main':
                 ob_start();
@@ -144,9 +146,9 @@ class Plugin
     }
 
     /**
-     * @return string
+     * @return void
      */
-    private function info()
+    private function renderInfo()
     {
         global $pth;
 
@@ -154,6 +156,6 @@ class Plugin
         $view->checks = (new SystemCheckService)->getChecks();
         $view->icon = $pth['folder']['plugins'] . 'polyglot/polyglot.png';
         $view->version = POLYGLOT_VERSION;
-        return (string) $view;
+        $view->render();
     }
 }

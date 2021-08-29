@@ -57,9 +57,9 @@ class LanguageMenuController
         $languages = array();
 
         foreach ($this->model->otherLanguages() as $language) {
-            $href = XH_hsc($this->languageURL($language));
+            $href = $this->languageURL($language);
             $src = $this->languageFlag($language);
-            $alt = XH_hsc($this->getAltAttribute($language));
+            $alt = $this->getAltAttribute($language);
             $languages[$language] = compact('href', 'src', 'alt');
         }
         $this->view->render('languagemenu', ['languages' => $languages]);

@@ -18,7 +18,7 @@ jobs:
         with:
           path: cmsimplexh/plugins/polyglot
       - name: phive install
-        run: cd cmsimplexh/plugins/polyglot && phive --no-progress install --trust-gpg-keys 0x0F9684B8B16B7AB0,0x2420BAE0A3BE25C6,0x31C7E470E2138192,0x4AA394086372C20A
+        run: cd cmsimplexh/plugins/polyglot && phive --no-progress install --trust-gpg-keys 0x0F9684B8B16B7AB0,0x31C7E470E2138192,0x4AA394086372C20A,0xD5F0CB76E2DD74F8
       - name: composer install
         run: cd cmsimplexh/plugins/polyglot && composer install
       - name: phing sniff

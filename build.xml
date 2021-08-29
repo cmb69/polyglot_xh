@@ -76,7 +76,9 @@
   </target>
 
   <target name="build" description="builds distributable ZIP archive">
-    <exec command="git archive -o export.zip HEAD" checkreturn="true"/>
+    <exec executable="git" passthru="true" checkreturn="true">
+      <arg line="archive -o export.zip HEAD"/>
+    </exec>
     <unzip file="export.zip" todir="export"/>
     <delete file="export.zip"/>
     <move todir="dist">

@@ -4,7 +4,7 @@ use Polyglot\View;
 
 /**
  * @var View $this
- * @var stdClass[] $checks
+ * @var array<int,stdClass> $checks
  * @var string $version
  */
 ?>

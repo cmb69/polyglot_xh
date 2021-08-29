@@ -4,8 +4,8 @@ use Polyglot\View;
 
 /**
  * @var View $this
- * @var string[] $languages
- * @var array<string,mixed> $pages
+ * @var array<int,string> $languages
+ * @var array<string,array{heading:string,url:string,indent:int,tag:string,translations:array<string,?string>}> $pages
  */
 ?>
 <h1>Polyglot – <?=$this->text('label_translations')?></h1>

@@ -4,7 +4,7 @@ use Polyglot\View;
 
 /**
  * @var View $this
- * @var array<string,array> $languages
+ * @var array<string,array{href:string,src:string,alt:string}> $languages
  */
 ?>
 <?php foreach($languages as $language):?>

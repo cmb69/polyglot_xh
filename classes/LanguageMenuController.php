@@ -87,11 +87,11 @@ class LanguageMenuController extends Controller
         $labels = $this->languageLabels();
         if (isset($labels[$language])) {
             if ($this->model->isTranslated($tag, $language)
-                || !isset($labels[$language][1])
+                || !isset($labels[$language]["untranslated"])
             ) {
-                $alt = $labels[$language][0];
+                $alt = $labels[$language]["translated"];
             } else {
-                $alt = $labels[$language][1];
+                $alt = $labels[$language]["untranslated"];
             }
         } else {
             $alt = $language;
@@ -100,7 +100,7 @@ class LanguageMenuController extends Controller
     }
 
     /**
-     * @return array<string,array>
+     * @return array<string,array{translated:string,untranslated?:string}>
      */
     private function languageLabels()
     {
@@ -108,8 +108,12 @@ class LanguageMenuController extends Controller
         assert(is_array($languages));
         $res = array();
         foreach ($languages as $language) {
-            list($key, $value) = explode('=', $language);
-            $res[$key] = explode(';', $value);
+            list($key, $value) = explode('=', $language, 2);
+            $parts = explode(';', $value, 2);
+            $res[$key]["translated"] = $parts[0];
+            if (isset($parts[1])) {
+                $res[$key]["untranslated"] = $parts[1];
+            }
         }
         return $res;
     }

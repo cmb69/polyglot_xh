@@ -2,6 +2,11 @@
 
 use Polyglot\View;
 
+if (!isset($this)) {
+    header("HTTP/1.1 404 Not found");
+    exit;
+}
+
 /**
  * @var View $this
  * @var array<string,array{href:string,src:string,alt:string}> $languages

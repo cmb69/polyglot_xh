@@ -50,6 +50,31 @@
     </exec>
   </target>
 
+  <target name="gen-help" description="builds help.htm from README.md">
+    <exec executable="pandoc" passthru="true" checkreturn="true">
+      <arg value="-s"/>
+      <arg value="--eol=lf"/>
+      <arg value="--template=help/template.htm"/>
+      <arg value="-Vlang=en"/>
+      <arg line="-Vpagetitle=&quot;User Manual&quot;"/>
+      <arg value="-o"/>
+      <arg file="help/help.htm"/>
+      <arg file="README.md"/>
+      <arg line="-t html"/>
+    </exec>
+    <exec executable="pandoc" passthru="true" checkreturn="true">
+      <arg value="-s"/>
+      <arg value="--eol=lf"/>
+      <arg value="--template=help/template.htm"/>
+      <arg value="-Vlang=de"/>
+      <arg line="-Vpagetitle=&quot;Benutzerhandbuch&quot;"/>
+      <arg value="-o"/>
+      <arg file="help/help_de.htm"/>
+      <arg file="README_de.md"/>
+      <arg line="-t html"/>
+    </exec>
+  </target>
+
   <target name="build" description="builds distributable ZIP archive">
     <exec command="git archive -o export.zip HEAD" checkreturn="true"/>
     <unzip file="export.zip" todir="export"/>
@@ -60,6 +85,7 @@
         <exclude name="build.xml"/>
         <exclude name="composer.*"/>
         <exclude name="coverage.xml"/>
+        <exclude name="README*.md"/>
         <exclude name="tests/**"/>
       </fileset>
     </move>

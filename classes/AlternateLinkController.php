@@ -48,9 +48,11 @@ class AlternateLinkController
 
         $links = [];
         $tag = $this->model->pageTag($s);
-        foreach ($this->model->languages() as $language) {
-            if ($this->model->isTranslated($tag, $language)) {
-                $links = array_merge($links, $this->alternateLinksFor($language, $tag));
+        if ($tag !== null) {
+            foreach ($this->model->languages() as $language) {
+                if ($this->model->isTranslated($tag, $language)) {
+                    $links = array_merge($links, $this->alternateLinksFor($language, $tag));
+                }
             }
         }
         ob_start();

@@ -179,6 +179,7 @@ class Model
         if ($this->tags === null) {
             $this->init();
         }
+        assert(is_array($this->tags));
         if (isset($this->tags[$tag][$language])) {
             $res .= '?' . $this->tags[$tag][$language];
         }
@@ -187,7 +188,7 @@ class Model
 
     private function getInstallationUrl(): string
     {
-        return preg_replace(
+        return (string) preg_replace(
             array('/index\.php$/', '/(?<=\/)' . $this->language . '\/$/'),
             '',
             CMSIMPLE_URL
@@ -199,6 +200,7 @@ class Model
         if ($this->tags === null) {
             $this->init();
         }
+        assert(is_array($this->tags));
         return isset($this->tags[$tag][$language]);
     }
 }

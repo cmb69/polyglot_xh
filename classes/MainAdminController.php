@@ -60,11 +60,13 @@ class MainAdminController
             $indent = $this->pages->level($i) - 1;
             $tag = $this->model->pageTag($i);
             $translations = array();
-            foreach ($languages as $language) {
-                $translations[$language]
-                    = $this->model->isTranslated($tag, $language)
-                        ? $this->model->languageURL($language, $tag) . '&amp;edit'
-                        : null;
+            if ($tag !== null) {
+                foreach ($languages as $language) {
+                    $translations[$language]
+                        = $this->model->isTranslated($tag, $language)
+                            ? $this->model->languageURL($language, $tag) . '&amp;edit'
+                            : null;
+                }
             }
             $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
         }

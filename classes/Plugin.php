@@ -21,6 +21,8 @@
 
 namespace Polyglot;
 
+use XH\Pages;
+
 class Plugin
 {
     const VERSION = "1.0beta2";
@@ -72,7 +74,7 @@ class Plugin
                 break;
             case 'plugin_main':
                 ob_start();
-                (new MainAdminController(self::getModel(), new View()))->defaultAction();
+                (new MainAdminController(new Pages(), self::getModel(), new View()))->defaultAction();
                 $o .= ob_get_clean();
                 break;
             default:

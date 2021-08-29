@@ -21,8 +21,15 @@
 
 namespace Polyglot;
 
+use XH\Pages;
+
 class MainAdminController
 {
+    /**
+     * @var Pages
+     */
+    private $pages;
+
     /**
      *  @var Model
      */
@@ -31,8 +38,9 @@ class MainAdminController
     /** @var View */
     private $view;
 
-    public function __construct(Model $model, View $view)
+    public function __construct(Pages $pages, Model $model, View $view)
     {
+        $this->pages = $pages;
         $this->model = $model;
         $this->view = $view;
     }
@@ -42,14 +50,14 @@ class MainAdminController
      */
     public function defaultAction()
     {
-        global $sn, $cl, $h, $l, $u;
+        global $sn;
 
         $languages = $this->model->otherLanguages();
         $pages = array();
-        for ($i = 0; $i < $cl; $i++) {
-            $heading = $h[$i];
-            $url = $sn . '?' . $u[$i] . '&amp;edit';
-            $indent = $l[$i] - 1;
+        for ($i = 0; $i < $this->pages->getCount(); $i++) {
+            $heading = $this->pages->heading($i);
+            $url = $sn . '?' . $this->pages->url($i) . '&amp;edit';
+            $indent = $this->pages->level($i) - 1;
             $tag = $this->model->pageTag($i);
             $translations = array();
             foreach ($languages as $language) {

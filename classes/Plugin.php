@@ -82,10 +82,7 @@ class Plugin
         }
     }
 
-    /**
-     * @return string
-     */
-    public static function languageMenu()
+    public static function languageMenu(): string
     {
         global $pth, $plugin_cf;
 
@@ -102,9 +99,8 @@ class Plugin
 
     /**
      * @param array<string,string> $pageData
-     * @return string
      */
-    public static function pageDataView(array $pageData)
+    public static function pageDataView(array $pageData): string
     {
         $command = new PageDataTabController($pageData, new View());
         ob_start();
@@ -112,10 +108,7 @@ class Plugin
         return (string) ob_get_clean();
     }
 
-    /**
-     * @return Model
-     */
-    private static function getModel()
+    private static function getModel(): Model
     {
         global $pth, $sl, $cf, $pd_router, $u;
 

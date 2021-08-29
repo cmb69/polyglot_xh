@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 class InfoControllerTest extends TestCase
 {
-    public function testDefaultAction()
+    public function testDefaultAction(): void
     {
         $systemChecks = ["foo" => "bar"];
         $systemCheckService = $this->createStub(SystemCheckService::class);

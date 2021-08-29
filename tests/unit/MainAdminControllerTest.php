@@ -26,7 +26,7 @@ use XH\Pages;
 
 class MainAdminControllerTest extends TestCase
 {
-    public function testDefaultAction()
+    public function testDefaultAction(): void
     {
         $pages = $this->createStub(Pages::class);
         $pages->method("getCount")->willReturn(2);
@@ -36,6 +36,7 @@ class MainAdminControllerTest extends TestCase
 
         $model = $this->createStub(Model::class);
         $model->method("otherLanguages")->willReturn(["de", "fr"]);
+        $model->method("pageTag")->willReturnOnConsecutiveCalls("foo", "bar");
         $model->method("isTranslated")->willReturn(true, false, false, true);
         $model->method("languageURL")->willReturnOnConsecutiveCalls("?foo-de", "?bar-fr");
        
@@ -49,14 +50,14 @@ class MainAdminControllerTest extends TestCase
                         "heading" => "Foo",
                         "url" => "?foo&amp;edit",
                         "indent" => 0,
-                        "tag" => null,
+                        "tag" => "foo",
                         "translations" => ["de" => "?foo-de&amp;edit", "fr" => null],
                     ],
                     [
                         "heading" => "Bar",
                         "url" => "?bar&amp;edit",
                         "indent" => 1,
-                        "tag" => null,
+                        "tag" => "bar",
                         "translations" => ["de" => null, "fr" => "?bar-fr&amp;edit"],
                     ],
                 ],

@@ -59,11 +59,9 @@ class AlternateLinkController
     }
 
     /**
-     * @param string $language
-     * @param string $tag
      * @return array<int,array{hreflang:string,href:string}>
      */
-    private function alternateLinksFor($language, $tag)
+    private function alternateLinksFor(string $language, string $tag): array
     {
         global $cf;
 
@@ -77,11 +75,9 @@ class AlternateLinkController
     }
 
     /**
-     * @param string $hreflang
-     * @param string $href
      * @return array{hreflang:string,href:string}
      */
-    private function renderAlternateLink($hreflang, $href)
+    private function renderAlternateLink(string $hreflang, string $href): array
     {
         return compact('hreflang', 'href');
     }

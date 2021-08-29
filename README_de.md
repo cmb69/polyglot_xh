@@ -23,7 +23,7 @@ genannte
 ## Voraussetzungen
 
 Polyglot_XH ist ein Plugin für CMSimple_XH.
-Es benötigt CMSimple_XH ≥ 1.7.0 und PHP ≥ 5.4.0.
+Es benötigt CMSimple_XH ≥ 1.7.0 und PHP ≥ 7.0.0.
 
 ## Download
 

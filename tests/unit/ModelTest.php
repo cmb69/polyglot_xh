@@ -69,10 +69,7 @@ class ModelTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @return void
-     */
-    public function testOtherLanguages()
+    public function testOtherLanguages(): void
     {
         $expected = array('de');
         $actual = $this->model->otherLanguages();
@@ -80,10 +77,9 @@ class ModelTest extends TestCase
     }
 
     /**
-     * @return void
      * @link email://C824A36AF8B46744B2AC8F8F671C5ED945D6468116@VServer-02
      */
-    public function testLanguageUrlContainsTld()
+    public function testLanguageUrlContainsTld(): void
     {
         $this->assertEquals('http://foo.en/de/', $this->model->languageURL('de', 'unknown'));
     }

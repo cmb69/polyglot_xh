@@ -19,19 +19,15 @@
  * along with Polyglot_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * @return string
- */
-function Polyglot_languageMenu()
+function Polyglot_languageMenu(): string
 {
     return Polyglot\Plugin::languageMenu();
 }
 
 /**
  * @param array<string,string> $pageData
- * @return string
  */
-function Polyglot_view(array $pageData)
+function Polyglot_view(array $pageData): string
 {
     return Polyglot\Plugin::pageDataView($pageData);
 }

@@ -21,6 +21,8 @@
 
 namespace Polyglot;
 
+use stdClass;
+
 class SystemCheckService
 {
     /**
@@ -50,10 +52,10 @@ class SystemCheckService
     /**
      * @return object[]
      */
-    public function getChecks()
+    public function getChecks(): array
     {
         return array(
-            $this->checkPhpVersion('5.4.0'),
+            $this->checkPhpVersion('7.0.0'),
             $this->checkXhVersion('1.7.0'),
             $this->checkWritability("$this->pluginFolder/css/"),
             $this->checkWritability("$this->pluginFolder/cache/"),
@@ -62,11 +64,7 @@ class SystemCheckService
         );
     }
 
-    /**
-     * @param string $version
-     * @return object
-     */
-    private function checkPhpVersion($version)
+    private function checkPhpVersion(string $version): stdClass
     {
         $state = version_compare(PHP_VERSION, $version, 'ge') ? 'success' : 'fail';
         $label = sprintf($this->lang['syscheck_phpversion'], $version);
@@ -74,11 +72,7 @@ class SystemCheckService
         return (object) compact('state', 'label', 'stateLabel');
     }
 
-    /**
-     * @param string $version
-     * @return object
-     */
-    private function checkXhVersion($version)
+    private function checkXhVersion(string $version): stdClass
     {
         $state = version_compare(CMSIMPLE_XH_VERSION, "CMSimple_XH $version", 'ge') ? 'success' : 'fail';
         $label = sprintf($this->lang['syscheck_xhversion'], $version);
@@ -86,11 +80,7 @@ class SystemCheckService
         return (object) compact('state', 'label', 'stateLabel');
     }
 
-    /**
-     * @param string $folder
-     * @return object
-     */
-    private function checkWritability($folder)
+    private function checkWritability(string $folder): stdClass
     {
         $state = is_writable($folder) ? 'success' : 'warning';
         $label = sprintf($this->lang['syscheck_writable'], $folder);

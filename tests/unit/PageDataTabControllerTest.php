@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
 
 class PageDataTabControllerTest extends TestCase
 {
-    public function testDefaultAction()
+    public function testDefaultAction(): void
     {
         global $tx, $sn, $su;
 

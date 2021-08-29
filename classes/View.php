@@ -33,11 +33,7 @@ class View
      */
     private $data = array();
 
-    /**
-     * @param string $key
-     * @return string
-     */
-    protected function text($key)
+    protected function text(string $key): string
     {
         global $plugin_tx;
 
@@ -46,12 +42,7 @@ class View
         return $this->escape(vsprintf($plugin_tx['polyglot'][$key], $args));
     }
 
-    /**
-     * @param string $key
-     * @param int $count
-     * @return string
-     */
-    protected function plural($key, $count)
+    protected function plural(string $key, int $count): string
     {
         global $plugin_tx;
 
@@ -66,11 +57,10 @@ class View
     }
 
     /**
-     * @param string $template
      * @param array<string,mixed> $data
      * @return void
      */
-    public function render($template, array $data)
+    public function render(string $template, array $data)
     {
         global $pth;
 

@@ -25,13 +25,15 @@ use PHPUnit\Framework\TestCase;
 
 class AlternateLinkControllerTest extends TestCase
 {
-    public function testDefaultAction()
+    public function testDefaultAction(): void
     {
-        global $cf;
+        global $cf, $s;
         
         $cf['language']['default'] = "en";
+        $s = 0;
         $model = $this->createStub(Model::class);
         $model->method("languages")->willReturn(["en", "de"]);
+        $model->method("pageTag")->willReturn("foo");
         $model->method("isTranslated")->willReturn(true);
         $model->method("languageURL")->willReturn("http://example.com/");
         $view = $this->createMock(View::class);

@@ -38,10 +38,9 @@ class LanguageMenuController
     private $view;
 
     /**
-     * @param string $flagsFolder
      * @param array<string,string> $conf
      */
-    public function __construct($flagsFolder, array $conf, Model $model, View $view)
+    public function __construct(string $flagsFolder, array $conf, Model $model, View $view)
     {
         $this->flagsFolder = $flagsFolder;
         $this->conf = $conf;
@@ -65,21 +64,13 @@ class LanguageMenuController
         $this->view->render('languagemenu', ['languages' => $languages]);
     }
 
-    /**
-     * @param string $language
-     * @return string
-     */
-    private function languageFlag($language)
+    private function languageFlag(string $language): string
     {
         return $this->flagsFolder . $language . '.'
             . $this->conf['flags_extension'];
     }
 
-    /**
-     * @param string $language
-     * @return string
-     */
-    private function getAltAttribute($language)
+    private function getAltAttribute(string $language): string
     {
         global $s;
 
@@ -102,7 +93,7 @@ class LanguageMenuController
     /**
      * @return array<string,array{translated:string,untranslated?:string}>
      */
-    private function languageLabels()
+    private function languageLabels(): array
     {
         $languages = preg_split('/\r\n|\r|\n/', $this->conf['languages_labels']);
         assert(is_array($languages));
@@ -118,11 +109,7 @@ class LanguageMenuController
         return $res;
     }
 
-    /**
-     * @param string $language
-     * @return string
-     */
-    private function languageURL($language)
+    private function languageURL(string $language): string
     {
         global $s;
 

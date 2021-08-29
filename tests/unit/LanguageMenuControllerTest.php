@@ -25,8 +25,12 @@ use PHPUnit\Framework\TestCase;
 
 class LanguageMenuControllerTest extends TestCase
 {
-    public function testDefaultAction()
+    public function testDefaultAction(): void
     {
+        global $s;
+
+        $s = 1;
+
         $conf = [
             "flags_extension" => "png",
             "languages_labels" => "de=Deutsch;nicht übersetzt\rfr=français",
@@ -34,6 +38,7 @@ class LanguageMenuControllerTest extends TestCase
 
         $model = $this->createStub(Model::class);
         $model->method("otherLanguages")->willReturn(["de", "fr", "it"]);
+        $model->method("pageTag")->willReturn("foo");
 
         $view = $this->createMock(View::class);
         $view->expects($this->once())->method("render")->with(

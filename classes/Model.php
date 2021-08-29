@@ -55,19 +55,15 @@ class Model
     private $contentFile;
 
     /**
-     * @param string $language
-     * @param string $defaultLang
-     * @param string $dataFolder
      * @param string[] $pageUrls
-     * @param string $contentFile
      */
     public function __construct(
-        $language,
-        $defaultLang,
-        $dataFolder,
+        string $language,
+        string $defaultLang,
+        string $dataFolder,
         PageDataRouter $pageDataRouter,
         array $pageUrls,
-        $contentFile
+        string $contentFile
     ) {
         $this->language = (string) $language;
         $this->defaultLanguage = (string) $defaultLang;
@@ -77,10 +73,7 @@ class Model
         $this->contentFile = (string) $contentFile;
     }
 
-    /**
-     * @return string
-     */
-    public function tagsFile()
+    public function tagsFile(): string
     {
         return $this->dataFolder . 'tags.dat';
     }
@@ -88,7 +81,7 @@ class Model
     /**
      * @return string[]
      */
-    public function languages()
+    public function languages(): array
     {
         $languages = XH_secondLanguages();
         $languages[] = $this->defaultLanguage;
@@ -99,7 +92,7 @@ class Model
     /**
      * @return string[]
      */
-    public function otherLanguages()
+    public function otherLanguages(): array
     {
         $res = array();
         $languages = $this->languages();
@@ -111,10 +104,7 @@ class Model
         return $res;
     }
 
-    /**
-     * @return int
-     */
-    private function lastMod()
+    private function lastMod(): int
     {
         $filename = $this->tagsFile();
         return file_exists($filename)
@@ -147,10 +137,7 @@ class Model
         }
     }
 
-    /**
-     * @return bool
-     */
-    private function isCacheStale()
+    private function isCacheStale(): bool
     {
         $contentLastMod = filemtime($this->contentFile);
         $tagsLastMod = $this->lastMod();
@@ -173,10 +160,9 @@ class Model
     }
 
     /**
-     * @param int $index
      * @return ?string
      */
-    public function pageTag($index)
+    public function pageTag(int $index)
     {
         $pageData = $this->pageDataRouter->find_page($index);
         return isset($pageData['polyglot_tag'])
@@ -184,12 +170,7 @@ class Model
             : null;
     }
 
-    /**
-     * @param string $language
-     * @param string $tag
-     * @return string
-     */
-    public function languageURL($language, $tag)
+    public function languageURL(string $language, string $tag): string
     {
         $res = $this->getInstallationUrl();
         if ($language != $this->defaultLanguage) {
@@ -204,10 +185,7 @@ class Model
         return $res;
     }
 
-    /**
-     * @return string
-     */
-    private function getInstallationUrl()
+    private function getInstallationUrl(): string
     {
         return preg_replace(
             array('/index\.php$/', '/(?<=\/)' . $this->language . '\/$/'),
@@ -216,12 +194,7 @@ class Model
         );
     }
 
-    /**
-     * @param string $tag
-     * @param string $language
-     * @return bool
-     */
-    public function isTranslated($tag, $language)
+    public function isTranslated(string $tag, string $language): bool
     {
         if ($this->tags === null) {
             $this->init();

@@ -28,9 +28,15 @@ class AlternateLinkController
      */
     private $model;
 
-    public function __construct(Model $model)
+    /**
+     * @var View
+     */
+    private $view;
+
+    public function __construct(Model $model, View $view)
     {
         $this->model = $model;
+        $this->view = $view;
     }
 
     /**
@@ -40,42 +46,43 @@ class AlternateLinkController
     {
         global $s, $hjs;
 
-        $res = '';
+        $links = [];
         $tag = $this->model->pageTag($s);
         foreach ($this->model->languages() as $language) {
             if ($this->model->isTranslated($tag, $language)) {
-                $res .= $this->alternateLinksFor($language, $tag);
+                $links = array_merge($links, $this->alternateLinksFor($language, $tag));
             }
         }
-        $hjs .= $res;
+        ob_start();
+        $this->view->render('alternate_links', compact('links'));
+        $hjs .= (string) ob_get_clean();
     }
 
     /**
      * @param string $language
      * @param string $tag
-     * @return string
+     * @return array<int,array{hreflang:string,href:string}>
      */
     private function alternateLinksFor($language, $tag)
     {
         global $cf;
 
-        $html = '';
+        $result = [];
         $href = $this->model->languageURL($language, $tag);
         if ($language == $cf['language']['default']) {
-            $html .= $this->renderAlternateLink('x-default', $href) . PHP_EOL;
+            $result[] = $this->renderAlternateLink('x-default', $href);
         }
-        $html .= $this->renderAlternateLink($language, $href) . PHP_EOL;
-        return $html;
+        $result[] = $this->renderAlternateLink($language, $href);
+        return $result;
     }
 
     /**
      * @param string $hreflang
      * @param string $href
-     * @return string
+     * @return array{hreflang:string,href:string}
      */
     private function renderAlternateLink($hreflang, $href)
     {
-        return '<link rel="alternate" hreflang="' . XH_hsc($hreflang)
-            . '" href="' . XH_hsc($href) . '">';
+        return compact('hreflang', 'href');
     }
 }

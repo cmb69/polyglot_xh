@@ -40,7 +40,7 @@ class Plugin
                 self::handleAdministration();
             }
         }
-        (new AlternateLinkController(self::getModel()))->defaultAction();
+        (new AlternateLinkController(self::getModel(), new View()))->defaultAction();
     }
 
     /**

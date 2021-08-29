@@ -67,7 +67,7 @@ class Plugin
         switch ($admin) {
             case '':
                 ob_start();
-                self::renderInfo();
+                (new InfoController(new SystemCheckService(), new View()))->defaultAction();
                 $o .= (string) ob_get_clean();
                 break;
             case 'plugin_main':
@@ -78,17 +78,6 @@ class Plugin
             default:
                 $o .= plugin_admin_common();
         }
-    }
-
-    /**
-     * @return void
-     */
-    private static function renderInfo()
-    {
-        (new View())->render('info', [
-            'checks' => (new SystemCheckService)->getChecks(),
-            'version' => self::VERSION,
-        ]);
     }
 
     /**

@@ -21,7 +21,7 @@
 
 namespace Polyglot;
 
-class MainAdminController extends Controller
+class MainAdminController
 {
     /**
      *  @var Model
@@ -50,7 +50,7 @@ class MainAdminController extends Controller
             $heading = $h[$i];
             $url = $sn . '?' . $u[$i] . '&amp;edit';
             $indent = $l[$i] - 1;
-            $tag = $this->pageTag($i);
+            $tag = $this->model->pageTag($i);
             $translations = array();
             foreach ($languages as $language) {
                 $translations[$language]

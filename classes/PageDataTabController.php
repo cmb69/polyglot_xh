@@ -21,7 +21,7 @@
 
 namespace Polyglot;
 
-class PageDataTabController extends Controller
+class PageDataTabController
 {
     /**
      * @var array<string,string>

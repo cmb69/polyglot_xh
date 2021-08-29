@@ -21,7 +21,7 @@
 
 namespace Polyglot;
 
-class AlternateLinkController extends Controller
+class AlternateLinkController
 {
     /**
      * @var Model
@@ -41,7 +41,7 @@ class AlternateLinkController extends Controller
         global $s, $hjs;
 
         $res = '';
-        $tag = $this->pageTag($s);
+        $tag = $this->model->pageTag($s);
         foreach ($this->model->languages() as $language) {
             if ($this->model->isTranslated($tag, $language)) {
                 $res .= $this->alternateLinksFor($language, $tag);

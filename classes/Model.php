@@ -173,6 +173,18 @@ class Model
     }
 
     /**
+     * @param int $index
+     * @return ?string
+     */
+    public function pageTag($index)
+    {
+        $pageData = $this->pageDataRouter->find_page($index);
+        return isset($pageData['polyglot_tag'])
+            ? $pageData['polyglot_tag']
+            : null;
+    }
+
+    /**
      * @param string $language
      * @param string $tag
      * @return string

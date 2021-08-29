@@ -21,7 +21,7 @@
 
 namespace Polyglot;
 
-class LanguageMenuController extends Controller
+class LanguageMenuController
 {
     /** @var string */
     private $flagsFolder;
@@ -83,7 +83,7 @@ class LanguageMenuController extends Controller
     {
         global $s;
 
-        $tag = $this->pageTag($s);
+        $tag = $this->model->pageTag($s);
         $labels = $this->languageLabels();
         if (isset($labels[$language])) {
             if ($this->model->isTranslated($tag, $language)
@@ -126,7 +126,7 @@ class LanguageMenuController extends Controller
     {
         global $s;
 
-        $tag = $s > 0 ? $this->pageTag($s) : null;
+        $tag = $s > 0 ? $this->model->pageTag($s) : null;
         $res = $this->model->languageURL($language, $tag);
         return $res;
     }

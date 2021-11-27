@@ -30,11 +30,6 @@ class View
     private $lang;
 
     /**
-     * @var string
-     */
-    private $template;
-
-    /**
      * @param array<string,string> $lang
      */
     public function __construct(string $templateDir, array $lang)
@@ -42,11 +37,6 @@ class View
         $this->templateDir = $templateDir;
         $this->lang = $lang;
     }
-
-    /**
-     * @var array<string,mixed>
-     */
-    private $data = array();
 
     public function text(string $key): string
     {
@@ -68,17 +58,13 @@ class View
     }
 
     /**
-     * @param array<string,mixed> $data
+     * @param array<string,mixed> $_data
      * @return void
      */
-    public function render(string $template, array $data)
+    public function render(string $_template, array $_data)
     {
-        $this->template = "{$this->templateDir}/{$template}.php";
-        $this->data = $data;
-        echo "<!-- {$template} -->\n";
-        unset($template, $data);
-        extract($this->data);
-        include $this->template;
+        extract($_data);
+        include "{$this->templateDir}/{$_template}.php";
     }
 
     /**

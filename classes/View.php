@@ -74,7 +74,7 @@ class View
     public function escape($value)
     {
         if ($value instanceof HtmlString) {
-            return $value;
+            return $value->asString();
         } else {
             return XH_hsc($value);
         }

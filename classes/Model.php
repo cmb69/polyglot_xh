@@ -41,7 +41,7 @@ class Model
     private $dataFolder;
 
     /**
-     * @var array<string,array>|null
+     * @var array<string,array<string,string>>|null
      */
     private $tags = null;
 

@@ -23,14 +23,12 @@ namespace Polyglot;
 
 class HtmlString
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $value;
 
     public function __construct(string $string)
     {
-        $this->value = (string) $string;
+        $this->value = $string;
     }
 
     public function asString(): string

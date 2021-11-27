@@ -76,9 +76,8 @@ class View
 
     /**
      * @param string|HtmlString $value
-     * @return string
      */
-    public function esc($value)
+    public function esc($value): string
     {
         if ($value instanceof HtmlString) {
             return $value->asString();

@@ -13,5 +13,5 @@ if (!isset($this)) {
  */
 ?>
 <?php foreach ($links as $link):?>
-<link rel="alternate" hreflang="<?=$this->escape($link['hreflang'])?>" href="<?=$this->escape($link['href'])?>">
+<link rel="alternate" hreflang="<?=$this->esc($link['hreflang'])?>" href="<?=$this->esc($link['href'])?>">
 <?php endforeach?>

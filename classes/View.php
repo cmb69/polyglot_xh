@@ -42,7 +42,7 @@ class View
     {
         $args = func_get_args();
         array_shift($args);
-        return $this->escape(vsprintf($this->lang[$key], $args));
+        return $this->esc(vsprintf($this->lang[$key], $args));
     }
 
     public function plural(string $key, int $count): string
@@ -54,7 +54,7 @@ class View
         }
         $args = func_get_args();
         array_shift($args);
-        return $this->escape(vsprintf($this->lang[$key], $args));
+        return $this->esc(vsprintf($this->lang[$key], $args));
     }
 
     /**
@@ -71,7 +71,7 @@ class View
      * @param mixed $value
      * @return mixed
      */
-    public function escape($value)
+    public function esc($value)
     {
         if ($value instanceof HtmlString) {
             return $value->asString();

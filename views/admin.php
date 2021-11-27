@@ -21,7 +21,7 @@ if (!isset($this)) {
         <th><?=$this->text('label_page')?></th>
         <th><?=$this->text('label_tag')?></th>
 <?php foreach ($languages as $language):?>
-        <th><?=$this->escape($language)?></th>
+        <th><?=$this->esc($language)?></th>
 <?php endforeach?>
       </tr>
     </thead>
@@ -29,13 +29,13 @@ if (!isset($this)) {
 <?php foreach ($pages as $page):?>
       <tr>
         <td>
-          <a href="<?=$this->escape($page['url'])?>" style="padding-left: <?=$this->escape($page['indent'])?>em"><?=$this->escape($page['heading'])?></a>
+          <a href="<?=$this->esc($page['url'])?>" style="padding-left: <?=$this->esc($page['indent'])?>em"><?=$this->esc($page['heading'])?></a>
         </td>
-        <td><?=$this->escape($page['tag'])?></td>
+        <td><?=$this->esc($page['tag'])?></td>
 <?php     foreach ($page['translations'] as $translation):?>
         <td>
 <?php         if (isset($translation)):?>
-          <a href="<?=$this->escape($translation)?>"><?=$this->text('label_ok')?></a>
+          <a href="<?=$this->esc($translation)?>"><?=$this->text('label_ok')?></a>
 <?php         endif?>
         </td>
 <?php     endforeach?>

@@ -13,9 +13,9 @@ if (!isset($this)) {
  */
 ?>
 <?php foreach($languages as $language):?>
-<a href="<?=$this->escape($language['href'])?>">
-  <img src="<?=$this->escape($language['src'])?>"
-     alt="<?=$this->escape($language['alt'])?>"
-     title="<?=$this->escape($language['alt'])?>"/>
+<a href="<?=$this->esc($language['href'])?>">
+  <img src="<?=$this->esc($language['src'])?>"
+     alt="<?=$this->esc($language['alt'])?>"
+     title="<?=$this->esc($language['alt'])?>"/>
 </a>
 <?php endforeach?>

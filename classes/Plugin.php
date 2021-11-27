@@ -42,7 +42,7 @@ class Plugin
                 self::handleAdministration();
             }
         }
-        (new AlternateLinkController(self::getModel(), new View()))->defaultAction();
+        (new AlternateLinkController(self::getModel(), self::view()))->defaultAction();
     }
 
     /**
@@ -69,12 +69,12 @@ class Plugin
         switch ($admin) {
             case '':
                 ob_start();
-                (new InfoController(new SystemCheckService(), new View()))->defaultAction();
+                (new InfoController(new SystemCheckService(), self::view()))->defaultAction();
                 $o .= (string) ob_get_clean();
                 break;
             case 'plugin_main':
                 ob_start();
-                (new MainAdminController(new Pages(), self::getModel(), new View()))->defaultAction();
+                (new MainAdminController(new Pages(), self::getModel(), self::view()))->defaultAction();
                 $o .= ob_get_clean();
                 break;
             default:
@@ -90,7 +90,7 @@ class Plugin
             $pth['folder']['flags'],
             $plugin_cf['polyglot'],
             self::getModel(),
-            new View()
+            self::view()
         );
         ob_start();
         $controller->defaultAction();
@@ -102,7 +102,7 @@ class Plugin
      */
     public static function pageDataView(array $pageData): string
     {
-        $command = new PageDataTabController($pageData, new View());
+        $command = new PageDataTabController($pageData, self::view());
         ob_start();
         $command->defaultAction();
         return (string) ob_get_clean();
@@ -120,5 +120,12 @@ class Plugin
             $u,
             $pth['file']['content']
         );
+    }
+
+    private static function view(): View
+    {
+        global $pth, $plugin_tx;
+
+        return new View("{$pth['folder']['plugins']}polyglot/views", $plugin_tx["polyglot"]);
     }
 }

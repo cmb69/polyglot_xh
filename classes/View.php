@@ -23,10 +23,25 @@ namespace Polyglot;
 
 class View
 {
+    /** @var string */
+    private $templateDir;
+
+    /** @var array<string,string> */
+    private $lang;
+
     /**
      * @var string
      */
     private $template;
+
+    /**
+     * @param array<string,string> $lang
+     */
+    public function __construct(string $templateDir, array $lang)
+    {
+        $this->templateDir = $templateDir;
+        $this->lang = $lang;
+    }
 
     /**
      * @var array<string,mixed>
@@ -35,17 +50,13 @@ class View
 
     public function text(string $key): string
     {
-        global $plugin_tx;
-
         $args = func_get_args();
         array_shift($args);
-        return $this->escape(vsprintf($plugin_tx['polyglot'][$key], $args));
+        return $this->escape(vsprintf($this->lang[$key], $args));
     }
 
     public function plural(string $key, int $count): string
     {
-        global $plugin_tx;
-
         if ($count == 0) {
             $key .= '_0';
         } else {
@@ -53,7 +64,7 @@ class View
         }
         $args = func_get_args();
         array_shift($args);
-        return $this->escape(vsprintf($plugin_tx['polyglot'][$key], $args));
+        return $this->escape(vsprintf($this->lang[$key], $args));
     }
 
     /**
@@ -62,12 +73,10 @@ class View
      */
     public function render(string $template, array $data)
     {
-        global $pth;
-
-        $this->template = "{$pth['folder']['plugins']}polyglot/views/{$template}.php";
+        $this->template = "{$this->templateDir}/{$template}.php";
         $this->data = $data;
         echo "<!-- {$template} -->\n";
-        unset($template, $data, $pth);
+        unset($template, $data);
         extract($this->data);
         include $this->template;
     }

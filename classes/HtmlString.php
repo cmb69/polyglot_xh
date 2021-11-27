@@ -21,7 +21,7 @@
 
 namespace Polyglot;
 
-class HtmlString
+final class HtmlString
 {
     /** @var string */
     private $value;

@@ -1,6 +1,9 @@
 <?php
 
+use DG\BypassFinals;
+
 require_once "./vendor/autoload.php";
+BypassFinals::enable();
 require_once "../../cmsimple/classes/PageDataRouter.php";
 require_once "../../cmsimple/classes/Pages.php";
 require_once "../../cmsimple/functions.php";

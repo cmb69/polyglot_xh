@@ -61,7 +61,7 @@ class LanguageMenuController
             $alt = $this->getAltAttribute($language);
             $languages[$language] = compact('href', 'src', 'alt');
         }
-        $this->view->render('languagemenu', ['languages' => $languages]);
+        echo $this->view->render('languagemenu', ['languages' => $languages]);
     }
 
     private function languageFlag(string $language): string

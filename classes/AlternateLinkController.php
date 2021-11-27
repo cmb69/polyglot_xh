@@ -55,9 +55,7 @@ class AlternateLinkController
                 }
             }
         }
-        ob_start();
-        $this->view->render('alternate_links', compact('links'));
-        $hjs .= (string) ob_get_clean();
+        $hjs .= $this->view->render('alternate_links', compact('links'));
     }
 
     /**

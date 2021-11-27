@@ -70,7 +70,7 @@ class MainAdminController
             }
             $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
         }
-        $this->view->render('admin', [
+        echo $this->view->render('admin', [
             'languages' => $languages,
             'pages' => $pages,
         ]);

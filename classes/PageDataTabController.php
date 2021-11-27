@@ -47,7 +47,7 @@ class PageDataTabController
     {
         global $sn, $su, $tx;
 
-        $this->view->render('tab', [
+        echo $this->view->render('tab', [
             'action' => $sn . '?' . $su,
             'tag' => $this->pageData['polyglot_tag'],
             'submit' => ucfirst($tx['action']['save']),

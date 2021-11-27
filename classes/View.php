@@ -38,23 +38,27 @@ class View
         $this->lang = $lang;
     }
 
-    public function text(string $key): string
+    /**
+     * @param string|HtmlString $args
+     */
+    public function text(string $key, ...$args): string
     {
-        $args = func_get_args();
-        array_shift($args);
-        return $this->esc(vsprintf($this->lang[$key], $args));
+        $args = array_map([$this, "esc"], $args);
+        return sprintf($this->esc($this->lang[$key]), ...$args);
     }
 
-    public function plural(string $key, int $count): string
+    /**
+     * @param string|HtmlString $args
+     */
+    public function plural(string $key, int $count, ...$args): string
     {
         if ($count == 0) {
             $key .= '_0';
         } else {
             $key .= XH_numberSuffix($count);
         }
-        $args = func_get_args();
-        array_shift($args);
-        return $this->esc(vsprintf($this->lang[$key], $args));
+        $args = array_map([$this, "esc"], $args);
+        return sprintf($this->esc($this->lang[$key]), $count, ...$args);
     }
 
     /**
@@ -68,8 +72,8 @@ class View
     }
 
     /**
-     * @param mixed $value
-     * @return mixed
+     * @param string|HtmlString $value
+     * @return string
      */
     public function esc($value)
     {

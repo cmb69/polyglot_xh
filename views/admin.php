@@ -1,6 +1,6 @@
 <?php
 
-use Polyglot\View;
+use Plib\HtmlView as View;
 
 if (!isset($this)) {
     header("HTTP/1.1 404 Not found");

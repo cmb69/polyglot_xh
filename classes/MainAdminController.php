@@ -21,6 +21,7 @@
 
 namespace Polyglot;
 
+use Plib\HtmlView as View;
 use XH\Pages;
 
 class MainAdminController

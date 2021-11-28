@@ -22,6 +22,7 @@
 namespace Polyglot;
 
 use PHPUnit\Framework\TestCase;
+use Plib\HtmlView as View;
 
 class LanguageMenuControllerTest extends TestCase
 {

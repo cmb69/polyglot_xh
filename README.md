@@ -21,7 +21,8 @@ engines regarding available translations of the current page (so called
 ## Requirements
 
 Polyglot_XH is a plugin for CMSimple_XH.
-It requires CMSimple_XH ≥ 1.7.0 and PHP ≥ 7.0.0.
+It requires CMSimple_XH ≥ 1.7.0 with the [Plib_XH plugin](https://github.com/cmb69/plib_xh)
+and PHP ≥ 7.0.0.
 
 ## Download
 

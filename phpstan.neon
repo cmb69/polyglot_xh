@@ -11,3 +11,5 @@ parameters:
     - ../../cmsimple/classes/Pages.php
     - ../../cmsimple/adminfuncs.php
     - ../../cmsimple/functions.php
+    - ../plib/classes/HtmlString.php
+    - ../plib/classes/HtmlView.php

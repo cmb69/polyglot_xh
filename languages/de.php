@@ -10,8 +10,6 @@ $plugin_tx['polyglot']['label_tab']="Polyglot";
 $plugin_tx['polyglot']['label_tag']="Schlagwort";
 $plugin_tx['polyglot']['label_ok']="✓";
 
-$plugin_tx['polyglot']['alt_logo']="Globus aus Flaggen";
-
 $plugin_tx['polyglot']['syscheck_extension']="die PHP-Erweiterung '%s' geladen ist";
 $plugin_tx['polyglot']['syscheck_fail']="Fehler";
 $plugin_tx['polyglot']['syscheck_message']="Prüfe, dass %1\$s … %2\$s";

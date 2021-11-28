@@ -28,9 +28,8 @@ class PageDataTabControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
-        global $tx, $sn, $su;
+        global $sn, $su;
 
-        $tx["action"]["save"] = "save";
         $sn = "/";
         $su = "foo";
         $view = $this->createMock(View::class);
@@ -39,7 +38,6 @@ class PageDataTabControllerTest extends TestCase
             $this->equalTo([
                 "action" => "/?foo",
                 "tag" => "foo",
-                "submit" => "Save",
             ])
         );
         $subject = new PageDataTabController(["polyglot_tag" => "foo"], $view);

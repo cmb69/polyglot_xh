@@ -6,6 +6,7 @@ $plugin_tx['polyglot']['not_translated']="Bedaure &ndash; diese Seite wurde noch
 
 $plugin_tx['polyglot']['label_translations']="Übersetzungen";
 $plugin_tx['polyglot']['label_page']="Seite";
+$plugin_tx['polyglot']['label_save']="Speichern";
 $plugin_tx['polyglot']['label_tab']="Polyglot";
 $plugin_tx['polyglot']['label_tag']="Schlagwort";
 $plugin_tx['polyglot']['label_ok']="✓";

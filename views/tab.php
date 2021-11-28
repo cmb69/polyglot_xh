@@ -11,7 +11,6 @@ if (!isset($this)) {
  * @var View $this
  * @var string $action
  * @var string $tag
- * @var string $submit
  */
 ?>
 <form id="polyglot_pagedata" action="<?=$this->esc($action)?>" method="post" onsubmit="return true">
@@ -20,6 +19,6 @@ if (!isset($this)) {
     <input id="polyglot_tag" type="text" name="polyglot_tag" value="<?=$this->esc($tag)?>"/>
   </div>
   <div style="text-align:right">
-    <input type="submit" name="save_page_data" value="<?=$this->esc($submit)?>"/>
+    <input type="submit" name="save_page_data" value="<?=$this->text("label_save")?>"/>
   </div>
 </form>

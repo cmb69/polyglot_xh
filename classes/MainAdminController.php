@@ -57,7 +57,7 @@ class MainAdminController
         $pages = array();
         for ($i = 0; $i < $this->pages->getCount(); $i++) {
             $heading = $this->pages->heading($i);
-            $url = $sn . '?' . $this->pages->url($i) . '&amp;edit';
+            $url = (new Url($sn))->page($this->pages->url($i))->param("edit")->string();
             $indent = (string) ($this->pages->level($i) - 1);
             $tag = $this->model->pageTag($i);
             $translations = array();

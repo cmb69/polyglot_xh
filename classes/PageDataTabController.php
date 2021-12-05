@@ -50,7 +50,7 @@ class PageDataTabController
         global $sn, $su;
 
         echo $this->view->render('tab', [
-            'action' => $sn . '?' . $su,
+            'action' => (new Url($sn, $su))->string(),
             'tag' => $this->pageData['polyglot_tag'],
         ]);
     }

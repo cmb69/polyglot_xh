@@ -29,6 +29,10 @@ class MainAdminControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
+        global $sn;
+
+        $sn = "";
+
         $pages = $this->createStub(Pages::class);
         $pages->method("getCount")->willReturn(2);
         $pages->method("level")->willReturnOnConsecutiveCalls(1, 2);
@@ -49,14 +53,14 @@ class MainAdminControllerTest extends TestCase
                 "pages" => [
                     [
                         "heading" => "Foo",
-                        "url" => "?foo&amp;edit",
+                        "url" => "?foo&edit",
                         "indent" => 0,
                         "tag" => "foo",
                         "translations" => ["de" => "?foo-de&amp;edit", "fr" => null],
                     ],
                     [
                         "heading" => "Bar",
-                        "url" => "?bar&amp;edit",
+                        "url" => "?bar&edit",
                         "indent" => 1,
                         "tag" => "bar",
                         "translations" => ["de" => null, "fr" => "?bar-fr&amp;edit"],

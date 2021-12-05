@@ -16,3 +16,4 @@ require_once "./classes/Model.php";
 require_once "./classes/PageDataTabController.php";
 require_once "./classes/Plugin.php";
 require_once "./classes/SystemCheckService.php";
+require_once "./classes/Url.php";

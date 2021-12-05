@@ -64,7 +64,7 @@ class Plugin
      */
     private static function handleAdministration()
     {
-        global $admin, $o;
+        global $admin, $o, $sn;
 
         $o .= print_plugin_admin('on');
         switch ($admin) {
@@ -75,7 +75,7 @@ class Plugin
                 break;
             case 'plugin_main':
                 ob_start();
-                (new MainAdminController(new Pages(), self::getModel(), self::view()))->defaultAction();
+                (new MainAdminController(new Pages(), new Url($sn), self::getModel(), self::view()))->defaultAction();
                 $o .= ob_get_clean();
                 break;
             default:
@@ -103,7 +103,9 @@ class Plugin
      */
     public static function pageDataView(array $pageData): string
     {
-        $command = new PageDataTabController($pageData, self::view());
+        global $sn, $su;
+
+        $command = new PageDataTabController($pageData, new Url($sn, $su), self::view());
         ob_start();
         $command->defaultAction();
         return (string) ob_get_clean();

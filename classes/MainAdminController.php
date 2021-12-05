@@ -31,6 +31,9 @@ class MainAdminController
      */
     private $pages;
 
+    /** @var Url */
+    private $url;
+
     /**
      *  @var Model
      */
@@ -39,9 +42,10 @@ class MainAdminController
     /** @var View */
     private $view;
 
-    public function __construct(Pages $pages, Model $model, View $view)
+    public function __construct(Pages $pages, Url $url, Model $model, View $view)
     {
         $this->pages = $pages;
+        $this->url = $url;
         $this->model = $model;
         $this->view = $view;
     }
@@ -51,13 +55,11 @@ class MainAdminController
      */
     public function defaultAction()
     {
-        global $sn;
-
         $languages = $this->model->otherLanguages();
         $pages = array();
         for ($i = 0; $i < $this->pages->getCount(); $i++) {
             $heading = $this->pages->heading($i);
-            $url = (new Url($sn))->page($this->pages->url($i))->param("edit")->string();
+            $url = $this->url->page($this->pages->url($i))->param("edit")->string();
             $indent = (string) ($this->pages->level($i) - 1);
             $tag = $this->model->pageTag($i);
             $translations = array();

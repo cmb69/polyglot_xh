@@ -30,15 +30,19 @@ class PageDataTabController
      */
     private $pageData;
 
+    /** @var Url */
+    private $url;
+
     /** @var View */
     private $view;
 
     /**
      * @param array<string,string> $pageData
      */
-    public function __construct(array $pageData, View $view)
+    public function __construct(array $pageData, Url $url, View $view)
     {
         $this->pageData = $pageData;
+        $this->url = $url;
         $this->view = $view;
     }
 
@@ -47,10 +51,8 @@ class PageDataTabController
      */
     public function defaultAction()
     {
-        global $sn, $su;
-
         echo $this->view->render('tab', [
-            'action' => (new Url($sn, $su))->string(),
+            'action' => $this->url->string(),
             'tag' => $this->pageData['polyglot_tag'],
         ]);
     }

@@ -28,10 +28,6 @@ class PageDataTabControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
-        global $sn, $su;
-
-        $sn = "/";
-        $su = "foo";
         $view = $this->createMock(View::class);
         $view->expects($this->once())->method("render")->with(
             $this->equalTo("tab"),
@@ -40,7 +36,7 @@ class PageDataTabControllerTest extends TestCase
                 "tag" => "foo",
             ])
         );
-        $subject = new PageDataTabController(["polyglot_tag" => "foo"], $view);
+        $subject = new PageDataTabController(["polyglot_tag" => "foo"], new Url("/", "foo"), $view);
         $subject->defaultAction();
     }
 }

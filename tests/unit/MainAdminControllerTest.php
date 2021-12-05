@@ -29,10 +29,6 @@ class MainAdminControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
-        global $sn;
-
-        $sn = "";
-
         $pages = $this->createStub(Pages::class);
         $pages->method("getCount")->willReturn(2);
         $pages->method("level")->willReturnOnConsecutiveCalls(1, 2);
@@ -69,7 +65,7 @@ class MainAdminControllerTest extends TestCase
             ])
         );
 
-        $subject = new MainAdminController($pages, $model, $view);
+        $subject = new MainAdminController($pages, new Url(""), $model, $view);
         $subject->defaultAction();
     }
 }

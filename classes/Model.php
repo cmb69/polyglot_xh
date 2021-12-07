@@ -159,15 +159,12 @@ class Model
         XH_writeFile($this->tagsFile(), $contents);
     }
 
-    /**
-     * @return ?string
-     */
-    public function pageTag(int $index)
+    public function pageTag(int $index): string
     {
         $pageData = $this->pageDataRouter->find_page($index);
         return isset($pageData['polyglot_tag'])
             ? $pageData['polyglot_tag']
-            : null;
+            : "";
     }
 
     public function languageURL(string $language, string $tag): string

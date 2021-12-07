@@ -79,7 +79,7 @@ class LanguageMenuController
         $tag = $this->model->pageTag($s);
         $labels = $this->languageLabels();
         if (isset($labels[$language])) {
-            if (($tag !== null && $this->model->isTranslated($tag, $language))
+            if (($this->model->isTranslated($tag, $language))
                 || !isset($labels[$language]["untranslated"])
             ) {
                 $alt = $labels[$language]["translated"];
@@ -115,10 +115,7 @@ class LanguageMenuController
     {
         global $s;
 
-        $tag = $s > 0 ? $this->model->pageTag($s) : null;
-        if ($tag === null) {
-            return "";
-        }
+        $tag = $s > 0 ? $this->model->pageTag($s) : "";
         return $this->model->languageURL($language, $tag);
     }
 }

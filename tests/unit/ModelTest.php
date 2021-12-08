@@ -55,7 +55,8 @@ class ModelTest extends TestCase
             vfsStream::url('test/'),
             $pageDataRouter,
             [],
-            vfsStream::url("test/content/content.htm")
+            vfsStream::url("test/content/content.htm"),
+            new Url("http://foo.en/", "de", "")
         );
     }
 

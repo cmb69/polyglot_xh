@@ -54,6 +54,9 @@ class Model
     /** @var string */
     private $contentFile;
 
+    /** @var Url */
+    private $url;
+
     /**
      * @param string[] $pageUrls
      */
@@ -63,7 +66,8 @@ class Model
         string $dataFolder,
         PageDataRouter $pageDataRouter,
         array $pageUrls,
-        string $contentFile
+        string $contentFile,
+        Url $url
     ) {
         $this->language = (string) $language;
         $this->defaultLanguage = (string) $defaultLang;
@@ -71,6 +75,7 @@ class Model
         $this->pageDataRouter = $pageDataRouter;
         $this->pageUrls = $pageUrls;
         $this->contentFile = (string) $contentFile;
+        $this->url = $url;
     }
 
     public function tagsFile(): string
@@ -169,27 +174,18 @@ class Model
 
     public function languageURL(string $language, string $tag): string
     {
-        $res = $this->getInstallationUrl();
+        $url = $this->url->lang("")->page("");
         if ($language != $this->defaultLanguage) {
-            $res .= $language . '/';
+            $url = $url->lang($language);
         }
         if ($this->tags === null) {
             $this->init();
         }
         assert(is_array($this->tags));
         if (isset($this->tags[$tag][$language])) {
-            $res .= '?' . $this->tags[$tag][$language];
+            $url = $url->page($this->tags[$tag][$language]);
         }
-        return $res;
-    }
-
-    private function getInstallationUrl(): string
-    {
-        return (string) preg_replace(
-            array('/index\.php$/', '/(?<=\/)' . $this->language . '\/$/'),
-            '',
-            CMSIMPLE_URL
-        );
+        return $url->absolute();
     }
 
     public function isTranslated(string $tag, string $language): bool

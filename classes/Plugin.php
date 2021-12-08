@@ -128,7 +128,8 @@ class Plugin
             $pth['folder']['plugins'] . 'polyglot/cache/',
             $pd_router,
             $u,
-            $pth['file']['content']
+            $pth['file']['content'],
+            self::url()
         );
     }
 

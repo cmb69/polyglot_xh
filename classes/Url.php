@@ -53,6 +53,13 @@ final class Url
         $this->page = $page;
     }
 
+    public function lang(string $lang): self
+    {
+        $url = clone $this;
+        $url->lang = $lang;
+        return $url;
+    }
+
     public function page(string $page): self
     {
         $url = clone $this;

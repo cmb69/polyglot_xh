@@ -70,17 +70,9 @@ class AlternateLinkController
         $result = [];
         $href = $this->model->languageURL($language, $tag);
         if ($language == $cf['language']['default']) {
-            $result[] = $this->renderAlternateLink('x-default', $href);
+            $result[] = ["hreflang" => "x-default", "href" => $href];
         }
-        $result[] = $this->renderAlternateLink($language, $href);
+        $result[] = ["hreflang" => $language, "href" => $href];
         return $result;
-    }
-
-    /**
-     * @return array{hreflang:string,href:string}
-     */
-    private function renderAlternateLink(string $hreflang, string $href): array
-    {
-        return compact('hreflang', 'href');
     }
 }

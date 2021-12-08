@@ -49,14 +49,14 @@ class MainAdminControllerTest extends TestCase
                 "pages" => [
                     [
                         "heading" => "Foo",
-                        "url" => "?foo&edit",
+                        "url" => "/?foo&edit",
                         "indent" => 0,
                         "tag" => "foo",
                         "translations" => ["de" => "?foo-de&amp;edit", "fr" => null],
                     ],
                     [
                         "heading" => "Bar",
-                        "url" => "?bar&edit",
+                        "url" => "/?bar&edit",
                         "indent" => 1,
                         "tag" => "bar",
                         "translations" => ["de" => null, "fr" => "?bar-fr&amp;edit"],
@@ -65,7 +65,7 @@ class MainAdminControllerTest extends TestCase
             ])
         );
 
-        $subject = new MainAdminController($pages, new Url(""), $model, $view);
+        $subject = new MainAdminController($pages, new Url("http://example.com/", "", ""), $model, $view);
         $subject->defaultAction();
     }
 }

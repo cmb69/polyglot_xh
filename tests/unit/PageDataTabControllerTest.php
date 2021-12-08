@@ -36,7 +36,11 @@ class PageDataTabControllerTest extends TestCase
                 "tag" => "foo",
             ])
         );
-        $subject = new PageDataTabController(["polyglot_tag" => "foo"], new Url("/", "foo"), $view);
+        $subject = new PageDataTabController(
+            ["polyglot_tag" => "foo"],
+            new Url("http://example.com/", "", "foo"),
+            $view
+        );
         $subject->defaultAction();
     }
 }

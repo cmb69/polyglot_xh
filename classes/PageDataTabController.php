@@ -52,7 +52,7 @@ class PageDataTabController
     public function defaultAction()
     {
         echo $this->view->render('tab', [
-            'action' => $this->url->string(),
+            'action' => $this->url->relative(),
             'tag' => $this->pageData['polyglot_tag'],
         ]);
     }

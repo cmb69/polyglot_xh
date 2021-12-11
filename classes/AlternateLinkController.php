@@ -51,11 +51,9 @@ class AlternateLinkController
 
         $links = [];
         $tag = $this->model->pageTag($s);
-        if ($tag !== null) {
-            foreach ($this->model->languages() as $language) {
-                if ($this->model->isTranslated($tag, $language)) {
-                    $links = array_merge($links, $this->alternateLinksFor($language, $tag));
-                }
+        foreach ($this->model->languages() as $language) {
+            if ($this->model->isTranslated($tag, $language)) {
+                $links = array_merge($links, $this->alternateLinksFor($language, $tag));
             }
         }
         $hjs .= $this->view->render('alternate_links', compact('links'));

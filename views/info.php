@@ -9,7 +9,7 @@ if (!isset($this)) {
 
 /**
  * @var View $this
- * @var array<int,stdClass> $checks
+ * @var array<array{state:string,label:string,stateLabel:string}> $checks
  * @var string $version
  */
 ?>
@@ -17,6 +17,6 @@ if (!isset($this)) {
 <div class="polyglot_syscheck">
   <h2><?=$this->text('syscheck_title')?></h2>
 <?php foreach ($checks as $check):?>
-  <p class="xh_<?=$this->esc($check->state)?>"><?=$this->text('syscheck_message', $check->label, $check->stateLabel)?></p>
+  <p class="xh_<?=$this->esc($check["state"])?>"><?=$this->text('syscheck_message', $check["label"], $check["stateLabel"])?></p>
 <?php endforeach?>
 </div>

@@ -21,8 +21,6 @@
 
 namespace Polyglot;
 
-use stdClass;
-
 class SystemCheckService
 {
     /**
@@ -50,7 +48,7 @@ class SystemCheckService
     }
 
     /**
-     * @return object[]
+     * @return array<array{state:string,label:string,stateLabel:string}>
      */
     public function getChecks(): array
     {
@@ -64,27 +62,36 @@ class SystemCheckService
         );
     }
 
-    private function checkPhpVersion(string $version): stdClass
+    /**
+     * @return array{state:string,label:string,stateLabel:string}
+     */
+    private function checkPhpVersion(string $version): array
     {
         $state = version_compare(PHP_VERSION, $version, 'ge') ? 'success' : 'fail';
         $label = sprintf($this->lang['syscheck_phpversion'], $version);
         $stateLabel = $this->lang["syscheck_$state"];
-        return (object) compact('state', 'label', 'stateLabel');
+        return compact('state', 'label', 'stateLabel');
     }
 
-    private function checkXhVersion(string $version): stdClass
+    /**
+     * @return array{state:string,label:string,stateLabel:string}
+     */
+    private function checkXhVersion(string $version): array
     {
         $state = version_compare(CMSIMPLE_XH_VERSION, "CMSimple_XH $version", 'ge') ? 'success' : 'fail';
         $label = sprintf($this->lang['syscheck_xhversion'], $version);
         $stateLabel = $this->lang["syscheck_$state"];
-        return (object) compact('state', 'label', 'stateLabel');
+        return compact('state', 'label', 'stateLabel');
     }
 
-    private function checkWritability(string $folder): stdClass
+    /**
+     * @return array{state:string,label:string,stateLabel:string}
+     */
+    private function checkWritability(string $folder): array
     {
         $state = is_writable($folder) ? 'success' : 'warning';
         $label = sprintf($this->lang['syscheck_writable'], $folder);
         $stateLabel = $this->lang["syscheck_$state"];
-        return (object) compact('state', 'label', 'stateLabel');
+        return compact('state', 'label', 'stateLabel');
     }
 }

@@ -70,12 +70,12 @@ class Model
         string $contentFile,
         Url $url
     ) {
-        $this->language = (string) $language;
-        $this->defaultLanguage = (string) $defaultLang;
-        $this->dataFolder = (string) $dataFolder;
+        $this->language = $language;
+        $this->defaultLanguage = $defaultLang;
+        $this->dataFolder = $dataFolder;
         $this->pageDataRouter = $pageDataRouter;
         $this->pageUrls = $pageUrls;
-        $this->contentFile = (string) $contentFile;
+        $this->contentFile = $contentFile;
         $this->url = $url;
     }
 

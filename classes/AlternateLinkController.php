@@ -61,7 +61,7 @@ class AlternateLinkController
     }
 
     /**
-     * @return array<int,array{hreflang:string,href:string}>
+     * @return array<int,array{hreflang:string,href:Url}>
      */
     private function alternateLinksFor(string $language, string $tag): array
     {

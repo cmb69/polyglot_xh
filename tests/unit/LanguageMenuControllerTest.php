@@ -37,9 +37,20 @@ class LanguageMenuControllerTest extends TestCase
             "languages_labels" => "de=Deutsch;nicht übersetzt\rfr=français",
         ];
 
+        $urls = [
+            "de" => new Url("http://example.com/", "de", ""),
+            "fr" => new Url("http://example.com/", "fr", ""),
+            "it" => new Url("http://example.com/", "it", ""),
+        ];
+
         $model = $this->createStub(Model::class);
         $model->method("otherLanguages")->willReturn(["de", "fr", "it"]);
         $model->method("pageTag")->willReturn("foo");
+        $model->method("languageURL")->willReturnOnConsecutiveCalls(
+            $urls["de"],
+            $urls["fr"],
+            $urls["it"]
+        );
 
         $view = $this->createMock(View::class);
         $view->expects($this->once())->method("render")->with(
@@ -47,17 +58,17 @@ class LanguageMenuControllerTest extends TestCase
             $this->equalTo([
                 "languages" => [
                     "de" => [
-                        "href" => "",
+                        "href" => $urls["de"],
                         "src" => "de.png",
                         "alt" => "nicht übersetzt",
                     ],
                     "fr" => [
-                        "href" => "",
+                        "href" => $urls["fr"],
                         "src" => "fr.png",
                         "alt" => "français",
                     ],
                     "it" => [
-                        "href" => "",
+                        "href" => $urls["it"],
                         "src" => "it.png",
                         "alt" => "it",
                     ],

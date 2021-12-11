@@ -36,15 +36,15 @@ class AlternateLinkControllerTest extends TestCase
         $model->method("languages")->willReturn(["en", "de"]);
         $model->method("pageTag")->willReturn("foo");
         $model->method("isTranslated")->willReturn(true);
-        $model->method("languageURL")->willReturn("http://example.com/");
+        $model->method("languageURL")->willReturn(new Url("http://example.com/", "", ""));
         $view = $this->createMock(View::class);
         $view->expects($this->once())->method("render")->with(
             $this->equalTo("alternate_links"),
             $this->equalTo([
                 "links" => [
-                    ["hreflang" => "x-default", "href" => "http://example.com/"],
-                    ["hreflang" => "en", "href" => "http://example.com/"],
-                    ["hreflang" => "de", "href" => "http://example.com/"],
+                    ["hreflang" => "x-default", "href" => new Url("http://example.com/", "", "")],
+                    ["hreflang" => "en", "href" => new Url("http://example.com/", "", "")],
+                    ["hreflang" => "de", "href" => new Url("http://example.com/", "", "")],
                 ],
             ])
         );

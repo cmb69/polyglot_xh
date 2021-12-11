@@ -1,6 +1,7 @@
 <?php
 
 use Plib\HtmlView as View;
+use Polyglot\Url;
 
 if (!isset($this)) {
     header("HTTP/1.1 404 Not found");
@@ -10,7 +11,7 @@ if (!isset($this)) {
 /**
  * @var View $this
  * @var array<int,string> $languages
- * @var array<string,array{heading:string,url:string,indent:string,tag:string,translations:array<string,?string>}> $pages
+ * @var array<string,array{heading:string,url:Url,indent:string,tag:string,translations:array<string,?Url>}> $pages
  */
 ?>
 <h1>Polyglot – <?=$this->text('label_translations')?></h1>
@@ -29,13 +30,13 @@ if (!isset($this)) {
 <?php foreach ($pages as $page):?>
       <tr>
         <td>
-          <a href="<?=$this->esc($page['url'])?>" style="padding-left: <?=$this->esc($page['indent'])?>em"><?=$this->esc($page['heading'])?></a>
+          <a href="<?=$this->esc($page['url']->relative())?>" style="padding-left: <?=$this->esc($page['indent'])?>em"><?=$this->esc($page['heading'])?></a>
         </td>
         <td><?=$this->esc($page['tag'])?></td>
 <?php     foreach ($page['translations'] as $translation):?>
         <td>
 <?php         if (isset($translation)):?>
-          <a href="<?=$this->esc($translation)?>"><?=$this->text('label_ok')?></a>
+          <a href="<?=$this->esc($translation->relative())?>"><?=$this->text('label_ok')?></a>
 <?php         endif?>
         </td>
 <?php     endforeach?>

@@ -39,7 +39,10 @@ class MainAdminControllerTest extends TestCase
         $model->method("otherLanguages")->willReturn(["de", "fr"]);
         $model->method("pageTag")->willReturnOnConsecutiveCalls("foo", "bar");
         $model->method("isTranslated")->willReturn(true, false, false, true);
-        $model->method("languageURL")->willReturnOnConsecutiveCalls("?foo-de", "?bar-fr");
+        $model->method("languageURL")->willReturnOnConsecutiveCalls(
+            (new Url("http://example.com/", "", "foo-de"))->with("edit"),
+            (new Url("http://example.com/", "", "bar-fr"))->with("edit")
+        );
        
         $view = $this->createMock(View::class);
         $view->expects($this->once())->method("render")->with(
@@ -49,17 +52,23 @@ class MainAdminControllerTest extends TestCase
                 "pages" => [
                     [
                         "heading" => "Foo",
-                        "url" => "/?foo&edit",
+                        "url" => (new Url("http://example.com/", "", "foo"))->with("edit"),
                         "indent" => 0,
                         "tag" => "foo",
-                        "translations" => ["de" => "?foo-de&amp;edit", "fr" => null],
+                        "translations" => [
+                            "de" => (new Url("http://example.com/", "", "foo-de"))->with("edit"),
+                            "fr" => null,
+                        ],
                     ],
                     [
                         "heading" => "Bar",
-                        "url" => "/?bar&edit",
+                        "url" => (new Url("http://example.com/", "", "bar"))->with("edit"),
                         "indent" => 1,
                         "tag" => "bar",
-                        "translations" => ["de" => null, "fr" => "?bar-fr&amp;edit"],
+                        "translations" => [
+                            "de" => null,
+                            "fr" => (new Url("http://example.com/", "", "bar-fr"))->with("edit"),
+                        ],
                     ],
                 ],
             ])

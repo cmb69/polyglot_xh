@@ -82,6 +82,6 @@ class ModelTest extends TestCase
      */
     public function testLanguageUrlContainsTld(): void
     {
-        $this->assertEquals('http://foo.en/de/', $this->model->languageURL('de', 'unknown'));
+        $this->assertEquals(new Url("http://foo.en/", "de", ""), $this->model->languageURL('de', 'unknown'));
     }
 }

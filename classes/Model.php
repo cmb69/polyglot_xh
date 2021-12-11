@@ -172,7 +172,7 @@ class Model
             : "";
     }
 
-    public function languageURL(string $language, string $tag): string
+    public function languageURL(string $language, string $tag): Url
     {
         $url = $this->url->lang("")->page("");
         if ($language != $this->defaultLanguage) {
@@ -185,7 +185,7 @@ class Model
         if (isset($this->tags[$tag][$language])) {
             $url = $url->page($this->tags[$tag][$language]);
         }
-        return $url->absolute();
+        return $url;
     }
 
     public function isTranslated(string $tag, string $language): bool

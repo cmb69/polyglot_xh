@@ -111,7 +111,7 @@ class LanguageMenuController
         return $res;
     }
 
-    private function languageURL(string $language): string
+    private function languageURL(string $language): Url
     {
         global $s;
 

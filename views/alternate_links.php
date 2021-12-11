@@ -1,6 +1,7 @@
 <?php
 
 use Plib\HtmlView as View;
+use Polyglot\Url;
 
 if (!isset($this)) {
     header("HTTP/1.1 404 Not found");
@@ -9,9 +10,9 @@ if (!isset($this)) {
 
 /**
  * @var View $this
- * @var array<int,array{hreflang:string,href:string}> $links
+ * @var array<int,array{hreflang:string,href:Url}> $links
  */
 ?>
 <?php foreach ($links as $link):?>
-<link rel="alternate" hreflang="<?=$this->esc($link['hreflang'])?>" href="<?=$this->esc($link['href'])?>">
+<link rel="alternate" hreflang="<?=$this->esc($link['hreflang'])?>" href="<?=$this->esc($link['href']->absolute())?>">
 <?php endforeach?>

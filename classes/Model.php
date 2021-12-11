@@ -21,6 +21,7 @@
 
 namespace Polyglot;
 
+use Plib\Url;
 use XH\PageDataRouter;
 
 class Model

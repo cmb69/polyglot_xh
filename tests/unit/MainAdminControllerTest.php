@@ -23,6 +23,7 @@ namespace Polyglot;
 
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
+use Plib\Url;
 use XH\Pages;
 
 class MainAdminControllerTest extends TestCase

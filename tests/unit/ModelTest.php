@@ -22,6 +22,7 @@
 namespace Polyglot;
 
 use PHPUnit\Framework\TestCase;
+use Plib\Url;
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;

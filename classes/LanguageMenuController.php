@@ -22,6 +22,7 @@
 namespace Polyglot;
 
 use Plib\HtmlView as View;
+use Plib\Url;
 
 class LanguageMenuController
 {

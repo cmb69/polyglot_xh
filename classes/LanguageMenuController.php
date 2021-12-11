@@ -56,7 +56,7 @@ class LanguageMenuController
      */
     public function defaultAction()
     {
-        $languages = array();
+        $languages = [];
 
         foreach ($this->model->otherLanguages() as $language) {
             $href = $this->languageURL($language);
@@ -100,7 +100,7 @@ class LanguageMenuController
     {
         $languages = preg_split('/\r\n|\r|\n/', $this->conf['languages_labels']);
         assert(is_array($languages));
-        $res = array();
+        $res = [];
         foreach ($languages as $language) {
             list($key, $value) = explode('=', $language, 2);
             $parts = explode(';', $value, 2);

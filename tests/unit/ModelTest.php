@@ -73,7 +73,7 @@ class ModelTest extends TestCase
 
     public function testOtherLanguages(): void
     {
-        $expected = array('de');
+        $expected = ['de'];
         $actual = $this->model->otherLanguages();
         $this->assertEquals($expected, $actual);
     }

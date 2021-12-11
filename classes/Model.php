@@ -100,7 +100,7 @@ class Model
      */
     public function otherLanguages(): array
     {
-        $res = array();
+        $res = [];
         $languages = $this->languages();
         foreach ($languages as $language) {
             if ($language != $this->language) {

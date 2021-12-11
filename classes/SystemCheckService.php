@@ -52,14 +52,14 @@ class SystemCheckService
      */
     public function getChecks(): array
     {
-        return array(
+        return [
             $this->checkPhpVersion('7.0.0'),
             $this->checkXhVersion('1.7.0'),
             $this->checkWritability("$this->pluginFolder/css/"),
             $this->checkWritability("$this->pluginFolder/cache/"),
             $this->checkWritability("$this->pluginFolder/config/"),
             $this->checkWritability("$this->pluginFolder/languages/")
-        );
+        ];
     }
 
     /**

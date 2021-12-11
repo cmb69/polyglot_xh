@@ -57,13 +57,13 @@ class MainAdminController
     public function defaultAction()
     {
         $languages = $this->model->otherLanguages();
-        $pages = array();
+        $pages = [];
         for ($i = 0; $i < $this->pages->getCount(); $i++) {
             $heading = $this->pages->heading($i);
             $url = $this->url->page($this->pages->url($i))->with("edit");
             $indent = (string) ($this->pages->level($i) - 1);
             $tag = $this->model->pageTag($i);
-            $translations = array();
+            $translations = [];
             foreach ($languages as $language) {
                 $translations[$language]
                     = $this->model->isTranslated($tag, $language)

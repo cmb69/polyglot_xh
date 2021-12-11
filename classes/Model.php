@@ -132,7 +132,9 @@ class Model
         if (!($contents = XH_readFile($filename))) {
             $contents = serialize([]);
         }
-        $this->tags = unserialize($contents);
+        $tags = unserialize($contents);
+        assert(is_array($tags));
+        $this->tags = $tags;
         if (!is_array($this->tags)) {
             $this->tags = [];
             $this->update();

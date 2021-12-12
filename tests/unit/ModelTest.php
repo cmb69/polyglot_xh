@@ -61,16 +61,6 @@ class ModelTest extends TestCase
         );
     }
 
-    /**
-     * @return void
-     */
-    public function testTagsFile()
-    {
-        $expected = vfsStream::url('test/tags.dat');
-        $actual = $this->model->tagsFile();
-        $this->assertEquals($expected, $actual);
-    }
-
     public function testOtherLanguages(): void
     {
         $expected = ['de'];

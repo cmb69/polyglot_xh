@@ -79,7 +79,7 @@ class Model
         $this->url = $url;
     }
 
-    public function tagsFile(): string
+    private function tagsFile(): string
     {
         return $this->dataFolder . 'tags.dat';
     }

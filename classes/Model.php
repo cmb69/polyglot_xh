@@ -36,6 +36,9 @@ class Model
      */
     private $defaultLanguage;
 
+    /** @var array<string> */
+    private $secondLanguages;
+
     /**
      * @var string
      */
@@ -59,11 +62,13 @@ class Model
     private $url;
 
     /**
+     * @param array<string> $secondLanguages
      * @param string[] $pageUrls
      */
     public function __construct(
         string $language,
         string $defaultLang,
+        array $secondLanguages,
         string $dataFolder,
         PageDataRouter $pageDataRouter,
         array $pageUrls,
@@ -72,6 +77,7 @@ class Model
     ) {
         $this->language = $language;
         $this->defaultLanguage = $defaultLang;
+        $this->secondLanguages = $secondLanguages;
         $this->dataFolder = $dataFolder;
         $this->pageDataRouter = $pageDataRouter;
         $this->pageUrls = $pageUrls;
@@ -89,7 +95,7 @@ class Model
      */
     public function languages(): array
     {
-        $languages = XH_secondLanguages();
+        $languages = $this->secondLanguages;
         $languages[] = $this->defaultLanguage;
         sort($languages);
         return $languages;

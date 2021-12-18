@@ -28,11 +28,6 @@ use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
 use XH\PageDataRouter;
 
-function XH_secondLanguages()
-{
-    return ["de"];
-}
-
 class ModelTest extends TestCase
 {
     /**
@@ -51,6 +46,7 @@ class ModelTest extends TestCase
         $this->model = new Model(
             'en',
             'en',
+            ["de"],
             vfsStream::url('test/'),
             $pageDataRouter,
             [],

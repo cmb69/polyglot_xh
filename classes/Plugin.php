@@ -131,6 +131,7 @@ class Plugin
         return new Model(
             $sl,
             $cf['language']['default'],
+            XH_secondLanguages(),
             $pth['folder']['plugins'] . 'polyglot/cache/',
             $pd_router,
             $u,

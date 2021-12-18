@@ -28,8 +28,6 @@ use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
 use XH\PageDataRouter;
 
-define('CMSIMPLE_URL', 'http://foo.en/');
-
 function XH_secondLanguages()
 {
     return ["de"];

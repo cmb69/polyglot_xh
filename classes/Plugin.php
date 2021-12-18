@@ -94,7 +94,8 @@ class Plugin
 
         $controller = new LanguageMenuController(
             $pth['folder']['flags'],
-            $plugin_cf['polyglot'],
+            $plugin_cf['polyglot']['flags_extension'],
+            $plugin_cf['polyglot']['languages_labels'],
             $s,
             self::getModel(),
             self::view()

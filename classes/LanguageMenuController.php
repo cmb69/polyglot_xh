@@ -29,8 +29,11 @@ class LanguageMenuController
     /** @var string */
     private $flagsFolder;
 
-    /** @var array<string,string> */
-    private $conf;
+    /** @var string */
+    private $flagsExtension;
+
+    /** @var string */
+    private $languageLabels;
 
     /** @var int */
     private $pageIndex;
@@ -43,13 +46,17 @@ class LanguageMenuController
     /** @var View */
     private $view;
 
-    /**
-     * @param array<string,string> $conf
-     */
-    public function __construct(string $flagsFolder, array $conf, int $pageIndex, Model $model, View $view)
-    {
+    public function __construct(
+        string $flagsFolder,
+        string $flagsExtension,
+        string $languageLabels,
+        int $pageIndex,
+        Model $model,
+        View $view
+    ) {
         $this->flagsFolder = $flagsFolder;
-        $this->conf = $conf;
+        $this->flagsExtension = $flagsExtension;
+        $this->languageLabels = $languageLabels;
         $this->pageIndex = $pageIndex;
         $this->model = $model;
         $this->view = $view;
@@ -74,7 +81,7 @@ class LanguageMenuController
     private function languageFlag(string $language): string
     {
         return $this->flagsFolder . $language . '.'
-            . $this->conf['flags_extension'];
+            . $this->flagsExtension;
     }
 
     private function getAltAttribute(string $language): string
@@ -100,7 +107,7 @@ class LanguageMenuController
      */
     private function languageLabels(): array
     {
-        $languages = preg_split('/\r\n|\r|\n/', $this->conf['languages_labels']);
+        $languages = preg_split('/\r\n|\r|\n/', $this->languageLabels);
         assert(is_array($languages));
         $res = [];
         foreach ($languages as $language) {

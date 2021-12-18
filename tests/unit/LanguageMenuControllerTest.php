@@ -29,10 +29,6 @@ class LanguageMenuControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
-        global $s;
-
-        $s = 1;
-
         $conf = [
             "flags_extension" => "png",
             "languages_labels" => "de=Deutsch;nicht übersetzt\rfr=français",
@@ -77,7 +73,7 @@ class LanguageMenuControllerTest extends TestCase
             ])
         );
 
-        $subject = new LanguageMenuController("", $conf, $model, $view);
+        $subject = new LanguageMenuController("", $conf, 1, $model, $view);
         $subject->defaultAction();
     }
 }

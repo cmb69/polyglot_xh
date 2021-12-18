@@ -26,6 +26,12 @@ use Plib\Url;
 
 class AlternateLinkController
 {
+    /** @var string */
+    private $defaultLanguage;
+
+    /**  @var int */
+    private $pageIndex;
+
     /**
      * @var Model
      */
@@ -36,8 +42,10 @@ class AlternateLinkController
      */
     private $view;
 
-    public function __construct(Model $model, View $view)
+    public function __construct(string $defaultLanguage, int $pageIndex, Model $model, View $view)
     {
+        $this->defaultLanguage = $defaultLanguage;
+        $this->pageIndex = $pageIndex;
         $this->model = $model;
         $this->view = $view;
     }
@@ -47,10 +55,10 @@ class AlternateLinkController
      */
     public function defaultAction()
     {
-        global $s, $hjs;
+        global $hjs;
 
         $links = [];
-        $tag = $this->model->pageTag($s);
+        $tag = $this->model->pageTag($this->pageIndex);
         foreach ($this->model->languages() as $language) {
             if ($this->model->isTranslated($tag, $language)) {
                 $links = array_merge($links, $this->alternateLinksFor($language, $tag));
@@ -64,11 +72,9 @@ class AlternateLinkController
      */
     private function alternateLinksFor(string $language, string $tag): array
     {
-        global $cf;
-
         $result = [];
         $href = $this->model->languageURL($language, $tag);
-        if ($language == $cf['language']['default']) {
+        if ($language === $this->defaultLanguage) {
             $result[] = ["hreflang" => "x-default", "href" => $href];
         }
         $result[] = ["hreflang" => $language, "href" => $href];

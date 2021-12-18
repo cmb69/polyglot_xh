@@ -29,10 +29,6 @@ class AlternateLinkControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
-        global $cf, $s;
-        
-        $cf['language']['default'] = "en";
-        $s = 0;
         $model = $this->createStub(Model::class);
         $model->method("languages")->willReturn(["en", "de"]);
         $model->method("pageTag")->willReturn("foo");
@@ -49,7 +45,7 @@ class AlternateLinkControllerTest extends TestCase
                 ],
             ])
         );
-        $subject = new AlternateLinkController($model, $view);
+        $subject = new AlternateLinkController("en", 0, $model, $view);
         $subject->defaultAction();
     }
 }

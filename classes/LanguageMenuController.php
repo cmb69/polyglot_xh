@@ -32,6 +32,9 @@ class LanguageMenuController
     /** @var array<string,string> */
     private $conf;
 
+    /** @var int */
+    private $pageIndex;
+
     /**
      * @var Model
      */
@@ -43,10 +46,11 @@ class LanguageMenuController
     /**
      * @param array<string,string> $conf
      */
-    public function __construct(string $flagsFolder, array $conf, Model $model, View $view)
+    public function __construct(string $flagsFolder, array $conf, int $pageIndex, Model $model, View $view)
     {
         $this->flagsFolder = $flagsFolder;
         $this->conf = $conf;
+        $this->pageIndex = $pageIndex;
         $this->model = $model;
         $this->view = $view;
     }
@@ -75,9 +79,7 @@ class LanguageMenuController
 
     private function getAltAttribute(string $language): string
     {
-        global $s;
-
-        $tag = $this->model->pageTag($s);
+        $tag = $this->model->pageTag($this->pageIndex);
         $labels = $this->languageLabels();
         if (isset($labels[$language])) {
             if (($this->model->isTranslated($tag, $language))
@@ -114,9 +116,7 @@ class LanguageMenuController
 
     private function languageURL(string $language): Url
     {
-        global $s;
-
-        $tag = $s > 0 ? $this->model->pageTag($s) : "";
+        $tag = $this->pageIndex > 0 ? $this->model->pageTag($this->pageIndex) : "";
         return $this->model->languageURL($language, $tag);
     }
 }

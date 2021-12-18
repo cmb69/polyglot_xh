@@ -34,7 +34,7 @@ class Plugin
      */
     public static function run()
     {
-        global $pd_router;
+        global $cf, $s, $pd_router;
 
         $pd_router->add_interest('polyglot_tag');
         if (defined('XH_ADM') && XH_ADM) {
@@ -44,7 +44,7 @@ class Plugin
                 self::handleAdministration();
             }
         }
-        (new AlternateLinkController(self::getModel(), self::view()))->defaultAction();
+        (new AlternateLinkController($cf['language']['default'], $s, self::getModel(), self::view()))->defaultAction();
     }
 
     /**
@@ -65,13 +65,17 @@ class Plugin
      */
     private static function handleAdministration()
     {
-        global $admin, $o;
+        global $pth, $plugin_tx, $admin, $o;
 
         $o .= print_plugin_admin('on');
         switch ($admin) {
             case '':
                 ob_start();
-                (new InfoController(new SystemCheckService(), self::view()))->defaultAction();
+                $controller = new InfoController(
+                    new SystemCheckService("{$pth['folder']['plugins']}polyglot", $plugin_tx['polyglot']),
+                    self::view()
+                );
+                $controller->defaultAction();
                 $o .= (string) ob_get_clean();
                 break;
             case 'plugin_main':
@@ -86,11 +90,12 @@ class Plugin
 
     public static function languageMenu(): string
     {
-        global $pth, $plugin_cf;
+        global $pth, $plugin_cf, $s;
 
         $controller = new LanguageMenuController(
             $pth['folder']['flags'],
             $plugin_cf['polyglot'],
+            $s,
             self::getModel(),
             self::view()
         );

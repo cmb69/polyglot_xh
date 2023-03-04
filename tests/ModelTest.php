@@ -26,6 +26,7 @@ use Plib\Url;
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
+use Polyglot\Infra\Model;
 use XH\PageDataRouter;
 
 class ModelTest extends TestCase

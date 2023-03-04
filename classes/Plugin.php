@@ -23,6 +23,8 @@ namespace Polyglot;
 
 use Plib\HtmlView as View;
 use Plib\Url;
+use Polyglot\Infra\Model;
+use Polyglot\Infra\SystemChecker;
 use XH\Pages;
 
 class Plugin
@@ -72,7 +74,9 @@ class Plugin
             case '':
                 ob_start();
                 $controller = new InfoController(
-                    new SystemCheckService("{$pth['folder']['plugins']}polyglot", $plugin_tx['polyglot']),
+                    $pth["folder"]["plugin"],
+                    $plugin_tx["polyglot"],
+                    new SystemChecker,
                     self::view()
                 );
                 $controller->defaultAction();

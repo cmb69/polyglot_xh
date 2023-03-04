@@ -23,14 +23,16 @@ namespace Polyglot;
 
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
+use Polyglot\Infra\SystemChecker;
 
 class InfoControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
         $systemChecks = ["foo" => "bar"];
-        $systemCheckService = $this->createStub(SystemCheckService::class);
-        $systemCheckService->method("getChecks")->willReturn($systemChecks);
+        $systemChecker = $this->createStub(SystemChecker::class);
+        $systemChecker->method("checkVersion")->willReturn(false);
+        $systemChecker->method("checkWritability")->willReturn(false);
 
         $view = $this->createMock(View::class);
         $view->expects($this->once())->method("render")->with(
@@ -41,7 +43,12 @@ class InfoControllerTest extends TestCase
             ])
         );
 
-        $subject = new InfoController($systemCheckService, $view);
+        $subject = new InfoController(
+            "./plugins/polyglot/",
+            XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"],
+            $systemChecker,
+            $view
+        );
         $subject->defaultAction();
     }
 }

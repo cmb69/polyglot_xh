@@ -19,7 +19,7 @@
  * along with Polyglot_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Polyglot;
+namespace Polyglot\Infra;
 
 use Plib\Url;
 use XH\PageDataRouter;

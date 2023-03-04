@@ -1,4 +1,4 @@
-tests/coverage
+/coverage
 vendor
 /cache/tags.dat
 /cache/.lck
@@ -6,3 +6,4 @@ vendor
 /composer.lock
 /.phpunit.result.cache
 /tools
+/.phpunit.cache

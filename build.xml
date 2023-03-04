@@ -14,7 +14,7 @@
       <arg value="--standard=PSR2"/>
       <arg line="--runtime-set ignore_warnings_on_exit true"/>
       <arg file="classes"/>
-      <arg file="tests/unit"/>
+      <arg file="tests"/>
       <arg file="index.php"/>
     </exec>
   </target>
@@ -23,18 +23,14 @@
     <exec executable="phpstan" passthru="true" checkreturn="true"/>
   </target>
 
-  <target name="unit-tests" description="runs all unit tests">
-    <exec executable="phpunit" passthru="true" checkreturn="true">
-      <arg value="--bootstrap"/>
-      <arg file="tests/unit/bootstrap.php"/>
-      <arg file="tests/unit"/>
-    </exec>
+  <target name="test" description="runs all developer tests">
+    <exec executable="phpunit" passthru="true" checkreturn="true"/>
   </target>
 
   <target name="coverage" description="generates coverage report">
     <exec executable="phpunit" passthru="true" checkreturn="true">
-      <arg value="--configuration"/>
-      <arg file="coverage.xml"/>
+      <arg value="--coverage-html"/>
+      <arg file="coverage"/>
     </exec>
   </target>
 
@@ -77,8 +73,8 @@
         <exclude name="README*.md"/>
         <exclude name="build.xml"/>
         <exclude name="composer.*"/>
-        <exclude name="coverage.xml"/>
         <exclude name="phpstan.*"/>
+        <exclude name="phpunit.xml"/>
         <exclude name="teplad.xml"/>
       </fileset>
     </move>

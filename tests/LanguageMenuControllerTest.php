@@ -21,6 +21,7 @@
 
 namespace Polyglot;
 
+use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Plib\Url;
@@ -45,31 +46,12 @@ class LanguageMenuControllerTest extends TestCase
             $urls["it"]
         );
 
-        $view = $this->createMock(View::class);
-        $view->expects($this->once())->method("render")->with(
-            $this->equalTo("languagemenu"),
-            $this->equalTo([
-                "languages" => [
-                    "de" => [
-                        "href" => $urls["de"],
-                        "src" => "de.png",
-                        "alt" => "nicht übersetzt",
-                    ],
-                    "fr" => [
-                        "href" => $urls["fr"],
-                        "src" => "fr.png",
-                        "alt" => "français",
-                    ],
-                    "it" => [
-                        "href" => $urls["it"],
-                        "src" => "it.png",
-                        "alt" => "it",
-                    ],
-                ]
-            ])
-        );
+        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
         $subject = new LanguageMenuController("", "png", "de=Deutsch;nicht übersetzt\rfr=français", 1, $model, $view);
+        ob_start();
         $subject->defaultAction();
+        $response = (string) ob_get_clean();
+        Approvals::verifyHtml($response);
     }
 }

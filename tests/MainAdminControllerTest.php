@@ -21,6 +21,7 @@
 
 namespace Polyglot;
 
+use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Plib\Url;
@@ -46,37 +47,12 @@ class MainAdminControllerTest extends TestCase
             (new Url("http://example.com/", "", "bar-fr"))->with("edit")
         );
        
-        $view = $this->createMock(View::class);
-        $view->expects($this->once())->method("render")->with(
-            $this->equalTo("admin"),
-            $this->equalTo([
-                "languages" => ["de", "fr"],
-                "pages" => [
-                    [
-                        "heading" => "Foo",
-                        "url" => (new Url("http://example.com/", "", "foo"))->with("edit"),
-                        "indent" => 0,
-                        "tag" => "foo",
-                        "translations" => [
-                            "de" => (new Url("http://example.com/", "", "foo-de"))->with("edit"),
-                            "fr" => null,
-                        ],
-                    ],
-                    [
-                        "heading" => "Bar",
-                        "url" => (new Url("http://example.com/", "", "bar"))->with("edit"),
-                        "indent" => 1,
-                        "tag" => "bar",
-                        "translations" => [
-                            "de" => null,
-                            "fr" => (new Url("http://example.com/", "", "bar-fr"))->with("edit"),
-                        ],
-                    ],
-                ],
-            ])
-        );
+        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
         $subject = new MainAdminController($pages, new Url("http://example.com/", "", ""), $model, $view);
+        ob_start();
         $subject->defaultAction();
+        $response = (string) ob_get_clean();
+        Approvals::verifyHtml($response);
     }
 }

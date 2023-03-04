@@ -21,6 +21,7 @@
 
 namespace Polyglot;
 
+use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Polyglot\Infra\SystemChecker;
@@ -29,26 +30,18 @@ class InfoControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
-        $systemChecks = ["foo" => "bar"];
         $systemChecker = $this->createStub(SystemChecker::class);
         $systemChecker->method("checkVersion")->willReturn(false);
         $systemChecker->method("checkWritability")->willReturn(false);
-
-        $view = $this->createMock(View::class);
-        $view->expects($this->once())->method("render")->with(
-            $this->equalTo("info"),
-            $this->equalTo([
-                "checks" => $systemChecks,
-                "version" => Plugin::VERSION,
-            ])
-        );
-
-        $subject = new InfoController(
+        $sut = new InfoController(
             "./plugins/polyglot/",
             XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"],
             $systemChecker,
-            $view
+            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
         );
-        $subject->defaultAction();
+        ob_start();
+        $sut->defaultAction();
+        $response = (string) ob_get_clean();
+        Approvals::verifyHtml($response);
     }
 }

@@ -21,6 +21,7 @@
 
 namespace Polyglot;
 
+use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Plib\Url;
@@ -29,19 +30,15 @@ class PageDataTabControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
-        $view = $this->createMock(View::class);
-        $view->expects($this->once())->method("render")->with(
-            $this->equalTo("tab"),
-            $this->equalTo([
-                "action" => "/?foo",
-                "tag" => "foo",
-            ])
-        );
+        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
         $subject = new PageDataTabController(
             ["polyglot_tag" => "foo"],
             new Url("http://example.com/", "", "foo"),
             $view
         );
+        ob_start();
         $subject->defaultAction();
+        $response = (string) ob_get_clean();
+        Approvals::verifyHtml($response);
     }
 }

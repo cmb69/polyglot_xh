@@ -21,6 +21,7 @@
 
 namespace Polyglot;
 
+use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Plib\Url;
@@ -30,23 +31,16 @@ class AlternateLinkControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
+        global $hjs;
+
         $model = $this->createStub(Model::class);
         $model->method("languages")->willReturn(["en", "de"]);
         $model->method("pageTag")->willReturn("foo");
         $model->method("isTranslated")->willReturn(true);
         $model->method("languageURL")->willReturn(new Url("http://example.com/", "", ""));
-        $view = $this->createMock(View::class);
-        $view->expects($this->once())->method("render")->with(
-            $this->equalTo("alternate_links"),
-            $this->equalTo([
-                "links" => [
-                    ["hreflang" => "x-default", "href" => new Url("http://example.com/", "", "")],
-                    ["hreflang" => "en", "href" => new Url("http://example.com/", "", "")],
-                    ["hreflang" => "de", "href" => new Url("http://example.com/", "", "")],
-                ],
-            ])
-        );
+        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
         $subject = new AlternateLinkController("en", 0, $model, $view);
         $subject->defaultAction();
+        Approvals::verifyHtml($hjs);
     }
 }

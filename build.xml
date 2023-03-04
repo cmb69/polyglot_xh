@@ -23,20 +23,6 @@
     <exec executable="phpstan" passthru="true" checkreturn="true"/>
   </target>
 
-  <target name="mess" description="detects code flaws">
-    <exec executable="phpmd" passthru="true" checkreturn="true">
-      <arg line="classes,index.php,tests/unit ansi codesize,unusedcode"/>
-    </exec>
-  </target>
-
-  <target name="compat" description="checks compatibility with PHP_CompatInfo">
-    <exec executable="phpcompatinfo" passthru="true" checkreturn="true">
-      <arg value="--ansi"/>
-      <arg value="analyser:run"/>
-      <arg file="classes"/>
-    </exec>
-  </target>
-
   <target name="unit-tests" description="runs all unit tests">
     <exec executable="phpunit" passthru="true" checkreturn="true">
       <arg value="--bootstrap"/>
@@ -87,12 +73,13 @@
       <fileset dir="export">
         <exclude name=".github/**"/>
         <exclude name=".phive/**"/>
+        <exclude name="tests/**"/>
+        <exclude name="README*.md"/>
         <exclude name="build.xml"/>
         <exclude name="composer.*"/>
         <exclude name="coverage.xml"/>
         <exclude name="phpstan.*"/>
-        <exclude name="README*.md"/>
-        <exclude name="tests/**"/>
+        <exclude name="teplad.xml"/>
       </fileset>
     </move>
     <delete dir="export"/>

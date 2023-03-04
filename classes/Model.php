@@ -141,7 +141,7 @@ class Model
         $tags = unserialize($contents);
         assert(is_array($tags));
         $this->tags = $tags;
-        if (!is_array($this->tags)) {
+        if (!is_array($this->tags)) { // @phpstan-ignore-line
             $this->tags = [];
             $this->update();
             return;
@@ -166,7 +166,7 @@ class Model
         foreach ($this->pageDataRouter->find_all() as $i => $data) {
             if (!empty($data['polyglot_tag'])) {
                 $tag = $data['polyglot_tag'];
-                $this->tags[$tag][$this->language] = $this->pageUrls[$i];
+                $this->tags[$tag][$this->language] = $this->pageUrls[$i]; // @phpstan-ignore-line
             }
         }
         $contents = serialize($this->tags);

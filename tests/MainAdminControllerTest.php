@@ -25,19 +25,13 @@ use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Plib\Url;
+use Polyglot\Infra\FakePages;
 use Polyglot\Infra\Model;
-use XH\Pages;
 
 class MainAdminControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
-        $pages = $this->createStub(Pages::class);
-        $pages->method("getCount")->willReturn(2);
-        $pages->method("level")->willReturnOnConsecutiveCalls(1, 2);
-        $pages->method("heading")->willReturnOnConsecutiveCalls("Foo", "Bar");
-        $pages->method("url")->willReturnOnConsecutiveCalls("foo", "bar");
-
         $model = $this->createStub(Model::class);
         $model->method("otherLanguages")->willReturn(["de", "fr"]);
         $model->method("pageTag")->willReturnOnConsecutiveCalls("foo", "bar");
@@ -49,7 +43,7 @@ class MainAdminControllerTest extends TestCase
        
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
-        $subject = new MainAdminController($pages, new Url("http://example.com/", "", ""), $model, $view);
+        $subject = new MainAdminController(new FakePages, new Url("http://example.com/", "", ""), $model, $view);
         $response = $subject->defaultAction();
         Approvals::verifyHtml($response);
     }

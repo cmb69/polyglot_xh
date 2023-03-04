@@ -26,8 +26,8 @@ use Plib\Url;
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
+use Polyglot\Infra\FakePages;
 use Polyglot\Infra\Model;
-use XH\PageDataRouter;
 
 class ModelTest extends TestCase
 {
@@ -42,17 +42,14 @@ class ModelTest extends TestCase
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
         mkdir(vfsStream::url('test/de'));
         touch(vfsStream::url('test/de/.2lang'));
-        $pageDataRouter = $this->createStub(PageDataRouter::class);
-        $pageDataRouter->method('find_all')->willReturn([]);
         $this->model = new Model(
             'en',
             'en',
             ["de"],
             vfsStream::url('test/'),
-            $pageDataRouter,
-            [],
             vfsStream::url("test/content/content.htm"),
-            new Url("http://foo.en/", "de", "")
+            new Url("http://foo.en/", "de", ""),
+            new FakePages
         );
     }
 

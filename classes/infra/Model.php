@@ -22,7 +22,6 @@
 namespace Polyglot\Infra;
 
 use Plib\Url;
-use XH\PageDataRouter;
 
 class Model
 {
@@ -49,40 +48,32 @@ class Model
      */
     private $tags = null;
 
-    /** @var PageDataRouter */
-    private $pageDataRouter;
-
-    /** @var string[] */
-    private $pageUrls;
-
     /** @var string */
     private $contentFile;
 
     /** @var Url */
     private $url;
 
-    /**
-     * @param array<string> $secondLanguages
-     * @param string[] $pageUrls
-     */
+    /** @var Pages */
+    private $pages;
+
+    /** @param array<string> $secondLanguages */
     public function __construct(
         string $language,
         string $defaultLang,
         array $secondLanguages,
         string $dataFolder,
-        PageDataRouter $pageDataRouter,
-        array $pageUrls,
         string $contentFile,
-        Url $url
+        Url $url,
+        Pages $pages
     ) {
         $this->language = $language;
         $this->defaultLanguage = $defaultLang;
         $this->secondLanguages = $secondLanguages;
         $this->dataFolder = $dataFolder;
-        $this->pageDataRouter = $pageDataRouter;
-        $this->pageUrls = $pageUrls;
         $this->contentFile = $contentFile;
         $this->url = $url;
+        $this->pages = $pages;
     }
 
     private function tagsFile(): string
@@ -163,10 +154,10 @@ class Model
      */
     private function update()
     {
-        foreach ($this->pageDataRouter->find_all() as $i => $data) {
+        foreach ($this->pages->allPageData() as $i => $data) {
             if (!empty($data['polyglot_tag'])) {
                 $tag = $data['polyglot_tag'];
-                $this->tags[$tag][$this->language] = $this->pageUrls[$i]; // @phpstan-ignore-line
+                $this->tags[$tag][$this->language] = $this->pages->url($i);
             }
         }
         $contents = serialize($this->tags);
@@ -175,7 +166,7 @@ class Model
 
     public function pageTag(int $index): string
     {
-        $pageData = $this->pageDataRouter->find_page($index);
+        $pageData = $this->pages->pageData($index);
         return isset($pageData['polyglot_tag'])
             ? $pageData['polyglot_tag']
             : "";

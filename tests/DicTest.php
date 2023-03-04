@@ -22,13 +22,12 @@
 namespace Polyglot;
 
 use PHPUnit\Framework\TestCase;
-use XH\PageDataRouter;
 
 class DicTest extends TestCase
 {
     public function setUp(): void
     {
-        global $pth, $cf, $plugin_cf, $plugin_tx, $u, $c, $pd_router, $sl, $s, $su;
+        global $pth, $cf, $plugin_cf, $plugin_tx, $c, $sl, $s, $su;
 
         $pth = [
             "folder" => ["base" => "", "flags" => "", "plugin" => "", "plugins" => ""],
@@ -37,9 +36,7 @@ class DicTest extends TestCase
         $cf = ["language" => ["default" => ""]];
         $plugin_cf = ["polyglot" => ["flags_extension" => "", "languages_labels" => ""]];
         $plugin_tx = ["polyglot" => []];
-        $u = [];
         $c = [];
-        $pd_router = $this->createStub(PageDataRouter::class);
         $sl = "";
         $s = 0;
         $su = "";

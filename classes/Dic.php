@@ -24,8 +24,8 @@ namespace Polyglot;
 use Plib\HtmlView as View;
 use Plib\Url;
 use Polyglot\Infra\Model;
+use Polyglot\Infra\Pages;
 use Polyglot\Infra\SystemChecker;
-use XH\Pages;
 
 class Dic
 {
@@ -69,22 +69,26 @@ class Dic
 
     public static function makeMainAdminController(): MainAdminController
     {
-        return new MainAdminController(new Pages(), self::makeUrl(), self::makeModel(), self::makeView());
+        return new MainAdminController(
+            new Pages(),
+            self::makeUrl(),
+            self::makeModel(),
+            self::makeView()
+        );
     }
 
     private static function makeModel(): Model
     {
-        global $pth, $sl, $cf, $pd_router, $u;
+        global $pth, $sl, $cf;
 
         return new Model(
             $sl,
             $cf['language']['default'],
             XH_secondLanguages(),
             $pth['folder']['plugins'] . 'polyglot/cache/',
-            $pd_router,
-            $u,
             $pth['file']['content'],
-            self::makeUrl()
+            self::makeUrl(),
+            new Pages()
         );
     }
 

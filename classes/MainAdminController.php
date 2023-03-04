@@ -24,7 +24,7 @@ namespace Polyglot;
 use Plib\HtmlView as View;
 use Plib\Url;
 use Polyglot\Infra\Model;
-use XH\Pages;
+use Polyglot\Infra\Pages;
 
 class MainAdminController
 {
@@ -56,7 +56,7 @@ class MainAdminController
     {
         $languages = $this->model->otherLanguages();
         $pages = [];
-        for ($i = 0; $i < $this->pages->getCount(); $i++) {
+        for ($i = 0; $i < $this->pages->count(); $i++) {
             $heading = $this->pages->heading($i);
             $url = $this->url->page($this->pages->url($i))->with("edit");
             $indent = (string) ($this->pages->level($i) - 1);

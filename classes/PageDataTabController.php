@@ -22,7 +22,6 @@
 namespace Polyglot;
 
 use Plib\HtmlView as View;
-use Plib\Url;
 use Polyglot\Infra\Request;
 
 class PageDataTabController

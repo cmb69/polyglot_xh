@@ -24,32 +24,25 @@ namespace Polyglot;
 use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
-use Plib\Url;
+use Polyglot\Infra\FakeLanguageRepo;
 use Polyglot\Infra\FakeRequest;
-use Polyglot\Infra\Model;
+use Polyglot\Infra\FakeTranslationRepo;
 
 class LanguageMenuControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
-        $urls = [
-            "de" => new Url("http://example.com/", "de", ""),
-            "fr" => new Url("http://example.com/", "fr", ""),
-            "it" => new Url("http://example.com/", "it", ""),
-        ];
-
-        $model = $this->createStub(Model::class);
-        $model->method("languages")->willReturn(["de", "en", "fr", "it"]);
-        $model->method("pageTag")->willReturn("foo");
-        $model->method("languageURL")->willReturnOnConsecutiveCalls(
-            $urls["de"],
-            $urls["fr"],
-            $urls["it"]
-        );
-
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
-        $subject = new LanguageMenuController("", "png", "de=Deutsch;nicht übersetzt\rfr=français", $model, $view);
+        $subject = new LanguageMenuController(
+            "en",
+            "",
+            "png",
+            "de=Deutsch;nicht übersetzt\rfr=français",
+            $view,
+            new FakeLanguageRepo(["second" => ["de", "fr", "it"]]),
+            new FakeTranslationRepo()
+        );
         $response = $subject->defaultAction(new FakeRequest(["sl" => "en"]));
         Approvals::verifyHtml($response);
     }

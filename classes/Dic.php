@@ -22,9 +22,11 @@
 namespace Polyglot;
 
 use Plib\HtmlView as View;
+use Polyglot\Infra\LanguageRepo;
 use Polyglot\Infra\Model;
 use Polyglot\Infra\Pages;
 use Polyglot\Infra\SystemChecker;
+use Polyglot\Infra\TranslationRepo;
 
 class Dic
 {
@@ -32,19 +34,26 @@ class Dic
     {
         global $cf;
 
-        return new AlternateLinkController($cf['language']['default'], self::makeModel(), self::makeView());
+        return new AlternateLinkController(
+            $cf['language']['default'],
+            self::makeView(),
+            new LanguageRepo,
+            self::makeTranslationRepo()
+        );
     }
 
     public static function makeLanguageMenuController(): LanguageMenuController
     {
-        global $pth, $plugin_cf;
+        global $pth, $cf, $plugin_cf;
 
         return new LanguageMenuController(
+            $cf['language']['default'],
             $pth['folder']['flags'],
             $plugin_cf['polyglot']['flags_extension'],
             $plugin_cf['polyglot']['languages_labels'],
-            self::makeModel(),
-            self::makeView()
+            self::makeView(),
+            new LanguageRepo,
+            self::makeTranslationRepo()
         );
     }
 
@@ -67,24 +76,22 @@ class Dic
 
     public static function makeMainAdminController(): MainAdminController
     {
+        global $cf;
+
         return new MainAdminController(
+            $cf['language']['default'],
             new Pages(),
-            self::makeModel(),
-            self::makeView()
+            self::makeView(),
+            new LanguageRepo,
+            self::makeTranslationRepo()
         );
     }
 
-    private static function makeModel(): Model
+    private static function makeTranslationRepo(): TranslationRepo
     {
-        global $pth, $cf;
+        global $pth;
 
-        return new Model(
-            $cf['language']['default'],
-            XH_secondLanguages(),
-            $pth['folder']['plugins'] . 'polyglot/cache/',
-            $pth['file']['content'],
-            new Pages()
-        );
+        return new TranslationRepo($pth['folder']['plugins'] . 'polyglot/cache/', new Pages());
     }
 
     private static function makeView(): View

@@ -24,9 +24,10 @@ namespace Polyglot;
 use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
-use Plib\Url;
+use Polyglot\Infra\FakeLanguageRepo;
 use Polyglot\Infra\FakeRequest;
-use Polyglot\Infra\Model;
+use Polyglot\Infra\FakeTranslationRepo;
+use Polyglot\Value\Translation;
 
 class AlternateLinkControllerTest extends TestCase
 {
@@ -34,13 +35,13 @@ class AlternateLinkControllerTest extends TestCase
     {
         global $hjs;
 
-        $model = $this->createStub(Model::class);
-        $model->method("languages")->willReturn(["en", "de"]);
-        $model->method("pageTag")->willReturn("foo");
-        $model->method("isTranslated")->willReturn(true);
-        $model->method("languageURL")->willReturn(new Url("http://example.com/", "", ""));
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
-        $subject = new AlternateLinkController("en", $model, $view);
+        $subject = new AlternateLinkController(
+            "en",
+            $view,
+            new FakeLanguageRepo(["second" => ["de"]]),
+            new FakeTranslationRepo(["trans" => [0 => new Translation("foo", ["de" => "", "en" => ""])]])
+        );
         $subject->defaultAction(new FakeRequest());
         Approvals::verifyHtml($hjs);
     }

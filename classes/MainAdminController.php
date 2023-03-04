@@ -22,51 +22,59 @@
 namespace Polyglot;
 
 use Plib\HtmlView as View;
-use Plib\Url;
-use Polyglot\Infra\Model;
+use Polyglot\Infra\LanguageRepo;
 use Polyglot\Infra\Pages;
 use Polyglot\Infra\Request;
+use Polyglot\Infra\TranslationRepo;
 
 class MainAdminController
 {
-    /**
-     * @var Pages
-     */
-    private $pages;
+    /** @var string */
+    private $defaultLanguage;
 
-    /**
-     *  @var Model
-     */
-    private $model;
+    /** @var Pages */
+    private $pages;
 
     /** @var View */
     private $view;
 
-    public function __construct(Pages $pages, Model $model, View $view)
-    {
+    /** @var LanguageRepo */
+    private $languageRepo;
+
+    /** @var TranslationRepo */
+    private $translationRepo;
+
+    public function __construct(
+        string $defaultLanguage,
+        Pages $pages,
+        View $view,
+        LanguageRepo $languageRepo,
+        TranslationRepo $translationRepo
+    ) {
+        $this->defaultLanguage = $defaultLanguage;
         $this->pages = $pages;
-        $this->model = $model;
         $this->view = $view;
+        $this->languageRepo = $languageRepo;
+        $this->translationRepo = $translationRepo;
     }
 
     public function defaultAction(Request $request): string
     {
-        $otherLanguages = array_filter($this->model->languages(), function (string $language) use ($request) {
-            return $language !== $request->sl();
-        });
-        $languages = $otherLanguages;
+        $this->translationRepo->init($request->sl());
+        $languages = $this->languageRepo->others($request->sl());
         $pages = [];
         for ($i = 0; $i < $this->pages->count(); $i++) {
             $heading = $this->pages->heading($i);
             $url = $request->url()->page($this->pages->url($i))->with("edit");
             $indent = (string) ($this->pages->level($i) - 1);
-            $tag = $this->model->pageTag($i);
+            $translation = $this->translationRepo->findByPage($i);
+            $tag = $translation->tag();
             $translations = [];
             foreach ($languages as $language) {
-                $translations[$language]
-                    = $this->model->isTranslated($request->sl(), $tag, $language)
-                        ? $this->model->languageURL($request->url(), $request->sl(), $language, $tag)->with("edit")
-                        : null;
+                $translations[$language] = $translation->pageUrl($language) !== null
+                    ? $request->url()->lang($language != $this->defaultLanguage ? $language : "")
+                        ->page($translation->pageUrl($language))->with("edit")
+                    : null;
             }
             $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
         }

@@ -69,6 +69,6 @@ class Pages
     /** @return array<string,string> */
     public function pageData(int $page): array
     {
-        return $this->xhPageDataRouter->find_page($page);
+        return $this->xhPageDataRouter->find_page($page) ?? []; // @phpstan-ignore-line
     }
 }

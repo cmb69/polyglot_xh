@@ -25,26 +25,29 @@ use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Plib\Url;
+use Polyglot\Infra\FakeLanguageRepo;
 use Polyglot\Infra\FakePages;
 use Polyglot\Infra\FakeRequest;
+use Polyglot\Infra\FakeTranslationRepo;
 use Polyglot\Infra\Model;
+use Polyglot\Value\Translation;
 
 class MainAdminControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
-        $model = $this->createStub(Model::class);
-        $model->method("languages")->willReturn(["de", "en", "fr"]);
-        $model->method("pageTag")->willReturnOnConsecutiveCalls("foo", "bar");
-        $model->method("isTranslated")->willReturn(true, false, false, true);
-        $model->method("languageURL")->willReturnOnConsecutiveCalls(
-            (new Url("http://example.com/", "", "foo-de"))->with("edit"),
-            (new Url("http://example.com/", "", "bar-fr"))->with("edit")
-        );
-       
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
-        $subject = new MainAdminController(new FakePages, $model, $view);
+        $subject = new MainAdminController(
+            "en",
+            new FakePages,
+            $view,
+            new FakeLanguageRepo(["second" => ["de", "fr"]]),
+            new FakeTranslationRepo(["trans" => [
+                0 => new Translation("foo", ["de" => "foo-de"]),
+                1 => new Translation("bar", ["fr" => "bar-fr"]),
+            ]])
+        );
         $response = $subject->defaultAction(new FakeRequest(["sl" => "en", "defaultLanguage" => "en"]));
         Approvals::verifyHtml($response);
     }

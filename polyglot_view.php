@@ -20,11 +20,12 @@
  */
 
 use Polyglot\Dic;
+use Polyglot\Infra\Request;
 
 /**
  * @param array<string,string> $pageData
  */
 function Polyglot_view(array $pageData): string
 {
-    return Dic::makePageDataTabController()->defaultAction($pageData);
+    return Dic::makePageDataTabController()->defaultAction(Request::current(), $pageData);
 }

@@ -19,52 +19,30 @@
  * along with Polyglot_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Polyglot\Infra;
+namespace Polyglot\Value;
 
-class FakePages extends Pages
+class Translation
 {
-    public function __construct()
-    {
-        $this->xhPages = new FakeXhPages;
-        $this->xhPageDataRouter = new FakeXhPageDataRouter;
-    }
-}
+    /** @var string */
+    private $tag;
 
-class FakeXhPages
-{
-    public function getCount()
-    {
-        return 2;
-    }
+    /** @var array<string,string> */
+    private $pageUrls;
 
-    public function level(int $page)
+    /** @param array<string,string> $pageUrls */
+    public function __construct(string $tag, array $pageUrls)
     {
-        $levels = [1, 2];
-        return $levels[$page];
+        $this->tag = $tag;
+        $this->pageUrls = $pageUrls;
     }
 
-    public function heading(int $page)
+    public function tag(): string
     {
-        $heading = ["Foo", "Bar"];
-        return $heading[$page];
+        return $this->tag;
     }
 
-    public function url(int $page)
+    public function pageUrl(string $language): ?string
     {
-        $urls = ["foo", "bar"];
-        return $urls[$page];
-    }
-}
-
-class FakeXhPageDataRouter
-{
-    public function find_all()
-    {
-        return [];
-    }
-
-    public function find_page()
-    {
-        return [];
+        return $this->pageUrls[$language] ?? null;
     }
 }

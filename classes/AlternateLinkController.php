@@ -23,29 +23,35 @@ namespace Polyglot;
 
 use Plib\HtmlView as View;
 use Plib\Url;
+use Polyglot\Infra\LanguageRepo;
 use Polyglot\Infra\Model;
 use Polyglot\Infra\Request;
+use Polyglot\Infra\TranslationRepo;
 
 class AlternateLinkController
 {
     /** @var string */
     private $defaultLanguage;
 
-    /**
-     * @var Model
-     */
-    private $model;
-
-    /**
-     * @var View
-     */
+    /** @var View */
     private $view;
 
-    public function __construct(string $defaultLanguage, Model $model, View $view)
-    {
+    /** @var LanguageRepo */
+    private $languageRepo;
+
+    /** @var TranslationRepo */
+    private $translationRepo;
+
+    public function __construct(
+        string $defaultLanguage,
+        View $view,
+        LanguageRepo $languageRepo,
+        TranslationRepo $translationRepo
+    ) {
         $this->defaultLanguage = $defaultLanguage;
-        $this->model = $model;
         $this->view = $view;
+        $this->languageRepo = $languageRepo;
+        $this->translationRepo = $translationRepo;
     }
 
     /**
@@ -55,11 +61,12 @@ class AlternateLinkController
     {
         global $hjs;
 
+        $this->translationRepo->init($request->sl());
         $links = [];
-        $tag = $this->model->pageTag($request->s());
-        foreach ($this->model->languages() as $language) {
-            if ($this->model->isTranslated($tag, $request->sl(), $language)) {
-                $links = array_merge($links, $this->alternateLinksFor($request, $language, $tag));
+        $translation = $this->translationRepo->findByPage($request->s());
+        foreach ($this->languageRepo->all() as $language) {
+            if ($translation->pageUrl($language) !== null) {
+                $links = array_merge($links, $this->alternateLinksFor($request, $language, $translation->tag()));
             }
         }
         $hjs .= $this->view->render('alternate_links', compact('links'));
@@ -71,7 +78,9 @@ class AlternateLinkController
     private function alternateLinksFor(Request $request, string $language, string $tag): array
     {
         $result = [];
-        $href = $this->model->languageURL($request->url(), $request->sl(), $language, $tag);
+        $pageUrl = $this->translationRepo->findByTag($tag)->pageUrl($language);
+        $href = $request->url()->lang($language != $this->defaultLanguage ? $language : "")
+            ->page($pageUrl !== null ? $pageUrl : "");
         if ($language === $this->defaultLanguage) {
             $result[] = ["hreflang" => "x-default", "href" => $href];
         }

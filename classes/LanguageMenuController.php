@@ -23,11 +23,16 @@ namespace Polyglot;
 
 use Plib\HtmlView as View;
 use Plib\Url;
+use Polyglot\Infra\LanguageRepo;
 use Polyglot\Infra\Model;
 use Polyglot\Infra\Request;
+use Polyglot\Infra\TranslationRepo;
 
 class LanguageMenuController
 {
+    /** @var string */
+    private $defaultLanguage;
+
     /** @var string */
     private $flagsFolder;
 
@@ -37,36 +42,38 @@ class LanguageMenuController
     /** @var string */
     private $languageLabels;
 
-    /**
-     * @var Model
-     */
-    private $model;
-
     /** @var View */
     private $view;
 
+    /** @var LanguageRepo */
+    private $languageRepo;
+
+    /** @var TranslationRepo */
+    private $translationRepo;
+
     public function __construct(
+        string $defaultLanguage,
         string $flagsFolder,
         string $flagsExtension,
         string $languageLabels,
-        Model $model,
-        View $view
+        View $view,
+        LanguageRepo $languageRepo,
+        TranslationRepo $translationRepo
     ) {
+        $this->defaultLanguage = $defaultLanguage;
         $this->flagsFolder = $flagsFolder;
         $this->flagsExtension = $flagsExtension;
         $this->languageLabels = $languageLabels;
-        $this->model = $model;
         $this->view = $view;
+        $this->languageRepo = $languageRepo;
+        $this->translationRepo = $translationRepo;
     }
 
     public function defaultAction(Request $request): string
     {
+        $this->translationRepo->init($request->sl());
         $languages = [];
-
-        $otherLanguages = array_filter($this->model->languages(), function (string $language) use ($request) {
-            return $language !== $request->sl();
-        });
-        foreach ($otherLanguages as $language) {
+        foreach ($this->languageRepo->others($request->sl()) as $language) {
             $href = $this->languageURL($request, $language);
             $src = $this->languageFlag($language);
             $alt = $this->getAltAttribute($request, $language);
@@ -83,10 +90,10 @@ class LanguageMenuController
 
     private function getAltAttribute(Request $request, string $language): string
     {
-        $tag = $this->model->pageTag($request->s());
+        $translation = $this->translationRepo->findByPage($request->s());
         $labels = $this->languageLabels();
         if (isset($labels[$language])) {
-            if (($this->model->isTranslated($tag, $request->sl(), $language))
+            if ($translation->pageUrl($language) !== null
                 || !isset($labels[$language]["untranslated"])
             ) {
                 $alt = $labels[$language]["translated"];
@@ -120,7 +127,10 @@ class LanguageMenuController
 
     private function languageURL(Request $request, string $language): Url
     {
-        $tag = $request->s() > 0 ? $this->model->pageTag($request->s()) : "";
-        return $this->model->languageURL($request->url(), $request->sl(), $language, $tag);
+        $translation = $this->translationRepo->findByPage($request->s());
+        $tag = $request->s() > 0 ? $translation->tag() : "";
+        $pageUrl = $this->translationRepo->findByTag($tag)->pageUrl($language);
+        return $request->url()->lang($language != $this->defaultLanguage ? $language : "")
+            ->page($pageUrl !== null ? $pageUrl : "");
     }
 }

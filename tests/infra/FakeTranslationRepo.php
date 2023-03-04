@@ -21,50 +21,36 @@
 
 namespace Polyglot\Infra;
 
-class FakePages extends Pages
+use Polyglot\Infra\TranslationRepo;
+use Polyglot\Value\Translation;
+
+class FakeTranslationRepo extends TranslationRepo
 {
-    public function __construct()
-    {
-        $this->xhPages = new FakeXhPages;
-        $this->xhPageDataRouter = new FakeXhPageDataRouter;
-    }
-}
+    private $options;
 
-class FakeXhPages
-{
-    public function getCount()
+    public function __construct($options = [])
     {
-        return 2;
+        $this->pages = new FakePages;
+        $this->options = $options;
     }
 
-    public function level(int $page)
+    public function init(string $sl)
     {
-        $levels = [1, 2];
-        return $levels[$page];
+        $this->tags = [];
     }
 
-    public function heading(int $page)
+    protected function contentFileTimestamp(): int
     {
-        $heading = ["Foo", "Bar"];
-        return $heading[$page];
+        return $this->options["mtime"] ?? 0;
     }
 
-    public function url(int $page)
+    public function findByTag(string $tag): Translation
     {
-        $urls = ["foo", "bar"];
-        return $urls[$page];
-    }
-}
-
-class FakeXhPageDataRouter
-{
-    public function find_all()
-    {
-        return [];
+        return $this->options["trans"][$tag] ?? parent::findByTag($tag);
     }
 
-    public function find_page()
+    public function findByPage(int $page): Translation
     {
-        return [];
+        return $this->options["trans"][$page] ?? parent::findByPage($page);
     }
 }

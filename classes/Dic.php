@@ -22,7 +22,6 @@
 namespace Polyglot;
 
 use Plib\HtmlView as View;
-use Plib\Url;
 use Polyglot\Infra\Model;
 use Polyglot\Infra\Pages;
 use Polyglot\Infra\SystemChecker;
@@ -31,20 +30,19 @@ class Dic
 {
     public static function makeAlternateLinkController(): AlternateLinkController
     {
-        global $cf, $s;
+        global $cf;
 
-        return new AlternateLinkController($cf['language']['default'], $s, self::makeModel(), self::makeView());
+        return new AlternateLinkController($cf['language']['default'], self::makeModel(), self::makeView());
     }
 
     public static function makeLanguageMenuController(): LanguageMenuController
     {
-        global $pth, $plugin_cf, $s;
+        global $pth, $plugin_cf;
 
         return new LanguageMenuController(
             $pth['folder']['flags'],
             $plugin_cf['polyglot']['flags_extension'],
             $plugin_cf['polyglot']['languages_labels'],
-            $s,
             self::makeModel(),
             self::makeView()
         );
@@ -52,7 +50,7 @@ class Dic
 
     public static function makePageDataTabController(): PageDataTabController
     {
-        return new PageDataTabController(self::makeUrl(), self::makeView());
+        return new PageDataTabController(self::makeView());
     }
 
     public static function makeInfoController(): InfoController
@@ -71,7 +69,6 @@ class Dic
     {
         return new MainAdminController(
             new Pages(),
-            self::makeUrl(),
             self::makeModel(),
             self::makeView()
         );
@@ -79,15 +76,13 @@ class Dic
 
     private static function makeModel(): Model
     {
-        global $pth, $sl, $cf;
+        global $pth, $cf;
 
         return new Model(
-            $sl,
             $cf['language']['default'],
             XH_secondLanguages(),
             $pth['folder']['plugins'] . 'polyglot/cache/',
             $pth['file']['content'],
-            self::makeUrl(),
             new Pages()
         );
     }
@@ -97,14 +92,5 @@ class Dic
         global $pth, $plugin_tx;
 
         return new View("{$pth["folder"]["plugins"]}polyglot/views", $plugin_tx["polyglot"]);
-    }
-
-    private static function makeUrl(): Url
-    {
-        global $sl, $cf, $su;
-
-        $base = preg_replace(['/index\.php$/', "/(?<=\\/)$sl\\/$/"], "", CMSIMPLE_URL);
-        assert($base !== null);
-        return new Url($base, $sl === $cf["language"]["default"] ? "" : $sl, $su);
     }
 }

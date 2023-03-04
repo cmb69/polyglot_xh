@@ -20,6 +20,7 @@
  */
 
 use Polyglot\Dic;
+use Polyglot\Infra\Request;
 use XH\PageDataRouter;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {
@@ -31,7 +32,7 @@ const POLYGLOT_VERSION = "1.0beta2";
 
 function Polyglot_languageMenu(): string
 {
-    return Dic::makeLanguageMenuController()->defaultAction();
+    return Dic::makeLanguageMenuController()->defaultAction(Request::current());
 }
 
 /**
@@ -40,4 +41,4 @@ function Polyglot_languageMenu(): string
 
 $pd_router->add_interest("polyglot_tag");
 
-Dic::makeAlternateLinkController()->defaultAction();
+Dic::makeAlternateLinkController()->defaultAction(Request::current());

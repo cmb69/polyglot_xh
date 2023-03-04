@@ -44,20 +44,11 @@ class ModelTest extends TestCase
         touch(vfsStream::url('test/de/.2lang'));
         $this->model = new Model(
             'en',
-            'en',
             ["de"],
             vfsStream::url('test/'),
             vfsStream::url("test/content/content.htm"),
-            new Url("http://foo.en/", "de", ""),
             new FakePages
         );
-    }
-
-    public function testOtherLanguages(): void
-    {
-        $expected = ['de'];
-        $actual = $this->model->otherLanguages();
-        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -65,6 +56,9 @@ class ModelTest extends TestCase
      */
     public function testLanguageUrlContainsTld(): void
     {
-        $this->assertEquals(new Url("http://foo.en/", "de", ""), $this->model->languageURL('de', 'unknown'));
+        $this->assertEquals(
+            new Url("http://foo.en/", "de", ""),
+            $this->model->languageURL(new Url("http://foo.en/", "de", ""), 'en', 'de', 'unknown')
+        );
     }
 }

@@ -26,6 +26,7 @@ use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Plib\Url;
 use Polyglot\Infra\FakePages;
+use Polyglot\Infra\FakeRequest;
 use Polyglot\Infra\Model;
 
 class MainAdminControllerTest extends TestCase
@@ -33,7 +34,7 @@ class MainAdminControllerTest extends TestCase
     public function testDefaultAction(): void
     {
         $model = $this->createStub(Model::class);
-        $model->method("otherLanguages")->willReturn(["de", "fr"]);
+        $model->method("languages")->willReturn(["de", "en", "fr"]);
         $model->method("pageTag")->willReturnOnConsecutiveCalls("foo", "bar");
         $model->method("isTranslated")->willReturn(true, false, false, true);
         $model->method("languageURL")->willReturnOnConsecutiveCalls(
@@ -43,8 +44,8 @@ class MainAdminControllerTest extends TestCase
        
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
-        $subject = new MainAdminController(new FakePages, new Url("http://example.com/", "", ""), $model, $view);
-        $response = $subject->defaultAction();
+        $subject = new MainAdminController(new FakePages, $model, $view);
+        $response = $subject->defaultAction(new FakeRequest(["sl" => "en", "defaultLanguage" => "en"]));
         Approvals::verifyHtml($response);
     }
 }

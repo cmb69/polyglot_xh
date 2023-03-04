@@ -25,6 +25,7 @@ use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Plib\Url;
+use Polyglot\Infra\FakeRequest;
 use Polyglot\Infra\Model;
 
 class LanguageMenuControllerTest extends TestCase
@@ -38,7 +39,7 @@ class LanguageMenuControllerTest extends TestCase
         ];
 
         $model = $this->createStub(Model::class);
-        $model->method("otherLanguages")->willReturn(["de", "fr", "it"]);
+        $model->method("languages")->willReturn(["de", "en", "fr", "it"]);
         $model->method("pageTag")->willReturn("foo");
         $model->method("languageURL")->willReturnOnConsecutiveCalls(
             $urls["de"],
@@ -48,8 +49,8 @@ class LanguageMenuControllerTest extends TestCase
 
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
-        $subject = new LanguageMenuController("", "png", "de=Deutsch;nicht übersetzt\rfr=français", 1, $model, $view);
-        $response = $subject->defaultAction();
+        $subject = new LanguageMenuController("", "png", "de=Deutsch;nicht übersetzt\rfr=français", $model, $view);
+        $response = $subject->defaultAction(new FakeRequest(["sl" => "en"]));
         Approvals::verifyHtml($response);
     }
 }

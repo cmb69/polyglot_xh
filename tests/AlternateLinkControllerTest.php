@@ -25,6 +25,7 @@ use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Plib\Url;
+use Polyglot\Infra\FakeRequest;
 use Polyglot\Infra\Model;
 
 class AlternateLinkControllerTest extends TestCase
@@ -39,8 +40,8 @@ class AlternateLinkControllerTest extends TestCase
         $model->method("isTranslated")->willReturn(true);
         $model->method("languageURL")->willReturn(new Url("http://example.com/", "", ""));
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
-        $subject = new AlternateLinkController("en", 0, $model, $view);
-        $subject->defaultAction();
+        $subject = new AlternateLinkController("en", $model, $view);
+        $subject->defaultAction(new FakeRequest());
         Approvals::verifyHtml($hjs);
     }
 }

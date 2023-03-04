@@ -24,6 +24,7 @@ namespace Polyglot;
 use Plib\HtmlView as View;
 use Plib\Url;
 use Polyglot\Infra\Model;
+use Polyglot\Infra\Request;
 
 class LanguageMenuController
 {
@@ -35,9 +36,6 @@ class LanguageMenuController
 
     /** @var string */
     private $languageLabels;
-
-    /** @var int */
-    private $pageIndex;
 
     /**
      * @var Model
@@ -51,26 +49,27 @@ class LanguageMenuController
         string $flagsFolder,
         string $flagsExtension,
         string $languageLabels,
-        int $pageIndex,
         Model $model,
         View $view
     ) {
         $this->flagsFolder = $flagsFolder;
         $this->flagsExtension = $flagsExtension;
         $this->languageLabels = $languageLabels;
-        $this->pageIndex = $pageIndex;
         $this->model = $model;
         $this->view = $view;
     }
 
-    public function defaultAction(): string
+    public function defaultAction(Request $request): string
     {
         $languages = [];
 
-        foreach ($this->model->otherLanguages() as $language) {
-            $href = $this->languageURL($language);
+        $otherLanguages = array_filter($this->model->languages(), function (string $language) use ($request) {
+            return $language !== $request->sl();
+        });
+        foreach ($otherLanguages as $language) {
+            $href = $this->languageURL($request, $language);
             $src = $this->languageFlag($language);
-            $alt = $this->getAltAttribute($language);
+            $alt = $this->getAltAttribute($request, $language);
             $languages[$language] = compact('href', 'src', 'alt');
         }
         return $this->view->render('languagemenu', ['languages' => $languages]);
@@ -82,12 +81,12 @@ class LanguageMenuController
             . $this->flagsExtension;
     }
 
-    private function getAltAttribute(string $language): string
+    private function getAltAttribute(Request $request, string $language): string
     {
-        $tag = $this->model->pageTag($this->pageIndex);
+        $tag = $this->model->pageTag($request->s());
         $labels = $this->languageLabels();
         if (isset($labels[$language])) {
-            if (($this->model->isTranslated($tag, $language))
+            if (($this->model->isTranslated($tag, $request->sl(), $language))
                 || !isset($labels[$language]["untranslated"])
             ) {
                 $alt = $labels[$language]["translated"];
@@ -119,9 +118,9 @@ class LanguageMenuController
         return $res;
     }
 
-    private function languageURL(string $language): Url
+    private function languageURL(Request $request, string $language): Url
     {
-        $tag = $this->pageIndex > 0 ? $this->model->pageTag($this->pageIndex) : "";
-        return $this->model->languageURL($language, $tag);
+        $tag = $request->s() > 0 ? $this->model->pageTag($request->s()) : "";
+        return $this->model->languageURL($request->url(), $request->sl(), $language, $tag);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2012-2021 Christoph M. Becker
+ * Copyright 2023 Christoph M. Becker
  *
  * This file is part of Polyglot_XH.
  *
@@ -19,28 +19,34 @@
  * along with Polyglot_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Polyglot;
+namespace Polyglot\Infra;
 
-use Plib\HtmlView as View;
-use Plib\Url;
-use Polyglot\Infra\Request;
-
-class PageDataTabController
+class FakeRequest extends Request
 {
-    /** @var View */
-    private $view;
+    private $options;
 
-    public function __construct(View $view)
+    public function __construct($options = [])
     {
-        $this->view = $view;
+        $this->options = $options;
     }
 
-    /** @param array<string,string> $pageData */
-    public function defaultAction(Request $request, array $pageData): string
+    protected function defaultLanguage(): string
     {
-        return $this->view->render('tab', [
-            'action' => $request->url()->relative(),
-            'tag' => $pageData['polyglot_tag'],
-        ]);
+        return $this->options["defaultLanguage"] ?? "";
+    }
+
+    public function sl(): string
+    {
+        return $this->options["sl"] ?? "";
+    }
+
+    public function s(): int
+    {
+        return $this->options["s"] ?? 0;
+    }
+
+    protected function su(): string
+    {
+        return $this->options["su"] ?? "";
     }
 }

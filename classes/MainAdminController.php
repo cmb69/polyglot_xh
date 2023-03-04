@@ -25,6 +25,7 @@ use Plib\HtmlView as View;
 use Plib\Url;
 use Polyglot\Infra\Model;
 use Polyglot\Infra\Pages;
+use Polyglot\Infra\Request;
 
 class MainAdminController
 {
@@ -32,9 +33,6 @@ class MainAdminController
      * @var Pages
      */
     private $pages;
-
-    /** @var Url */
-    private $url;
 
     /**
      *  @var Model
@@ -44,28 +42,30 @@ class MainAdminController
     /** @var View */
     private $view;
 
-    public function __construct(Pages $pages, Url $url, Model $model, View $view)
+    public function __construct(Pages $pages, Model $model, View $view)
     {
         $this->pages = $pages;
-        $this->url = $url;
         $this->model = $model;
         $this->view = $view;
     }
 
-    public function defaultAction(): string
+    public function defaultAction(Request $request): string
     {
-        $languages = $this->model->otherLanguages();
+        $otherLanguages = array_filter($this->model->languages(), function (string $language) use ($request) {
+            return $language !== $request->sl();
+        });
+        $languages = $otherLanguages;
         $pages = [];
         for ($i = 0; $i < $this->pages->count(); $i++) {
             $heading = $this->pages->heading($i);
-            $url = $this->url->page($this->pages->url($i))->with("edit");
+            $url = $request->url()->page($this->pages->url($i))->with("edit");
             $indent = (string) ($this->pages->level($i) - 1);
             $tag = $this->model->pageTag($i);
             $translations = [];
             foreach ($languages as $language) {
                 $translations[$language]
-                    = $this->model->isTranslated($tag, $language)
-                        ? $this->model->languageURL($language, $tag)->with("edit")
+                    = $this->model->isTranslated($request->sl(), $tag, $language)
+                        ? $this->model->languageURL($request->url(), $request->sl(), $language, $tag)->with("edit")
                         : null;
             }
             $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');

@@ -24,14 +24,12 @@ namespace Polyglot;
 use Plib\HtmlView as View;
 use Plib\Url;
 use Polyglot\Infra\Model;
+use Polyglot\Infra\Request;
 
 class AlternateLinkController
 {
     /** @var string */
     private $defaultLanguage;
-
-    /**  @var int */
-    private $pageIndex;
 
     /**
      * @var Model
@@ -43,10 +41,9 @@ class AlternateLinkController
      */
     private $view;
 
-    public function __construct(string $defaultLanguage, int $pageIndex, Model $model, View $view)
+    public function __construct(string $defaultLanguage, Model $model, View $view)
     {
         $this->defaultLanguage = $defaultLanguage;
-        $this->pageIndex = $pageIndex;
         $this->model = $model;
         $this->view = $view;
     }
@@ -54,15 +51,15 @@ class AlternateLinkController
     /**
      * @return void
      */
-    public function defaultAction()
+    public function defaultAction(Request $request)
     {
         global $hjs;
 
         $links = [];
-        $tag = $this->model->pageTag($this->pageIndex);
+        $tag = $this->model->pageTag($request->s());
         foreach ($this->model->languages() as $language) {
-            if ($this->model->isTranslated($tag, $language)) {
-                $links = array_merge($links, $this->alternateLinksFor($language, $tag));
+            if ($this->model->isTranslated($tag, $request->sl(), $language)) {
+                $links = array_merge($links, $this->alternateLinksFor($request, $language, $tag));
             }
         }
         $hjs .= $this->view->render('alternate_links', compact('links'));
@@ -71,10 +68,10 @@ class AlternateLinkController
     /**
      * @return array<int,array{hreflang:string,href:Url}>
      */
-    private function alternateLinksFor(string $language, string $tag): array
+    private function alternateLinksFor(Request $request, string $language, string $tag): array
     {
         $result = [];
-        $href = $this->model->languageURL($language, $tag);
+        $href = $this->model->languageURL($request->url(), $request->sl(), $language, $tag);
         if ($language === $this->defaultLanguage) {
             $result[] = ["hreflang" => "x-default", "href" => $href];
         }

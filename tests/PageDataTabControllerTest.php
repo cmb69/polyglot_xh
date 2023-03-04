@@ -24,18 +24,15 @@ namespace Polyglot;
 use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
-use Plib\Url;
+use Polyglot\Infra\FakeRequest;
 
 class PageDataTabControllerTest extends TestCase
 {
     public function testDefaultAction(): void
     {
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
-        $subject = new PageDataTabController(
-            new Url("http://example.com/", "", "foo"),
-            $view
-        );
-        $response = $subject->defaultAction(["polyglot_tag" => "foo"]);
+        $subject = new PageDataTabController($view);
+        $response = $subject->defaultAction(new FakeRequest(["su" => "foo"]), ["polyglot_tag" => "foo"]);
         Approvals::verifyHtml($response);
     }
 }

@@ -28,11 +28,6 @@ class Model
     /**
      * @var string
      */
-    private $language;
-
-    /**
-     * @var string
-     */
     private $defaultLanguage;
 
     /** @var array<string> */
@@ -51,28 +46,21 @@ class Model
     /** @var string */
     private $contentFile;
 
-    /** @var Url */
-    private $url;
-
     /** @var Pages */
     private $pages;
 
     /** @param array<string> $secondLanguages */
     public function __construct(
-        string $language,
         string $defaultLang,
         array $secondLanguages,
         string $dataFolder,
         string $contentFile,
-        Url $url,
         Pages $pages
     ) {
-        $this->language = $language;
         $this->defaultLanguage = $defaultLang;
         $this->secondLanguages = $secondLanguages;
         $this->dataFolder = $dataFolder;
         $this->contentFile = $contentFile;
-        $this->url = $url;
         $this->pages = $pages;
     }
 
@@ -92,21 +80,6 @@ class Model
         return $languages;
     }
 
-    /**
-     * @return string[]
-     */
-    public function otherLanguages(): array
-    {
-        $res = [];
-        $languages = $this->languages();
-        foreach ($languages as $language) {
-            if ($language != $this->language) {
-                $res[] = $language;
-            }
-        }
-        return $res;
-    }
-
     private function lastMod(): int
     {
         $filename = $this->tagsFile();
@@ -118,12 +91,12 @@ class Model
     /**
      * @return void
      */
-    private function init()
+    private function init(string $sl)
     {
         $filename = $this->tagsFile();
         if (!is_readable($filename)) {
             $this->tags = [];
-            $this->update();
+            $this->update($sl);
             return;
         }
         if (!($contents = XH_readFile($filename))) {
@@ -134,11 +107,11 @@ class Model
         $this->tags = $tags;
         if (!is_array($this->tags)) { // @phpstan-ignore-line
             $this->tags = [];
-            $this->update();
+            $this->update($sl);
             return;
         }
         if ($this->isCacheStale()) {
-            $this->update();
+            $this->update($sl);
         }
     }
 
@@ -152,12 +125,12 @@ class Model
     /**
      * @return void
      */
-    private function update()
+    private function update(string $sl)
     {
         foreach ($this->pages->allPageData() as $i => $data) {
             if (!empty($data['polyglot_tag'])) {
                 $tag = $data['polyglot_tag'];
-                $this->tags[$tag][$this->language] = $this->pages->url($i);
+                $this->tags[$tag][$sl] = $this->pages->url($i);
             }
         }
         $contents = serialize($this->tags);
@@ -172,14 +145,14 @@ class Model
             : "";
     }
 
-    public function languageURL(string $language, string $tag): Url
+    public function languageURL(Url $url, string $sl, string $language, string $tag): Url
     {
-        $url = $this->url->lang("")->page("");
+        $url = $url->lang("")->page("");
         if ($language != $this->defaultLanguage) {
             $url = $url->lang($language);
         }
         if ($this->tags === null) {
-            $this->init();
+            $this->init($sl);
         }
         assert(is_array($this->tags));
         if (isset($this->tags[$tag][$language])) {
@@ -188,10 +161,10 @@ class Model
         return $url;
     }
 
-    public function isTranslated(string $tag, string $language): bool
+    public function isTranslated(string $sl, string $tag, string $language): bool
     {
         if ($this->tags === null) {
-            $this->init();
+            $this->init($sl);
         }
         assert(is_array($this->tags));
         return isset($this->tags[$tag][$language]);

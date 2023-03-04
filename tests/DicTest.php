@@ -27,7 +27,7 @@ class DicTest extends TestCase
 {
     public function setUp(): void
     {
-        global $pth, $cf, $plugin_cf, $plugin_tx, $c, $sl, $s, $su;
+        global $pth, $cf, $plugin_cf, $plugin_tx, $c;
 
         $pth = [
             "folder" => ["base" => "", "flags" => "", "plugin" => "", "plugins" => ""],
@@ -37,9 +37,6 @@ class DicTest extends TestCase
         $plugin_cf = ["polyglot" => ["flags_extension" => "", "languages_labels" => ""]];
         $plugin_tx = ["polyglot" => []];
         $c = [];
-        $sl = "";
-        $s = 0;
-        $su = "";
     }
 
     public function testMakesAlternateLinkController(): void

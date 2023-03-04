@@ -20,6 +20,7 @@
  */
 
 use Polyglot\Dic;
+use Polyglot\Infra\Request;
 use XH\PageDataRouter;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {
@@ -49,7 +50,7 @@ if (XH_wantsPluginAdministration("polyglot")) {
             $o .= Dic::makeInfoController()->defaultAction();
             break;
         case "plugin_main":
-            $o .= Dic::makeMainAdminController()->defaultAction();
+            $o .= Dic::makeMainAdminController()->defaultAction(Request::current());
             break;
         default:
             $o .= plugin_admin_common();

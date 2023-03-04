@@ -49,9 +49,7 @@ class LanguageMenuControllerTest extends TestCase
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
         $subject = new LanguageMenuController("", "png", "de=Deutsch;nicht übersetzt\rfr=français", 1, $model, $view);
-        ob_start();
-        $subject->defaultAction();
-        $response = (string) ob_get_clean();
+        $response = $subject->defaultAction();
         Approvals::verifyHtml($response);
     }
 }

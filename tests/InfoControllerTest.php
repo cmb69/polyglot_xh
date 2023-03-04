@@ -39,9 +39,7 @@ class InfoControllerTest extends TestCase
             $systemChecker,
             new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
         );
-        ob_start();
-        $sut->defaultAction();
-        $response = (string) ob_get_clean();
+        $response = $sut->defaultAction();
         Approvals::verifyHtml($response);
     }
 }

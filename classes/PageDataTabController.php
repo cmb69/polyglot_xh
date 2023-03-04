@@ -26,35 +26,24 @@ use Plib\Url;
 
 class PageDataTabController
 {
-    /**
-     * @var array<string,string>
-     */
-    private $pageData;
-
     /** @var Url */
     private $url;
 
     /** @var View */
     private $view;
 
-    /**
-     * @param array<string,string> $pageData
-     */
-    public function __construct(array $pageData, Url $url, View $view)
+    public function __construct(Url $url, View $view)
     {
-        $this->pageData = $pageData;
         $this->url = $url;
         $this->view = $view;
     }
 
-    /**
-     * @return void
-     */
-    public function defaultAction()
+    /** @param array<string,string> $pageData */
+    public function defaultAction(array $pageData): string
     {
-        echo $this->view->render('tab', [
+        return $this->view->render('tab', [
             'action' => $this->url->relative(),
-            'tag' => $this->pageData['polyglot_tag'],
+            'tag' => $pageData['polyglot_tag'],
         ]);
     }
 }

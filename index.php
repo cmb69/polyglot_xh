@@ -19,4 +19,25 @@
  * along with Polyglot_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-Polyglot\Plugin::run();
+use Polyglot\Dic;
+use XH\PageDataRouter;
+
+if (!defined("CMSIMPLE_XH_VERSION")) {
+    header("HTTP/1.1 403 Forbidden");
+    exit;
+}
+
+const POLYGLOT_VERSION = "1.0beta2";
+
+function Polyglot_languageMenu(): string
+{
+    return Dic::makeLanguageMenuController()->defaultAction();
+}
+
+/**
+ * @var PageDataRouter $pd_router
+ */
+
+$pd_router->add_interest("polyglot_tag");
+
+Dic::makeAlternateLinkController()->defaultAction();

@@ -50,9 +50,7 @@ class MainAdminControllerTest extends TestCase
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
         $subject = new MainAdminController($pages, new Url("http://example.com/", "", ""), $model, $view);
-        ob_start();
-        $subject->defaultAction();
-        $response = (string) ob_get_clean();
+        $response = $subject->defaultAction();
         Approvals::verifyHtml($response);
     }
 }

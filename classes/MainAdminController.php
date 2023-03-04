@@ -52,10 +52,7 @@ class MainAdminController
         $this->view = $view;
     }
 
-    /**
-     * @return void
-     */
-    public function defaultAction()
+    public function defaultAction(): string
     {
         $languages = $this->model->otherLanguages();
         $pages = [];
@@ -73,7 +70,7 @@ class MainAdminController
             }
             $pages[] = compact('heading', 'url', 'indent', 'tag', 'translations');
         }
-        echo $this->view->render('admin', [
+        return $this->view->render('admin', [
             'languages' => $languages,
             'pages' => $pages,
         ]);

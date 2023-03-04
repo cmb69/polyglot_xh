@@ -32,13 +32,10 @@ class PageDataTabControllerTest extends TestCase
     {
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
         $subject = new PageDataTabController(
-            ["polyglot_tag" => "foo"],
             new Url("http://example.com/", "", "foo"),
             $view
         );
-        ob_start();
-        $subject->defaultAction();
-        $response = (string) ob_get_clean();
+        $response = $subject->defaultAction(["polyglot_tag" => "foo"]);
         Approvals::verifyHtml($response);
     }
 }

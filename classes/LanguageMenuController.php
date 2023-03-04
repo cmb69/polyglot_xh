@@ -63,10 +63,7 @@ class LanguageMenuController
         $this->view = $view;
     }
 
-    /**
-     * @return void
-     */
-    public function defaultAction()
+    public function defaultAction(): string
     {
         $languages = [];
 
@@ -76,7 +73,7 @@ class LanguageMenuController
             $alt = $this->getAltAttribute($language);
             $languages[$language] = compact('href', 'src', 'alt');
         }
-        echo $this->view->render('languagemenu', ['languages' => $languages]);
+        return $this->view->render('languagemenu', ['languages' => $languages]);
     }
 
     private function languageFlag(string $language): string

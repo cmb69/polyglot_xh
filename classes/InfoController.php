@@ -51,14 +51,11 @@ class InfoController
         $this->view = $view;
     }
 
-    /**
-     * @return void
-     */
-    public function defaultAction()
+    public function defaultAction(): string
     {
-        echo $this->view->render('info', [
+        return $this->view->render('info', [
             'checks' => $this->getChecks(),
-            'version' => Plugin::VERSION,
+            'version' => POLYGLOT_VERSION,
         ]);
     }
 

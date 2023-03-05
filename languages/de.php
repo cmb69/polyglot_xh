@@ -11,16 +11,15 @@ $plugin_tx['polyglot']['label_tab']="Polyglot";
 $plugin_tx['polyglot']['label_tag']="Schlagwort";
 $plugin_tx['polyglot']['label_ok']="✓";
 
-$plugin_tx['polyglot']['syscheck_extension']="die PHP-Erweiterung '%s' geladen ist";
+$plugin_tx['polyglot']['syscheck_extension']="PHP-Erweiterung '%s' ist geladen";
 $plugin_tx['polyglot']['syscheck_fail']="Fehler";
-$plugin_tx['polyglot']['syscheck_message']="Prüfe, dass %1\$s … %2\$s";
-$plugin_tx['polyglot']['syscheck_phpversion']="die PHP-Version ≥ %s";
-$plugin_tx['polyglot']['syscheck_plugin']="das CMSIMPLE_XH Plugin '%s' installiert ist";
+$plugin_tx['polyglot']['syscheck_phpversion']="PHP-Version ≥ %s";
+$plugin_tx['polyglot']['syscheck_plugin']="CMSIMPLE_XH Plugin '%s' ist installiert";
 $plugin_tx['polyglot']['syscheck_success']="OK";
 $plugin_tx['polyglot']['syscheck_title']="System-Prüfung";
 $plugin_tx['polyglot']['syscheck_warning']="Warnung";
-$plugin_tx['polyglot']['syscheck_writable']="'%s' schreibbar ist";
-$plugin_tx['polyglot']['syscheck_xhversion']="die CMSimple_XH-Version ≥ %s";
+$plugin_tx['polyglot']['syscheck_writable']="%s ist schreibbar";
+$plugin_tx['polyglot']['syscheck_xhversion']="CMSimple_XH-Version ≥ %s";
 
 $plugin_tx['polyglot']['cf_languages_labels']="Die Beschriftungen der Fahnen-Icons des Sprachmenüs. Beachten Sie, dass Sie unterschiedliche Texte (getrennt durch Strichpunkte) für übersetzte und unübersetzte Seiten angeben <em>können</em>.";
 $plugin_tx['polyglot']['cf_flags_extension']="Die Dateiendung der Fahnen-Icons.";

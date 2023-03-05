@@ -25,29 +25,23 @@ use Plib\HtmlView as View;
 use Polyglot\Infra\Response;
 use Polyglot\Infra\SystemChecker;
 
+/**
+ * @phpstan-type SystemCheck array{state:string,label:array{string,string},state_label:string}
+ */
 class PluginInfo
 {
     /** @var string */
     private $pluginFolder;
 
-    /** @var array<string,string> */
-    private $text;
-
-    /**
-     * @var SystemChecker
-     */
+    /** @var SystemChecker */
     private $systemChecker;
 
-    /**
-     * @var View
-     */
+    /** @var View */
     private $view;
 
-    /** @param array<string,string> $text */
-    public function __construct(string $pluginFolder, array $text, SystemChecker $systemChecker, View $view)
+    public function __construct(string $pluginFolder, SystemChecker $systemChecker, View $view)
     {
         $this->pluginFolder = $pluginFolder;
-        $this->text = $text;
         $this->systemChecker = $systemChecker;
         $this->view = $view;
     }
@@ -60,57 +54,49 @@ class PluginInfo
         ]))->withTitle("Polyglot " . POLYGLOT_VERSION);
     }
 
-    /**
-     * @return array<array{state:string,label:string,state_label:string}>
-     */
+    /** @return list<SystemCheck> */
     public function getChecks(): array
     {
         return [
             $this->checkPhpVersion('7.1.0'),
             $this->checkXhVersion('1.7.0'),
-            $this->checkWritability("$this->pluginFolder/css/"),
-            $this->checkWritability("$this->pluginFolder/cache/"),
-            $this->checkWritability("$this->pluginFolder/config/"),
-            $this->checkWritability("$this->pluginFolder/languages/")
+            $this->checkWritability($this->pluginFolder . "css/"),
+            $this->checkWritability($this->pluginFolder . "cache/"),
+            $this->checkWritability($this->pluginFolder . "config/"),
+            $this->checkWritability($this->pluginFolder . "languages/")
         ];
     }
 
-    /**
-     * @return array{state:string,label:string,state_label:string}
-     */
+    /** @return SystemCheck */
     private function checkPhpVersion(string $version): array
     {
         $state = $this->systemChecker->checkVersion(PHP_VERSION, $version) ? 'success' : 'fail';
         return [
             "state" => $state,
-            "label" => sprintf($this->text['syscheck_phpversion'], $version),
-            "state_label" => $this->text["syscheck_$state"],
+            "label" => ['syscheck_phpversion', $version],
+            "state_label" => "syscheck_$state",
         ];
     }
 
-    /**
-     * @return array{state:string,label:string,state_label:string}
-     */
+    /** @return SystemCheck */
     private function checkXhVersion(string $version): array
     {
         $state = $this->systemChecker->checkVersion(CMSIMPLE_XH_VERSION, "CMSimple_XH $version") ? 'success' : 'fail';
         return [
             "state" => $state,
-            "label" => sprintf($this->text['syscheck_xhversion'], $version),
-            "state_label" => $this->text["syscheck_$state"],
+            "label" => ['syscheck_xhversion', $version],
+            "state_label" => "syscheck_$state",
         ];
     }
 
-    /**
-     * @return array{state:string,label:string,state_label:string}
-     */
+    /** @return SystemCheck */
     private function checkWritability(string $folder): array
     {
         $state = $this->systemChecker->checkWritability($folder) ? 'success' : 'warning';
         return [
             "state" => $state,
-            "label" => sprintf($this->text['syscheck_writable'], $folder),
-            "state_label" => $this->text["syscheck_$state"],
+            "label" => ['syscheck_writable', $folder],
+            "state_label" => "syscheck_$state",
         ];
     }
 }

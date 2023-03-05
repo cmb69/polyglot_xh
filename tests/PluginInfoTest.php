@@ -35,7 +35,6 @@ class PluginInfoTest extends TestCase
         $systemChecker->method("checkWritability")->willReturn(false);
         $sut = new PluginInfo(
             "./plugins/polyglot/",
-            XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"],
             $systemChecker,
             new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
         );

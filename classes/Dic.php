@@ -59,11 +59,10 @@ class Dic
 
     public static function makePluginInfo(): PluginInfo
     {
-        global $pth, $plugin_tx;
+        global $pth;
 
         return new PluginInfo(
             $pth["folder"]["plugin"],
-            $plugin_tx["polyglot"],
             new SystemChecker,
             self::makeView()
         );

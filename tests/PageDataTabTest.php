@@ -30,9 +30,15 @@ class PageDataTabTest extends TestCase
 {
     public function testRendersPageDataTab(): void
     {
-        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
-        $subject = new PageDataTab($view);
-        $response = $subject(new FakeRequest(["su" => "foo"]), ["polyglot_tag" => "foo"]);
+        $sut = $this->sut();
+        $response = $sut(new FakeRequest(["su" => "foo"]), ["polyglot_tag" => "foo"]);
         Approvals::verifyHtml($response->output());
+    }
+
+    private function sut(): PageDataTab
+    {
+        return new PageDataTab(
+            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
+        );
     }
 }

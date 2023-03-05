@@ -32,17 +32,20 @@ class LanguageMenuTest extends TestCase
 {
     public function testRendersLanguageMenu(): void
     {
-        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
+        $sut = $this->sut();
+        $response = $sut(new FakeRequest(["sl" => "en"]));
+        Approvals::verifyHtml($response->output());
+    }
 
-        $subject = new LanguageMenu(
+    private function sut(): LanguageMenu
+    {
+        return new LanguageMenu(
             $this->conf(),
             "",
-            $view,
+            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]),
             new FakeLanguageRepo(["second" => ["de", "fr", "it"]]),
             new FakeTranslationRepo()
         );
-        $response = $subject(new FakeRequest(["sl" => "en"]));
-        Approvals::verifyHtml($response->output());
     }
 
     private function conf(): array

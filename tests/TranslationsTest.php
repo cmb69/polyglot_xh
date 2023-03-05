@@ -34,21 +34,24 @@ class TranslationsTest extends TestCase
 {
     public function testRendersTranslations(): void
     {
-        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
+        $sut = $this->sut();
+        $response = $sut(new FakeRequest(["sl" => "en", "defaultLanguage" => "en"]));
+        $this->assertEquals("Polyglot – Translations", $response->title());
+        Approvals::verifyHtml($response->output());
+    }
 
-        $subject = new Translations(
+    private function sut(): Translations
+    {
+        return new Translations(
             $this->conf(),
             new FakePages,
-            $view,
+            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]),
             new FakeLanguageRepo(["second" => ["de", "fr"]]),
             new FakeTranslationRepo(["trans" => [
                 0 => new Translation("foo", ["de" => "foo-de"]),
                 1 => new Translation("bar", ["fr" => "bar-fr"]),
             ]])
         );
-        $response = $subject(new FakeRequest(["sl" => "en", "defaultLanguage" => "en"]));
-        $this->assertEquals("Polyglot – Translations", $response->title());
-        Approvals::verifyHtml($response->output());
     }
 
     private function conf(): array

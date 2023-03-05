@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2021-2023 Christoph M. Becker
+ * Copyright 2023 Christoph M. Becker
  *
  * This file is part of Polyglot_XH.
  *
@@ -19,30 +19,17 @@
  * along with Polyglot_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Polyglot;
+namespace Polyglot\Infra;
 
-use ApprovalTests\Approvals;
-use PHPUnit\Framework\TestCase;
-use Plib\HtmlView as View;
-use Polyglot\Infra\FakeSystemChecker;
-use Polyglot\Infra\SystemChecker;
-
-class PluginInfoTest extends TestCase
+class FakeSystemChecker extends SystemChecker
 {
-    public function testRendersPluginInfo(): void
+    public function checkVersion(string $actual, string $minimum): bool
     {
-        $sut = $this->sut();
-        $response = $sut();
-        $this->assertEquals("Polyglot 1.0", $response->title());
-        Approvals::verifyHtml($response->output());
+        return false;
     }
 
-    private function sut(): PluginInfo
+    public function checkWritability(string $path): bool
     {
-        return new PluginInfo(
-            "./plugins/polyglot/",
-            new FakeSystemChecker,
-            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
-        );
+        return false;
     }
 }

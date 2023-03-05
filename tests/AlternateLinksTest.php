@@ -33,15 +33,19 @@ class AlternateLinksTest extends TestCase
 {
     public function testRendersAlternateLinks(): void
     {
-        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
-        $subject = new AlternateLinks(
+        $sut = $this->sut();
+        $response = $sut(new FakeRequest());
+        Approvals::verifyHtml($response->hjs());
+    }
+
+    private function sut(): AlternateLinks
+    {
+        return new AlternateLinks(
             $this->conf(),
-            $view,
+            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]),
             new FakeLanguageRepo(["second" => ["de"]]),
             new FakeTranslationRepo(["trans" => [0 => new Translation("foo", ["de" => "", "en" => ""])]])
         );
-        $response = $subject(new FakeRequest());
-        Approvals::verifyHtml($response->hjs());
     }
 
     private function conf(): array

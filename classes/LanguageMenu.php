@@ -37,28 +37,28 @@ class LanguageMenu
     /** @var string */
     private $flagsFolder;
 
-    /** @var View */
-    private $view;
-
     /** @var LanguageRepo */
     private $languageRepo;
 
     /** @var TranslationRepo */
     private $translationRepo;
 
+    /** @var View */
+    private $view;
+
     /** @param array<string,string> $conf */
     public function __construct(
         array $conf,
         string $flagsFolder,
-        View $view,
         LanguageRepo $languageRepo,
-        TranslationRepo $translationRepo
+        TranslationRepo $translationRepo,
+        View $view
     ) {
         $this->conf = $conf;
         $this->flagsFolder = $flagsFolder;
-        $this->view = $view;
         $this->languageRepo = $languageRepo;
         $this->translationRepo = $translationRepo;
+        $this->view = $view;
     }
 
     public function __invoke(Request $request): Response

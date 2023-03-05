@@ -33,9 +33,9 @@ class Dic
     {
         return new AlternateLinks(
             self::makeConf(),
-            self::makeView(),
             new LanguageRepo,
-            self::makeTranslationRepo()
+            self::makeTranslationRepo(),
+            self::makeView()
         );
     }
 
@@ -46,9 +46,9 @@ class Dic
         return new LanguageMenu(
             self::makeConf(),
             $pth['folder']['flags'],
-            self::makeView(),
             new LanguageRepo,
-            self::makeTranslationRepo()
+            self::makeTranslationRepo(),
+            self::makeView()
         );
     }
 
@@ -73,9 +73,9 @@ class Dic
         return new Translations(
             self::makeConf(),
             new Pages(),
-            self::makeView(),
             new LanguageRepo,
-            self::makeTranslationRepo()
+            self::makeTranslationRepo(),
+            self::makeView()
         );
     }
 

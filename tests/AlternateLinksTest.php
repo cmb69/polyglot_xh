@@ -42,9 +42,9 @@ class AlternateLinksTest extends TestCase
     {
         return new AlternateLinks(
             $this->conf(),
-            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]),
             new FakeLanguageRepo(["second" => ["de"]]),
-            new FakeTranslationRepo(["trans" => [0 => new Translation("foo", ["de" => "", "en" => ""])]])
+            new FakeTranslationRepo(["trans" => [0 => new Translation("foo", ["de" => "", "en" => ""])]]),
+            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
         );
     }
 

@@ -22,7 +22,6 @@
 namespace Polyglot;
 
 use Plib\HtmlView as View;
-use Plib\Url;
 use Polyglot\Infra\LanguageRepo;
 use Polyglot\Infra\Request;
 use Polyglot\Infra\Response;
@@ -33,26 +32,26 @@ class AlternateLinks
     /** @var array<string,string> */
     private $conf;
 
-    /** @var View */
-    private $view;
-
     /** @var LanguageRepo */
     private $languageRepo;
 
     /** @var TranslationRepo */
     private $translationRepo;
 
+    /** @var View */
+    private $view;
+
     /** @param array<string,string> $conf */
     public function __construct(
         array $conf,
-        View $view,
         LanguageRepo $languageRepo,
-        TranslationRepo $translationRepo
+        TranslationRepo $translationRepo,
+        View $view
     ) {
         $this->conf = $conf;
-        $this->view = $view;
         $this->languageRepo = $languageRepo;
         $this->translationRepo = $translationRepo;
+        $this->view = $view;
     }
 
     public function __invoke(Request $request): Response

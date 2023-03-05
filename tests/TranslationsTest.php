@@ -45,12 +45,12 @@ class TranslationsTest extends TestCase
         return new Translations(
             $this->conf(),
             new FakePages,
-            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]),
             new FakeLanguageRepo(["second" => ["de", "fr"]]),
             new FakeTranslationRepo(["trans" => [
                 0 => new Translation("foo", ["de" => "foo-de"]),
                 1 => new Translation("bar", ["fr" => "bar-fr"]),
-            ]])
+            ]]),
+            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
         );
     }
 

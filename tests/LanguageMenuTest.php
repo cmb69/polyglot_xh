@@ -42,9 +42,9 @@ class LanguageMenuTest extends TestCase
         return new LanguageMenu(
             $this->conf(),
             "",
-            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]),
             new FakeLanguageRepo(["second" => ["de", "fr", "it"]]),
-            new FakeTranslationRepo()
+            new FakeTranslationRepo(),
+            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
         );
     }
 

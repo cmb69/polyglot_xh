@@ -75,14 +75,14 @@ class AlternateLinkController
     }
 
     /**
-     * @return array<int,array{hreflang:string,href:Url}>
+     * @return array<int,array{hreflang:string,href:string}>
      */
     private function alternateLinksFor(Request $request, string $language, string $tag): array
     {
         $result = [];
         $pageUrl = $this->translationRepo->findByTag($tag)->pageUrl($language);
         $href = $request->url()->lang($language != $this->conf["language_default"] ? $language : "")
-            ->page($pageUrl !== null ? $pageUrl : "");
+            ->page($pageUrl !== null ? $pageUrl : "")->absolute();
         if ($language === $this->conf["language_default"]) {
             $result[] = ["hreflang" => "x-default", "href" => $href];
         }

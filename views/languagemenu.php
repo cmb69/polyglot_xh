@@ -1,22 +1,17 @@
 <?php
 
 use Plib\HtmlView as View;
-use Plib\Url;
 
-if (!isset($this)) {
-    header("HTTP/1.1 404 Not found");
-    exit;
-}
+if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
 
 /**
  * @var View $this
- * @var array<string,array{href:Url,src:string,alt:string}> $languages
+ * @var array<string,array{href:string,src:string,alt:string}> $languages
  */
 ?>
-<?php foreach($languages as $language):?>
-<a href="<?=$this->esc($language['href']->relative())?>">
-  <img src="<?=$this->esc($language['src'])?>"
-     alt="<?=$this->esc($language['alt'])?>"
-     title="<?=$this->esc($language['alt'])?>"/>
+<!-- polyglot languagemenu -->
+<?foreach($languages as $language):?>
+<a href="<?=$this->esc($language['href'])?>">
+  <img src="<?=$this->esc($language['src'])?>" alt="<?=$this->esc($language['alt'])?>" title="<?=$this->esc($language['alt'])?>"/>
 </a>
-<?php endforeach?>
+<?endforeach?>

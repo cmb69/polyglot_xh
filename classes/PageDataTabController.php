@@ -37,7 +37,7 @@ class PageDataTabController
     /** @param array<string,string> $pageData */
     public function defaultAction(Request $request, array $pageData): string
     {
-        return $this->view->render('tab', [
+        return $this->view->render('page_data_tab', [
             'action' => $request->url()->relative(),
             'tag' => $pageData['polyglot_tag'],
         ]);

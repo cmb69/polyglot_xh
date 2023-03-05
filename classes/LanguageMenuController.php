@@ -66,7 +66,7 @@ class LanguageMenuController
         $languages = [];
         foreach ($this->languageRepo->others($request->sl()) as $language) {
             $languages[$language] = [
-                "href" => $this->languageURL($request, $language),
+                "href" => $this->languageURL($request, $language)->relative(),
                 "src" => $this->languageFlag($language),
                 "alt" => $this->getAltAttribute($request, $language),
             ];

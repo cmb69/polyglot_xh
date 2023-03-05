@@ -65,7 +65,7 @@ class MainAdminController
     {
         $this->translationRepo->init($request->sl());
         $languages = $this->languageRepo->others($request->sl());
-        return $this->view->render('admin', [
+        return $this->view->render('translations', [
             'languages' => $languages,
             'pages' => $this->pages($request->url(), $languages),
         ]);
@@ -73,7 +73,7 @@ class MainAdminController
 
     /**
      * @param list<string> $languages
-     * @return list<array{heading:string,url:Url,indent:string,tag:string,translations:array<string,?Url>}>
+     * @return list<array{heading:string,url:string,indent:string,tag:string,translations:array<string,?string>}>
      */
     private function pages(Url $url, array $languages): array
     {
@@ -82,7 +82,7 @@ class MainAdminController
             $translation = $this->translationRepo->findByPage($i);
             $pages[] = [
                 "heading" => $this->pages->heading($i),
-                "url" => $url->page($this->pages->url($i))->with("edit"),
+                "url" => $url->page($this->pages->url($i))->with("edit")->relative(),
                 "indent" => (string) ($this->pages->level($i) - 1),
                 "tag" => $translation->tag(),
                 "translations" => $this->translations($url, $languages, $translation),
@@ -93,7 +93,7 @@ class MainAdminController
 
     /**
      * @param list<string> $languages
-     * @return array<string,?Url>
+     * @return array<string,?string>
      */
     private function translations(Url $url, array $languages, Translation $translation): array
     {
@@ -101,7 +101,7 @@ class MainAdminController
         foreach ($languages as $language) {
             $translations[$language] = $translation->pageUrl($language) !== null
                 ? $url->lang($language != $this->conf["language_default"] ? $language : "")
-                    ->page($translation->pageUrl($language))->with("edit")
+                    ->page($translation->pageUrl($language))->with("edit")->relative()
                 : null;
         }
         return $translations;

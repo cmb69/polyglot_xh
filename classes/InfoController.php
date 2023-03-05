@@ -53,14 +53,14 @@ class InfoController
 
     public function defaultAction(): string
     {
-        return $this->view->render('info', [
+        return $this->view->render('plugin_info', [
             'checks' => $this->getChecks(),
             'version' => POLYGLOT_VERSION,
         ]);
     }
 
     /**
-     * @return array<array{state:string,label:string,stateLabel:string}>
+     * @return array<array{state:string,label:string,state_label:string}>
      */
     public function getChecks(): array
     {
@@ -75,7 +75,7 @@ class InfoController
     }
 
     /**
-     * @return array{state:string,label:string,stateLabel:string}
+     * @return array{state:string,label:string,state_label:string}
      */
     private function checkPhpVersion(string $version): array
     {
@@ -83,12 +83,12 @@ class InfoController
         return [
             "state" => $state,
             "label" => sprintf($this->text['syscheck_phpversion'], $version),
-            "stateLabel" => $this->text["syscheck_$state"],
+            "state_label" => $this->text["syscheck_$state"],
         ];
     }
 
     /**
-     * @return array{state:string,label:string,stateLabel:string}
+     * @return array{state:string,label:string,state_label:string}
      */
     private function checkXhVersion(string $version): array
     {
@@ -96,12 +96,12 @@ class InfoController
         return [
             "state" => $state,
             "label" => sprintf($this->text['syscheck_xhversion'], $version),
-            "stateLabel" => $this->text["syscheck_$state"],
+            "state_label" => $this->text["syscheck_$state"],
         ];
     }
 
     /**
-     * @return array{state:string,label:string,stateLabel:string}
+     * @return array{state:string,label:string,state_label:string}
      */
     private function checkWritability(string $folder): array
     {
@@ -109,7 +109,7 @@ class InfoController
         return [
             "state" => $state,
             "label" => sprintf($this->text['syscheck_writable'], $folder),
-            "stateLabel" => $this->text["syscheck_$state"],
+            "state_label" => $this->text["syscheck_$state"],
         ];
     }
 }

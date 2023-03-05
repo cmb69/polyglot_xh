@@ -26,10 +26,11 @@ use Plib\Url;
 use Polyglot\Infra\LanguageRepo;
 use Polyglot\Infra\Pages;
 use Polyglot\Infra\Request;
+use Polyglot\Infra\Response;
 use Polyglot\Infra\TranslationRepo;
 use Polyglot\Value\Translation;
 
-class MainAdminController
+class Translations
 {
     /** @var array<string,string> */
     private $conf;
@@ -61,14 +62,14 @@ class MainAdminController
         $this->translationRepo = $translationRepo;
     }
 
-    public function defaultAction(Request $request): string
+    public function __invoke(Request $request): Response
     {
         $this->translationRepo->init($request->sl());
         $languages = $this->languageRepo->others($request->sl());
-        return $this->view->render('translations', [
+        return Response::create($this->view->render('translations', [
             'languages' => $languages,
             'pages' => $this->pages($request->url(), $languages),
-        ]);
+        ]));
     }
 
     /**

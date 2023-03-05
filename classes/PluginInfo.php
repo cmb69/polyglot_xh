@@ -22,9 +22,10 @@
 namespace Polyglot;
 
 use Plib\HtmlView as View;
+use Polyglot\Infra\Response;
 use Polyglot\Infra\SystemChecker;
 
-class InfoController
+class PluginInfo
 {
     /** @var string */
     private $pluginFolder;
@@ -51,12 +52,12 @@ class InfoController
         $this->view = $view;
     }
 
-    public function defaultAction(): string
+    public function __invoke(): Response
     {
-        return $this->view->render('plugin_info', [
+        return Response::create($this->view->render('plugin_info', [
             'checks' => $this->getChecks(),
             'version' => POLYGLOT_VERSION,
-        ]);
+        ]));
     }
 
     /**

@@ -25,9 +25,10 @@ use Plib\HtmlView as View;
 use Plib\Url;
 use Polyglot\Infra\LanguageRepo;
 use Polyglot\Infra\Request;
+use Polyglot\Infra\Response;
 use Polyglot\Infra\TranslationRepo;
 
-class AlternateLinkController
+class AlternateLinks
 {
     /** @var array<string,string> */
     private $conf;
@@ -54,13 +55,8 @@ class AlternateLinkController
         $this->translationRepo = $translationRepo;
     }
 
-    /**
-     * @return void
-     */
-    public function defaultAction(Request $request)
+    public function __invoke(Request $request): Response
     {
-        global $hjs;
-
         $this->translationRepo->init($request->sl());
         $links = [];
         $translation = $this->translationRepo->findByPage($request->s());
@@ -69,9 +65,7 @@ class AlternateLinkController
                 $links = array_merge($links, $this->alternateLinksFor($request, $language, $translation->tag()));
             }
         }
-        $hjs .= $this->view->render('alternate_links', [
-            "links" => $links,
-        ]);
+        return Response::create("")->addHjs($this->view->render('alternate_links', ["links" => $links,]));
     }
 
     /**

@@ -39,28 +39,28 @@ class DicTest extends TestCase
         $c = [];
     }
 
-    public function testMakesAlternateLinkController(): void
+    public function testMakesAlternateLinks(): void
     {
-        $this->assertInstanceOf(AlternateLinkController::class, Dic::makeAlternateLinkController());
+        $this->assertInstanceOf(AlternateLinks::class, Dic::makeAlternateLinks());
     }
 
-    public function testMakesLanguageMenuController(): void
+    public function testMakesLanguageMenu(): void
     {
-        $this->assertInstanceOf(LanguageMenuController::class, Dic::makeLanguageMenuController());
+        $this->assertInstanceOf(LanguageMenu::class, Dic::makeLanguageMenu());
     }
 
-    public function testMakesPageDataTabController(): void
+    public function testMakesPageDataTab(): void
     {
-        $this->assertInstanceOf(PageDataTabController::class, Dic::makePageDataTabController());
+        $this->assertInstanceOf(PageDataTab::class, Dic::makePageDataTab());
     }
 
-    public function testMakesInfoController(): void
+    public function testMakesPluginInfo(): void
     {
-        $this->assertInstanceOf(InfoController::class, Dic::makeInfoController());
+        $this->assertInstanceOf(PluginInfo::class, Dic::makePluginInfo());
     }
 
-    public function testMakesMainAdminController(): void
+    public function testMakesTranslations(): void
     {
-        $this->assertInstanceOf(MainAdminController::class, Dic::makeMainAdminController());
+        $this->assertInstanceOf(Translations::class, Dic::makeTranslations());
     }
 }

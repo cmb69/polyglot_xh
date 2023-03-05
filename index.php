@@ -32,7 +32,7 @@ const POLYGLOT_VERSION = "1.0beta2";
 
 function Polyglot_languageMenu(): string
 {
-    return Dic::makeLanguageMenuController()->defaultAction(Request::current());
+    return Dic::makeLanguageMenu()(Request::current())->respond();
 }
 
 /**
@@ -41,4 +41,4 @@ function Polyglot_languageMenu(): string
 
 $pd_router->add_interest("polyglot_tag");
 
-Dic::makeAlternateLinkController()->defaultAction(Request::current());
+Dic::makeAlternateLinks()(Request::current())->respond();

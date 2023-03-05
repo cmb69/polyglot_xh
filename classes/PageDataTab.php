@@ -23,8 +23,9 @@ namespace Polyglot;
 
 use Plib\HtmlView as View;
 use Polyglot\Infra\Request;
+use Polyglot\Infra\Response;
 
-class PageDataTabController
+class PageDataTab
 {
     /** @var View */
     private $view;
@@ -35,11 +36,11 @@ class PageDataTabController
     }
 
     /** @param array<string,string> $pageData */
-    public function defaultAction(Request $request, array $pageData): string
+    public function __invoke(Request $request, array $pageData): Response
     {
-        return $this->view->render('page_data_tab', [
+        return Response::create($this->view->render('page_data_tab', [
             'action' => $request->url()->relative(),
             'tag' => $pageData['polyglot_tag'],
-        ]);
+        ]));
     }
 }

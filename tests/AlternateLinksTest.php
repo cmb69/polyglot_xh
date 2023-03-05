@@ -29,21 +29,19 @@ use Polyglot\Infra\FakeRequest;
 use Polyglot\Infra\FakeTranslationRepo;
 use Polyglot\Value\Translation;
 
-class AlternateLinkControllerTest extends TestCase
+class AlternateLinksTest extends TestCase
 {
-    public function testDefaultAction(): void
+    public function testRendersAlternateLinks(): void
     {
-        global $hjs;
-
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
-        $subject = new AlternateLinkController(
+        $subject = new AlternateLinks(
             $this->conf(),
             $view,
             new FakeLanguageRepo(["second" => ["de"]]),
             new FakeTranslationRepo(["trans" => [0 => new Translation("foo", ["de" => "", "en" => ""])]])
         );
-        $subject->defaultAction(new FakeRequest());
-        Approvals::verifyHtml($hjs);
+        $response = $subject(new FakeRequest());
+        Approvals::verifyHtml($response->hjs());
     }
 
     private function conf(): array

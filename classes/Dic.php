@@ -29,9 +29,9 @@ use Polyglot\Infra\TranslationRepo;
 
 class Dic
 {
-    public static function makeAlternateLinkController(): AlternateLinkController
+    public static function makeAlternateLinks(): AlternateLinks
     {
-        return new AlternateLinkController(
+        return new AlternateLinks(
             self::makeConf(),
             self::makeView(),
             new LanguageRepo,
@@ -39,11 +39,11 @@ class Dic
         );
     }
 
-    public static function makeLanguageMenuController(): LanguageMenuController
+    public static function makeLanguageMenu(): LanguageMenu
     {
         global $pth;
 
-        return new LanguageMenuController(
+        return new LanguageMenu(
             self::makeConf(),
             $pth['folder']['flags'],
             self::makeView(),
@@ -52,16 +52,16 @@ class Dic
         );
     }
 
-    public static function makePageDataTabController(): PageDataTabController
+    public static function makePageDataTab(): PageDataTab
     {
-        return new PageDataTabController(self::makeView());
+        return new PageDataTab(self::makeView());
     }
 
-    public static function makeInfoController(): InfoController
+    public static function makePluginInfo(): PluginInfo
     {
         global $pth, $plugin_tx;
 
-        return new InfoController(
+        return new PluginInfo(
             $pth["folder"]["plugin"],
             $plugin_tx["polyglot"],
             new SystemChecker,
@@ -69,9 +69,9 @@ class Dic
         );
     }
 
-    public static function makeMainAdminController(): MainAdminController
+    public static function makeTranslations(): Translations
     {
-        return new MainAdminController(
+        return new Translations(
             self::makeConf(),
             new Pages(),
             self::makeView(),

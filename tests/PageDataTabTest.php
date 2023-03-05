@@ -24,29 +24,15 @@ namespace Polyglot;
 use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
-use Polyglot\Infra\FakeLanguageRepo;
 use Polyglot\Infra\FakeRequest;
-use Polyglot\Infra\FakeTranslationRepo;
 
-class LanguageMenuControllerTest extends TestCase
+class PageDataTabTest extends TestCase
 {
-    public function testDefaultAction(): void
+    public function testRendersPageDataTab(): void
     {
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
-
-        $subject = new LanguageMenuController(
-            $this->conf(),
-            "",
-            $view,
-            new FakeLanguageRepo(["second" => ["de", "fr", "it"]]),
-            new FakeTranslationRepo()
-        );
-        $response = $subject->defaultAction(new FakeRequest(["sl" => "en"]));
-        Approvals::verifyHtml($response);
-    }
-
-    private function conf(): array
-    {
-        return XH_includeVar("./config/config.php", "plugin_cf")["polyglot"] + ["language_default" => "en"];
+        $subject = new PageDataTab($view);
+        $response = $subject(new FakeRequest(["su" => "foo"]), ["polyglot_tag" => "foo"]);
+        Approvals::verifyHtml($response->output());
     }
 }

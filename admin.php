@@ -47,10 +47,10 @@ if (XH_wantsPluginAdministration("polyglot")) {
     $o .= print_plugin_admin("on");
     switch ($admin) {
         case "":
-            $o .= Dic::makeInfoController()->defaultAction();
+            $o .= Dic::makePluginInfo()()->respond();
             break;
         case "plugin_main":
-            $o .= Dic::makeMainAdminController()->defaultAction(Request::current());
+            $o .= Dic::makeTranslations()(Request::current())->respond();
             break;
         default:
             $o .= plugin_admin_common();

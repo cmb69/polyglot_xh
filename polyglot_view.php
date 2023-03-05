@@ -27,5 +27,5 @@ use Polyglot\Infra\Request;
  */
 function Polyglot_view(array $pageData): string
 {
-    return Dic::makePageDataTabController()->defaultAction(Request::current(), $pageData);
+    return Dic::makePageDataTab()(Request::current(), $pageData)->respond();
 }

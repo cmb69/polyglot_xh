@@ -25,10 +25,11 @@ use Plib\HtmlView as View;
 use Plib\Url;
 use Polyglot\Infra\LanguageRepo;
 use Polyglot\Infra\Request;
+use Polyglot\Infra\Response;
 use Polyglot\Infra\TranslationRepo;
 use Polyglot\Logic\Util;
 
-class LanguageMenuController
+class LanguageMenu
 {
     /** @var array<string,string> */
     private $conf;
@@ -60,7 +61,7 @@ class LanguageMenuController
         $this->translationRepo = $translationRepo;
     }
 
-    public function defaultAction(Request $request): string
+    public function __invoke(Request $request): Response
     {
         $this->translationRepo->init($request->sl());
         $languages = [];
@@ -71,7 +72,7 @@ class LanguageMenuController
                 "alt" => $this->getAltAttribute($request, $language),
             ];
         }
-        return $this->view->render('languagemenu', ['languages' => $languages]);
+        return Response::create($this->view->render('languagemenu', ['languages' => $languages]));
     }
 
     private function languageFlag(string $language): string

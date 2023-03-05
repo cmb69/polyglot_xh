@@ -26,20 +26,20 @@ use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Polyglot\Infra\SystemChecker;
 
-class InfoControllerTest extends TestCase
+class PluginInfoTest extends TestCase
 {
-    public function testDefaultAction(): void
+    public function testRendersPluginInfo(): void
     {
         $systemChecker = $this->createStub(SystemChecker::class);
         $systemChecker->method("checkVersion")->willReturn(false);
         $systemChecker->method("checkWritability")->willReturn(false);
-        $sut = new InfoController(
+        $sut = new PluginInfo(
             "./plugins/polyglot/",
             XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"],
             $systemChecker,
             new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
         );
-        $response = $sut->defaultAction();
-        Approvals::verifyHtml($response);
+        $response = $sut();
+        Approvals::verifyHtml($response->output());
     }
 }

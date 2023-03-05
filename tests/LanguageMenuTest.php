@@ -25,29 +25,24 @@ use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Polyglot\Infra\FakeLanguageRepo;
-use Polyglot\Infra\FakePages;
 use Polyglot\Infra\FakeRequest;
 use Polyglot\Infra\FakeTranslationRepo;
-use Polyglot\Value\Translation;
 
-class MainAdminControllerTest extends TestCase
+class LanguageMenuTest extends TestCase
 {
-    public function testDefaultAction(): void
+    public function testRendersLanguageMenu(): void
     {
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
-        $subject = new MainAdminController(
+        $subject = new LanguageMenu(
             $this->conf(),
-            new FakePages,
+            "",
             $view,
-            new FakeLanguageRepo(["second" => ["de", "fr"]]),
-            new FakeTranslationRepo(["trans" => [
-                0 => new Translation("foo", ["de" => "foo-de"]),
-                1 => new Translation("bar", ["fr" => "bar-fr"]),
-            ]])
+            new FakeLanguageRepo(["second" => ["de", "fr", "it"]]),
+            new FakeTranslationRepo()
         );
-        $response = $subject->defaultAction(new FakeRequest(["sl" => "en", "defaultLanguage" => "en"]));
-        Approvals::verifyHtml($response);
+        $response = $subject(new FakeRequest(["sl" => "en"]));
+        Approvals::verifyHtml($response->output());
     }
 
     private function conf(): array

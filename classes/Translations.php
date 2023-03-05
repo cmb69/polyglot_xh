@@ -69,7 +69,7 @@ class Translations
         return Response::create($this->view->render('translations', [
             'languages' => $languages,
             'pages' => $this->pages($request->url(), $languages),
-        ]));
+        ]))->withTitle("Polyglot – " . $this->view->text('label_translations'));
     }
 
     /**

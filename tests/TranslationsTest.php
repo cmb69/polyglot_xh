@@ -47,6 +47,7 @@ class TranslationsTest extends TestCase
             ]])
         );
         $response = $subject(new FakeRequest(["sl" => "en", "defaultLanguage" => "en"]));
+        $this->assertEquals("Polyglot – Translations", $response->title());
         Approvals::verifyHtml($response->output());
     }
 

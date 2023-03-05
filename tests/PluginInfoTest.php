@@ -40,6 +40,7 @@ class PluginInfoTest extends TestCase
             new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
         );
         $response = $sut();
+        $this->assertEquals("Polyglot 1.0", $response->title());
         Approvals::verifyHtml($response->output());
     }
 }

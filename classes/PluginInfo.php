@@ -57,7 +57,7 @@ class PluginInfo
         return Response::create($this->view->render('plugin_info', [
             'checks' => $this->getChecks(),
             'version' => POLYGLOT_VERSION,
-        ]));
+        ]))->withTitle("Polyglot " . POLYGLOT_VERSION);
     }
 
     /**

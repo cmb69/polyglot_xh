@@ -106,7 +106,7 @@ bestimmten Zweck*. Details finden Sie in der GNU General Public License.
 Sie sollten ein Exemplar der GNU General Public License zusammen mit
 Polyglot_XH erhalten haben. Falls nicht, siehe <https://www.gnu.org/licenses/>.
 
-Copyright 2012-2021 Christoph M. Becker
+Copyright 2012-2023 Christoph M. Becker
 
 ## Danksagung
 

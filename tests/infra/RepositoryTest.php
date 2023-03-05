@@ -25,7 +25,7 @@ use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use Polyglot\Value\Translation;
 
-class TranslationRepoTest extends TestCase
+class RepositoryTest extends TestCase
 {
     public function testFindsByTagFromContent(): void
     {
@@ -33,19 +33,19 @@ class TranslationRepoTest extends TestCase
         $root = vfsStream::url("root/");
         mkdir($root . "plugins/polyglot/cache/", 0777, true);
         $cacheFile = $root . "plugins/polyglot/cache/translations.dat";
-        $sut = new TranslationRepo(
+        $sut = new Repository(
             $cacheFile,
             $root . "content/",
             "en",
             new FakePages,
-            new FakeLanguageRepo(["second" => ["de"]]),
+            new FakeLanguages(["second" => ["de"]]),
             new FakeContentReader([
                 "de" => ["some_tag" => "Eine-Seite"],
                 "en" => ["some_tag" => "A-Page"],
             ])
         );
         $this->assertFileDoesNotExist($cacheFile);
-        $translation = $sut->findByTag("some_tag");
+        $translation = $sut->findTranslationByTag("some_tag");
         $this->assertEquals($this->translation(), $translation);
         $this->assertFileExists($cacheFile);
     }
@@ -60,16 +60,16 @@ class TranslationRepoTest extends TestCase
         mkdir($root . "plugins/polyglot/cache/", 0777, true);
         $cacheFile = $root . "plugins/polyglot/cache/translations.dat";
         file_put_contents($cacheFile, serialize(["some_tag" => $this->translation()]));
-        $sut = new TranslationRepo(
+        $sut = new Repository(
             $cacheFile,
             $root . "content/",
             "en",
             new FakePages,
-            new FakeLanguageRepo(),
+            new FakeLanguages(),
             new FakeContentReader()
         );
         $this->assertFileExists($cacheFile);
-        $translation = $sut->findByTag("some_tag");
+        $translation = $sut->findTranslationByTag("some_tag");
         $this->assertEquals($this->translation(), $translation);
     }
 

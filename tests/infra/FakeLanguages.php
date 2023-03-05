@@ -21,7 +21,7 @@
 
 namespace Polyglot\Infra;
 
-class FakeLanguageRepo extends LanguageRepo
+class FakeLanguages extends Languages
 {
     private $options;
 

@@ -21,27 +21,28 @@
 
 namespace Polyglot\Infra;
 
-use Polyglot\Infra\TranslationRepo;
+use Polyglot\Infra\Repository;
 use Polyglot\Value\Translation;
 
-class FakeTranslationRepo extends TranslationRepo
+class FakeRepository extends Repository
 {
     private $options;
 
     public function __construct($options = [])
     {
+        $this->languages = new FakeLanguages($options["lang"] ?? []);
         $this->pages = new FakePages;
         $this->options = $options;
     }
 
-    public function findByTag(string $tag): Translation
+    public function findTranslationByTag(string $tag): Translation
     {
-        return $this->options["trans"][$tag] ?? parent::findByTag($tag);
+        return $this->options["trans"][$tag] ?? parent::findTranslationByTag($tag);
     }
 
-    public function findByPage(int $page): Translation
+    public function findTranslationByPage(int $page): Translation
     {
-        return $this->options["trans"][$page] ?? parent::findByPage($page);
+        return $this->options["trans"][$page] ?? parent::findTranslationByPage($page);
     }
 
     protected function init()

@@ -24,9 +24,8 @@ namespace Polyglot;
 use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
-use Polyglot\Infra\FakeLanguageRepo;
+use Polyglot\Infra\FakeRepository;
 use Polyglot\Infra\FakeRequest;
-use Polyglot\Infra\FakeTranslationRepo;
 use Polyglot\Value\Translation;
 
 class AlternateLinksTest extends TestCase
@@ -42,8 +41,7 @@ class AlternateLinksTest extends TestCase
     {
         return new AlternateLinks(
             $this->conf(),
-            new FakeLanguageRepo(["second" => ["de"]]),
-            new FakeTranslationRepo(["trans" => [0 => new Translation("foo", ["de" => "", "en" => ""])]]),
+            new FakeRepository(["lang" => ["second" => ["de"]], "trans" => [0 => new Translation("foo", ["de" => "", "en" => ""])]]),
             new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
         );
     }

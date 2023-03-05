@@ -23,11 +23,10 @@ namespace Polyglot;
 
 use Plib\HtmlView as View;
 use Plib\Url;
-use Polyglot\Infra\LanguageRepo;
 use Polyglot\Infra\Pages;
+use Polyglot\Infra\Repository;
 use Polyglot\Infra\Request;
 use Polyglot\Infra\Response;
-use Polyglot\Infra\TranslationRepo;
 use Polyglot\Value\Translation;
 
 class Translations
@@ -38,11 +37,8 @@ class Translations
     /** @var Pages */
     private $pages;
 
-    /** @var LanguageRepo */
-    private $languageRepo;
-
-    /** @var TranslationRepo */
-    private $translationRepo;
+    /** @var Repository */
+    private $repository;
 
     /** @var View */
     private $view;
@@ -51,20 +47,18 @@ class Translations
     public function __construct(
         array $conf,
         Pages $pages,
-        LanguageRepo $languageRepo,
-        TranslationRepo $translationRepo,
+        Repository $repository,
         View $view
     ) {
         $this->conf = $conf;
         $this->pages = $pages;
-        $this->languageRepo = $languageRepo;
-        $this->translationRepo = $translationRepo;
+        $this->repository = $repository;
         $this->view = $view;
     }
 
     public function __invoke(Request $request): Response
     {
-        $languages = $this->languageRepo->others($request->sl());
+        $languages = $this->repository->otherLanguages($request->sl());
         return Response::create($this->view->render('translations', [
             'languages' => $languages,
             'pages' => $this->pages($request->url(), $languages),
@@ -79,7 +73,7 @@ class Translations
     {
         $pages = [];
         for ($i = 0; $i < $this->pages->count(); $i++) {
-            $translation = $this->translationRepo->findByPage($i);
+            $translation = $this->repository->findTranslationByPage($i);
             $pages[] = [
                 "heading" => $this->pages->heading($i),
                 "url" => $url->page($this->pages->url($i))->with("edit")->relative(),

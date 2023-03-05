@@ -22,21 +22,17 @@
 namespace Polyglot;
 
 use Plib\HtmlView as View;
-use Polyglot\Infra\LanguageRepo;
+use Polyglot\Infra\Repository;
 use Polyglot\Infra\Request;
 use Polyglot\Infra\Response;
-use Polyglot\Infra\TranslationRepo;
 
 class AlternateLinks
 {
     /** @var array<string,string> */
     private $conf;
 
-    /** @var LanguageRepo */
-    private $languageRepo;
-
-    /** @var TranslationRepo */
-    private $translationRepo;
+    /** @var Repository */
+    private $repository;
 
     /** @var View */
     private $view;
@@ -44,21 +40,19 @@ class AlternateLinks
     /** @param array<string,string> $conf */
     public function __construct(
         array $conf,
-        LanguageRepo $languageRepo,
-        TranslationRepo $translationRepo,
+        Repository $repository,
         View $view
     ) {
         $this->conf = $conf;
-        $this->languageRepo = $languageRepo;
-        $this->translationRepo = $translationRepo;
+        $this->repository = $repository;
         $this->view = $view;
     }
 
     public function __invoke(Request $request): Response
     {
         $links = [];
-        $translation = $this->translationRepo->findByPage($request->s());
-        foreach ($this->languageRepo->all() as $language) {
+        $translation = $this->repository->findTranslationByPage($request->s());
+        foreach ($this->repository->allLanguages() as $language) {
             if ($translation->pageUrl($language) !== null) {
                 $links = array_merge($links, $this->alternateLinksFor($request, $language, $translation->tag()));
             }
@@ -72,7 +66,7 @@ class AlternateLinks
     private function alternateLinksFor(Request $request, string $language, string $tag): array
     {
         $result = [];
-        $pageUrl = $this->translationRepo->findByTag($tag)->pageUrl($language);
+        $pageUrl = $this->repository->findTranslationByTag($tag)->pageUrl($language);
         $href = $request->url()->lang($language != $this->conf["language_default"] ? $language : "")
             ->page($pageUrl !== null ? $pageUrl : "")->absolute();
         if ($language === $this->conf["language_default"]) {

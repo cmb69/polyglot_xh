@@ -24,9 +24,8 @@ namespace Polyglot;
 use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
-use Polyglot\Infra\FakeLanguageRepo;
+use Polyglot\Infra\FakeRepository;
 use Polyglot\Infra\FakeRequest;
-use Polyglot\Infra\FakeTranslationRepo;
 
 class LanguageMenuTest extends TestCase
 {
@@ -42,8 +41,7 @@ class LanguageMenuTest extends TestCase
         return new LanguageMenu(
             $this->conf(),
             "./userfiles/images/flags/",
-            new FakeLanguageRepo(["second" => ["de", "fr", "it"]]),
-            new FakeTranslationRepo(),
+            new FakeRepository(["lang" => ["second" => ["de", "fr", "it"]]]),
             new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])
         );
     }

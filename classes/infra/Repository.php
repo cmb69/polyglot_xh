@@ -23,7 +23,7 @@ namespace Polyglot\Infra;
 
 use Polyglot\Value\Translation;
 
-class TranslationRepo
+class Repository
 {
     /** @var string */
     private $cacheFile;
@@ -37,8 +37,8 @@ class TranslationRepo
     /** @var Pages */
     protected $pages;
 
-    /** @var LanguageRepo */
-    private $languageRepo;
+    /** @var Languages */
+    protected $languages;
 
     /** @var ContentReader */
     private $contentReader;
@@ -51,18 +51,18 @@ class TranslationRepo
         string $generalContentFolder,
         string $defaultLanguage,
         Pages $pages,
-        LanguageRepo $languageRepo,
+        Languages $languages,
         ContentReader $contentReader
     ) {
         $this->cacheFile = $cacheFile;
         $this->generalContentFolder = $generalContentFolder;
         $this->defaultLanguage = $defaultLanguage;
         $this->pages = $pages;
-        $this->languageRepo = $languageRepo;
+        $this->languages = $languages;
         $this->contentReader = $contentReader;
     }
 
-    public function findByTag(string $tag): Translation
+    public function findTranslationByTag(string $tag): Translation
     {
         if ($this->translations === null) {
             $this->init();
@@ -70,14 +70,14 @@ class TranslationRepo
         return $this->translations[$tag] ?? new Translation($tag, []);
     }
 
-    public function findByPage(int $page): Translation
+    public function findTranslationByPage(int $page): Translation
     {
         if ($this->translations === null) {
             $this->init();
         }
         $pageData = $this->pages->pageData($page);
         $tag = $pageData['polyglot_tag'] ?? "";
-        return $this->findByTag($tag);
+        return $this->findTranslationByTag($tag);
     }
 
     /** @return void */
@@ -103,7 +103,7 @@ class TranslationRepo
             return true;
         }
         $mTime = 0;
-        foreach ($this->languageRepo->all() as $language) {
+        foreach ($this->languages->all() as $language) {
             $folder = $this->generalContentFolder;
             if ($language !== $this->defaultLanguage) {
                 $folder .= $language . "/";
@@ -118,7 +118,7 @@ class TranslationRepo
     private function doInit()
     {
         $tags = [];
-        foreach ($this->languageRepo->all() as $language) {
+        foreach ($this->languages->all() as $language) {
             $pageUrls = $this->contentReader->readLanguage($language);
             if ($pageUrls === null) {
                 continue;
@@ -141,5 +141,17 @@ class TranslationRepo
     {
         $contents = serialize($this->translations);
         XH_writeFile($this->cacheFile, $contents);
+    }
+
+    /** @return list<string> */
+    public function allLanguages(): array
+    {
+        return $this->languages->all();
+    }
+
+    /** @return list<string> */
+    public function otherLanguages(string $that): array
+    {
+        return $this->languages->others($that);
     }
 }

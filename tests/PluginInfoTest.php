@@ -25,7 +25,6 @@ use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
 use Polyglot\Infra\FakeSystemChecker;
-use Polyglot\Infra\SystemChecker;
 
 class PluginInfoTest extends TestCase
 {

@@ -23,10 +23,10 @@ namespace Polyglot;
 
 use Plib\HtmlView as View;
 use Polyglot\Infra\ContentReader;
-use Polyglot\Infra\LanguageRepo;
+use Polyglot\Infra\Languages;
 use Polyglot\Infra\Pages;
+use Polyglot\Infra\Repository;
 use Polyglot\Infra\SystemChecker;
-use Polyglot\Infra\TranslationRepo;
 
 class Dic
 {
@@ -34,8 +34,7 @@ class Dic
     {
         return new AlternateLinks(
             self::makeConf(),
-            new LanguageRepo,
-            self::makeTranslationRepo(),
+            self::makeRepository(),
             self::makeView()
         );
     }
@@ -47,8 +46,7 @@ class Dic
         return new LanguageMenu(
             self::makeConf(),
             $pth['folder']['flags'],
-            new LanguageRepo,
-            self::makeTranslationRepo(),
+            self::makeRepository(),
             self::makeView()
         );
     }
@@ -74,8 +72,7 @@ class Dic
         return new Translations(
             self::makeConf(),
             new Pages(),
-            new LanguageRepo,
-            self::makeTranslationRepo(),
+            self::makeRepository(),
             self::makeView()
         );
     }
@@ -88,16 +85,16 @@ class Dic
         return $plugin_cf["polyglot"] + ["language_default" => $cf["language"]["default"]];
     }
 
-    private static function makeTranslationRepo(): TranslationRepo
+    private static function makeRepository(): Repository
     {
         global $pth, $cf;
 
-        return new TranslationRepo(
+        return new Repository(
             $pth['folder']['plugins'] . 'polyglot/cache/translations.dat',
             $pth["folder"]["content"] . $pth["folder"]["base"],
             $cf["language"]["default"],
             new Pages(),
-            new LanguageRepo,
+            new Languages,
             new ContentReader($cf["language"]["default"])
         );
     }

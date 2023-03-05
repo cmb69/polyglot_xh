@@ -23,10 +23,9 @@ namespace Polyglot;
 
 use Plib\HtmlView as View;
 use Plib\Url;
-use Polyglot\Infra\LanguageRepo;
+use Polyglot\Infra\Repository;
 use Polyglot\Infra\Request;
 use Polyglot\Infra\Response;
-use Polyglot\Infra\TranslationRepo;
 use Polyglot\Logic\Util;
 
 class LanguageMenu
@@ -37,11 +36,8 @@ class LanguageMenu
     /** @var string */
     private $flagsFolder;
 
-    /** @var LanguageRepo */
-    private $languageRepo;
-
-    /** @var TranslationRepo */
-    private $translationRepo;
+    /** @var Repository */
+    private $repository;
 
     /** @var View */
     private $view;
@@ -50,21 +46,19 @@ class LanguageMenu
     public function __construct(
         array $conf,
         string $flagsFolder,
-        LanguageRepo $languageRepo,
-        TranslationRepo $translationRepo,
+        Repository $repository,
         View $view
     ) {
         $this->conf = $conf;
         $this->flagsFolder = $flagsFolder;
-        $this->languageRepo = $languageRepo;
-        $this->translationRepo = $translationRepo;
+        $this->repository = $repository;
         $this->view = $view;
     }
 
     public function __invoke(Request $request): Response
     {
         $languages = [];
-        foreach ($this->languageRepo->others($request->sl()) as $language) {
+        foreach ($this->repository->otherLanguages($request->sl()) as $language) {
             $languages[$language] = [
                 "href" => $this->languageURL($request, $language)->relative(),
                 "src" => $this->languageFlag($language),
@@ -82,7 +76,7 @@ class LanguageMenu
 
     private function getAltAttribute(Request $request, string $language): string
     {
-        $translation = $this->translationRepo->findByPage($request->s());
+        $translation = $this->repository->findTranslationByPage($request->s());
         $labels = Util::parseLanguageLabels($this->conf["languages_labels"]);
         return $this->label($labels, $language, $translation->pageUrl($language) !== null);
     }
@@ -101,9 +95,9 @@ class LanguageMenu
 
     private function languageURL(Request $request, string $language): Url
     {
-        $translation = $this->translationRepo->findByPage($request->s());
+        $translation = $this->repository->findTranslationByPage($request->s());
         $tag = $request->s() > 0 ? $translation->tag() : "";
-        $pageUrl = $this->translationRepo->findByTag($tag)->pageUrl($language);
+        $pageUrl = $this->repository->findTranslationByTag($tag)->pageUrl($language);
         return $request->url()->lang($language != $this->conf["language_default"] ? $language : "")
             ->page($pageUrl !== null ? $pageUrl : "");
     }

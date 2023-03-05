@@ -21,7 +21,7 @@
 
 namespace Polyglot\Infra;
 
-class LanguageRepo
+class Languages
 {
     /** @return list<string> */
     public function all(): array

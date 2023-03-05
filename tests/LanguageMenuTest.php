@@ -41,7 +41,7 @@ class LanguageMenuTest extends TestCase
     {
         return new LanguageMenu(
             $this->conf(),
-            "",
+            "./userfiles/images/flags/",
             new FakeLanguageRepo(["second" => ["de", "fr", "it"]]),
             new FakeTranslationRepo(),
             new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"])

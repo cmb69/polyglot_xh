@@ -63,7 +63,6 @@ class LanguageMenu
 
     public function __invoke(Request $request): Response
     {
-        $this->translationRepo->init($request->sl());
         $languages = [];
         foreach ($this->languageRepo->others($request->sl()) as $language) {
             $languages[$language] = [

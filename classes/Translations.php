@@ -64,7 +64,6 @@ class Translations
 
     public function __invoke(Request $request): Response
     {
-        $this->translationRepo->init($request->sl());
         $languages = $this->languageRepo->others($request->sl());
         return Response::create($this->view->render('translations', [
             'languages' => $languages,

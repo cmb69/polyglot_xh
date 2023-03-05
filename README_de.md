@@ -80,10 +80,10 @@ Seiten im Bearbeitungsmodus verlinkt, so dass Sie schnell möglicherweise
 fehlende Polyglot_XH Schlagwörter nachbessern können.
 
 Beachten Sie, dass die Beziehungen zwischen Seiten verschiedener Sprachen
-unter `plugins/polyglot/cache/` aus Performance-Gründen zwischengespeichert
-werden. Falls Sie diesen Cache, aus welchen Gründen auch immer, löschen müssen,
-dann müssen Sie wenigstens eine Seite **jeder** Sprache speichern, um ihn
-korrekt wieder aufzubauen.
+unter `plugins/polyglot/cache/translations.dat` aus Performance-Gründen
+zwischengespeichert werden.
+Sie können diese Datei jederzeit löschen; sie wird beim nächsten Seitenzugriff
+automatisch neu erzeugt.
 
 ## Problembehebung
 

@@ -22,6 +22,7 @@
 namespace Polyglot;
 
 use Plib\HtmlView as View;
+use Polyglot\Infra\ContentReader;
 use Polyglot\Infra\LanguageRepo;
 use Polyglot\Infra\Pages;
 use Polyglot\Infra\SystemChecker;
@@ -89,9 +90,16 @@ class Dic
 
     private static function makeTranslationRepo(): TranslationRepo
     {
-        global $pth;
+        global $pth, $cf;
 
-        return new TranslationRepo($pth['folder']['plugins'] . 'polyglot/cache/', new Pages());
+        return new TranslationRepo(
+            $pth['folder']['plugins'] . 'polyglot/cache/translations.dat',
+            $pth["folder"]["content"] . $pth["folder"]["base"],
+            $cf["language"]["default"],
+            new Pages(),
+            new LanguageRepo,
+            new ContentReader($cf["language"]["default"])
+        );
     }
 
     private static function makeView(): View

@@ -65,7 +65,7 @@
 <pre><code>&lt;?php echo polyglot_languagemenu()?&gt;</code></pre>
 <p>To make this actually work, you have to tag individual pages of different languages appropriately. You can do this in the tab <code>Polyglot</code> above the content editor; simply set the same unique tag for the original page and for its translations.</p>
 <p>In the plugin administration (<code>Plugins</code> → <code>Polyglot</code> → <code>Translations</code>) you can get an overview of which pages are already translated. The page headings as well as the translations are linked to the respective pages in edit mode, so you can quickly repair possibly missing Polyglot_XH tags.</p>
-<p>Note that the relations between pages of different languages are cached in <code>plugins/polyglot/cache/</code> for performance reasons. If you have to clear this cache for whatever reason, you have to save at least one page of <strong>every</strong> language to rebuilt it properly.</p>
+<p>Note that the relations between pages of different languages are cached in <code>plugins/polyglot/cache/translations.dat</code> for performance reasons. You can delete that file at any time; the cache will automatically be recreated on the next page request.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>Report bugs and ask for support either on <a href="https://github.com/cmb69/polyglot_xh/issues">Github</a> or in the <a href="https://cmsimpleforum.com/">CMSimple_XH Forum</a>.</p>
 <h2 id="license">License</h2>

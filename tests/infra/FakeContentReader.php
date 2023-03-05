@@ -21,31 +21,17 @@
 
 namespace Polyglot\Infra;
 
-use Polyglot\Infra\TranslationRepo;
-use Polyglot\Value\Translation;
-
-class FakeTranslationRepo extends TranslationRepo
+class FakeContentReader extends ContentReader
 {
     private $options;
 
     public function __construct($options = [])
     {
-        $this->pages = new FakePages;
         $this->options = $options;
     }
 
-    public function findByTag(string $tag): Translation
+    public function readLanguage(?string $language)
     {
-        return $this->options["trans"][$tag] ?? parent::findByTag($tag);
-    }
-
-    public function findByPage(int $page): Translation
-    {
-        return $this->options["trans"][$page] ?? parent::findByPage($page);
-    }
-
-    protected function init()
-    {
-        $this->translations = [];
+        return $this->options[$language] ?? null;
     }
 }

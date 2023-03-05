@@ -1,8 +1,6 @@
 /coverage
-vendor
-/cache/tags.dat
-/cache/.lck
-/classes.svg
+/vendor
+/cache/translations.dat
 /composer.lock
 /.phpunit.result.cache
 /tools

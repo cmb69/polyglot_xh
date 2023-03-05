@@ -65,7 +65,7 @@
 <pre><code>&lt;?php echo polyglot_languagemenu();?&gt;</code></pre>
 <p>Damit das wirklich funktioniert, müssen Sie individuelle Seiten unterschiedlicher Sprachen geeignet markieren. Sie können dies im Reiter <code>Polyglot</code> oberhalb des Content-Editors tun; vergeben Sie einfach das selbe eindeutige Schlagwort für die Originalseite und für ihre Übersetzungen.</p>
 <p>In der Plugin-Administration (<code>Plugins</code> → <code>Polyglot</code> → <code>Übersetzungen</code>) erhalten Sie einen Überblick darüber, welche Seiten bereits übersetzt wurden. Die Seitenüberschriften sowie die Übersetzungen sind zu den entsprechenden Seiten im Bearbeitungsmodus verlinkt, so dass Sie schnell möglicherweise fehlende Polyglot_XH Schlagwörter nachbessern können.</p>
-<p>Beachten Sie, dass die Beziehungen zwischen Seiten verschiedener Sprachen unter <code>plugins/polyglot/cache/</code> aus Performance-Gründen zwischengespeichert werden. Falls Sie diesen Cache, aus welchen Gründen auch immer, löschen müssen, dann müssen Sie wenigstens eine Seite <strong>jeder</strong> Sprache speichern, um ihn korrekt wieder aufzubauen.</p>
+<p>Beachten Sie, dass die Beziehungen zwischen Seiten verschiedener Sprachen unter <code>plugins/polyglot/cache/translations.dat</code> aus Performance-Gründen zwischengespeichert werden. Sie können diese Datei jederzeit löschen; sie wird beim nächsten Seitenzugriff automatisch neu erzeugt.</p>
 <h2 id="problembehebung">Problembehebung</h2>
 <p>Melden Sie Programmfehler und stellen Sie Supportanfragen entweder auf <a href="https://github.com/cmb69/polyglot_xh/issues">Github</a> oder im <a href="https://cmsimpleforum.com/">CMSimple_XH Forum</a>.</p>
 <h2 id="lizenz">Lizenz</h2>

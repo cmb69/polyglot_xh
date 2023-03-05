@@ -75,9 +75,9 @@ as well as the translations are linked to the respective pages in edit mode, so
 you can quickly repair possibly missing Polyglot_XH tags.
 
 Note that the relations between pages of different languages are cached in
-`plugins/polyglot/cache/` for performance reasons. If you have to clear this
-cache for whatever reason, you have to save at least one page of **every**
-language to rebuilt it properly.
+`plugins/polyglot/cache/translations.dat` for performance reasons.
+You can delete that file at any time; the cache will automatically be recreated
+on the next page request.
 
 ## Troubleshooting
 

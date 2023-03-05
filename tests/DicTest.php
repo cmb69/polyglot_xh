@@ -30,7 +30,7 @@ class DicTest extends TestCase
         global $pth, $cf, $plugin_cf, $plugin_tx, $c;
 
         $pth = [
-            "folder" => ["base" => "", "flags" => "", "plugin" => "", "plugins" => ""],
+            "folder" => ["base" => "", "content" => "", "flags" => "", "plugin" => "", "plugins" => ""],
             "file" => ["content" => ""]
         ];
         $cf = ["language" => ["default" => ""]];

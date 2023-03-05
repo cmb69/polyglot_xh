@@ -56,7 +56,6 @@ class AlternateLinks
 
     public function __invoke(Request $request): Response
     {
-        $this->translationRepo->init($request->sl());
         $links = [];
         $translation = $this->translationRepo->findByPage($request->s());
         foreach ($this->languageRepo->all() as $language) {

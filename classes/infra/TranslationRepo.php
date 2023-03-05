@@ -26,88 +26,120 @@ use Polyglot\Value\Translation;
 class TranslationRepo
 {
     /** @var string */
-    private $dataFolder;
+    private $cacheFile;
+
+    /** @var string */
+    private $generalContentFolder;
+
+    /** @var string */
+    private $defaultLanguage;
 
     /** @var Pages */
     protected $pages;
 
-    /** @var array<string,array<string,string>>|null */
-    protected $tags = null;
+    /** @var LanguageRepo */
+    private $languageRepo;
 
-    public function __construct(string $dataFolder, Pages $pages)
-    {
-        $this->dataFolder = $dataFolder;
+    /** @var ContentReader */
+    private $contentReader;
+
+    /** @var array<string,Translation>|null */
+    protected $translations = null;
+
+    public function __construct(
+        string $cacheFile,
+        string $generalContentFolder,
+        string $defaultLanguage,
+        Pages $pages,
+        LanguageRepo $languageRepo,
+        ContentReader $contentReader
+    ) {
+        $this->cacheFile = $cacheFile;
+        $this->generalContentFolder = $generalContentFolder;
+        $this->defaultLanguage = $defaultLanguage;
         $this->pages = $pages;
-    }
-
-    /** @return void */
-    public function init(string $sl)
-    {
-        $filename = $this->tagsFile();
-        if (!is_readable($filename)) {
-            $this->tags = [];
-            $this->update($sl);
-            return;
-        }
-        if (!($contents = XH_readFile($filename))) {
-            $contents = serialize([]);
-        }
-        $tags = unserialize($contents);
-        assert(is_array($tags));
-        $this->tags = $tags;
-        if (!is_array($this->tags)) { // @phpstan-ignore-line
-            $this->tags = [];
-            $this->update($sl);
-            return;
-        }
-        if ($this->lastMod() < $this->contentFileTimestamp()) {
-            $this->update($sl);
-        }
-    }
-
-    /** @return void */
-    private function update(string $sl)
-    {
-        foreach ($this->pages->allPageData() as $i => $data) {
-            if (!empty($data['polyglot_tag'])) {
-                $tag = $data['polyglot_tag'];
-                $this->tags[$tag][$sl] = $this->pages->url($i);
-            }
-        }
-        $contents = serialize($this->tags);
-        XH_writeFile($this->tagsFile(), $contents);
-    }
-
-    protected function contentFileTimestamp(): int
-    {
-        global $pth;
-        return (int) filemtime($pth["file"]["content"]);
-    }
-
-    private function lastMod(): int
-    {
-        $filename = $this->tagsFile();
-        return file_exists($filename)
-            ? (int) filemtime($filename)
-            : 0;
-    }
-
-    private function tagsFile(): string
-    {
-        return $this->dataFolder . 'tags.dat';
+        $this->languageRepo = $languageRepo;
+        $this->contentReader = $contentReader;
     }
 
     public function findByTag(string $tag): Translation
     {
-        assert($this->tags !== null);
-        return new Translation($tag, $this->tags[$tag] ?? []);
+        if ($this->translations === null) {
+            $this->init();
+        }
+        return $this->translations[$tag] ?? new Translation($tag, []);
     }
 
     public function findByPage(int $page): Translation
     {
-        assert($this->tags !== null);
+        if ($this->translations === null) {
+            $this->init();
+        }
         $pageData = $this->pages->pageData($page);
         $tag = $pageData['polyglot_tag'] ?? "";
         return $this->findByTag($tag);
+    }
+
+    /** @return void */
+    protected function init()
+    {
+        if (!$this->isCacheStale()) {
+            $translations = XH_readFile($this->cacheFile);
+            if ($translations !== false) {
+                $translations = unserialize($translations);
+                if (is_array($translations)) {
+                    $this->translations = $translations;
+                    return;
+                }
+            }
+        }
+        $this->doInit();
+        $this->updateCache();
+    }
+
+    private function isCacheStale(): bool
+    {
+        if (!file_exists($this->cacheFile)) {
+            return true;
+        }
+        $mTime = 0;
+        foreach ($this->languageRepo->all() as $language) {
+            $folder = $this->generalContentFolder;
+            if ($language !== $this->defaultLanguage) {
+                $folder .= $language . "/";
+            }
+            $file = $folder . "content.htm";
+            $mTime = max($mTime, (int) filemtime($file));
+        }
+        return $mTime > (int) filemtime($this->cacheFile);
+    }
+
+    /** @return void */
+    private function doInit()
+    {
+        $tags = [];
+        foreach ($this->languageRepo->all() as $language) {
+            $pageUrls = $this->contentReader->readLanguage($language);
+            if ($pageUrls === null) {
+                continue;
+            }
+            foreach ($pageUrls as $tag => $pageUrl) {
+                if (isset($tags[$tag])) {
+                    $tags[$tag] += [$language => $pageUrl];
+                } else {
+                    $tags[$tag] = [$language => $pageUrl];
+                }
+            }
+        }
+        foreach ($tags as $tag => $pageUrls) {
+            $this->translations[$tag] = new Translation($tag, $pageUrls);
+        }
+    }
+
+    /** @return void */
+    private function updateCache()
+    {
+        $contents = serialize($this->translations);
+        XH_writeFile($this->cacheFile, $contents);
     }
 }

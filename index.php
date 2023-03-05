@@ -28,7 +28,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {
     exit;
 }
 
-const POLYGLOT_VERSION = "1.0beta2";
+const POLYGLOT_VERSION = "1.0";
 
 function Polyglot_languageMenu(): string
 {

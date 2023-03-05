@@ -65,10 +65,11 @@ class LanguageMenuController
         $this->translationRepo->init($request->sl());
         $languages = [];
         foreach ($this->languageRepo->others($request->sl()) as $language) {
-            $href = $this->languageURL($request, $language);
-            $src = $this->languageFlag($language);
-            $alt = $this->getAltAttribute($request, $language);
-            $languages[$language] = compact('href', 'src', 'alt');
+            $languages[$language] = [
+                "href" => $this->languageURL($request, $language),
+                "src" => $this->languageFlag($language),
+                "alt" => $this->getAltAttribute($request, $language),
+            ];
         }
         return $this->view->render('languagemenu', ['languages' => $languages]);
     }

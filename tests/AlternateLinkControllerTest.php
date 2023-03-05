@@ -37,12 +37,17 @@ class AlternateLinkControllerTest extends TestCase
 
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
         $subject = new AlternateLinkController(
-            "en",
+            $this->conf(),
             $view,
             new FakeLanguageRepo(["second" => ["de"]]),
             new FakeTranslationRepo(["trans" => [0 => new Translation("foo", ["de" => "", "en" => ""])]])
         );
         $subject->defaultAction(new FakeRequest());
         Approvals::verifyHtml($hjs);
+    }
+
+    private function conf(): array
+    {
+        return XH_includeVar("./config/config.php", "plugin_cf")["polyglot"] + ["language_default" => "en"];
     }
 }

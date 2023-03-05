@@ -35,15 +35,18 @@ class LanguageMenuControllerTest extends TestCase
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
         $subject = new LanguageMenuController(
-            "en",
+            $this->conf(),
             "",
-            "png",
-            "de=Deutsch;nicht übersetzt\rfr=français",
             $view,
             new FakeLanguageRepo(["second" => ["de", "fr", "it"]]),
             new FakeTranslationRepo()
         );
         $response = $subject->defaultAction(new FakeRequest(["sl" => "en"]));
         Approvals::verifyHtml($response);
+    }
+
+    private function conf(): array
+    {
+        return XH_includeVar("./config/config.php", "plugin_cf")["polyglot"] + ["language_default" => "en"];
     }
 }

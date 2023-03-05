@@ -29,8 +29,8 @@ use Polyglot\Infra\TranslationRepo;
 
 class MainAdminController
 {
-    /** @var string */
-    private $defaultLanguage;
+    /** @var array<string,string> */
+    private $conf;
 
     /** @var Pages */
     private $pages;
@@ -44,14 +44,15 @@ class MainAdminController
     /** @var TranslationRepo */
     private $translationRepo;
 
+    /** @param array<string,string> $conf */
     public function __construct(
-        string $defaultLanguage,
+        array $conf,
         Pages $pages,
         View $view,
         LanguageRepo $languageRepo,
         TranslationRepo $translationRepo
     ) {
-        $this->defaultLanguage = $defaultLanguage;
+        $this->conf = $conf;
         $this->pages = $pages;
         $this->view = $view;
         $this->languageRepo = $languageRepo;
@@ -72,7 +73,7 @@ class MainAdminController
             $translations = [];
             foreach ($languages as $language) {
                 $translations[$language] = $translation->pageUrl($language) !== null
-                    ? $request->url()->lang($language != $this->defaultLanguage ? $language : "")
+                    ? $request->url()->lang($language != $this->conf["language_default"] ? $language : "")
                         ->page($translation->pageUrl($language))->with("edit")
                     : null;
             }

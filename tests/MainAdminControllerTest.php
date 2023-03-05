@@ -24,12 +24,10 @@ namespace Polyglot;
 use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\HtmlView as View;
-use Plib\Url;
 use Polyglot\Infra\FakeLanguageRepo;
 use Polyglot\Infra\FakePages;
 use Polyglot\Infra\FakeRequest;
 use Polyglot\Infra\FakeTranslationRepo;
-use Polyglot\Infra\Model;
 use Polyglot\Value\Translation;
 
 class MainAdminControllerTest extends TestCase
@@ -39,7 +37,7 @@ class MainAdminControllerTest extends TestCase
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["polyglot"]);
 
         $subject = new MainAdminController(
-            "en",
+            $this->conf(),
             new FakePages,
             $view,
             new FakeLanguageRepo(["second" => ["de", "fr"]]),
@@ -50,5 +48,10 @@ class MainAdminControllerTest extends TestCase
         );
         $response = $subject->defaultAction(new FakeRequest(["sl" => "en", "defaultLanguage" => "en"]));
         Approvals::verifyHtml($response);
+    }
+
+    private function conf(): array
+    {
+        return XH_includeVar("./config/config.php", "plugin_cf")["polyglot"] + ["language_default" => "en"];
     }
 }

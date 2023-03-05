@@ -24,14 +24,13 @@ namespace Polyglot;
 use Plib\HtmlView as View;
 use Plib\Url;
 use Polyglot\Infra\LanguageRepo;
-use Polyglot\Infra\Model;
 use Polyglot\Infra\Request;
 use Polyglot\Infra\TranslationRepo;
 
 class AlternateLinkController
 {
-    /** @var string */
-    private $defaultLanguage;
+    /** @var array<string,string> */
+    private $conf;
 
     /** @var View */
     private $view;
@@ -42,13 +41,14 @@ class AlternateLinkController
     /** @var TranslationRepo */
     private $translationRepo;
 
+    /** @param array<string,string> $conf */
     public function __construct(
-        string $defaultLanguage,
+        array $conf,
         View $view,
         LanguageRepo $languageRepo,
         TranslationRepo $translationRepo
     ) {
-        $this->defaultLanguage = $defaultLanguage;
+        $this->conf = $conf;
         $this->view = $view;
         $this->languageRepo = $languageRepo;
         $this->translationRepo = $translationRepo;
@@ -79,9 +79,9 @@ class AlternateLinkController
     {
         $result = [];
         $pageUrl = $this->translationRepo->findByTag($tag)->pageUrl($language);
-        $href = $request->url()->lang($language != $this->defaultLanguage ? $language : "")
+        $href = $request->url()->lang($language != $this->conf["language_default"] ? $language : "")
             ->page($pageUrl !== null ? $pageUrl : "");
-        if ($language === $this->defaultLanguage) {
+        if ($language === $this->conf["language_default"]) {
             $result[] = ["hreflang" => "x-default", "href" => $href];
         }
         $result[] = ["hreflang" => $language, "href" => $href];

@@ -23,7 +23,6 @@ namespace Polyglot;
 
 use Plib\HtmlView as View;
 use Polyglot\Infra\LanguageRepo;
-use Polyglot\Infra\Model;
 use Polyglot\Infra\Pages;
 use Polyglot\Infra\SystemChecker;
 use Polyglot\Infra\TranslationRepo;
@@ -32,10 +31,8 @@ class Dic
 {
     public static function makeAlternateLinkController(): AlternateLinkController
     {
-        global $cf;
-
         return new AlternateLinkController(
-            $cf['language']['default'],
+            self::makeConf(),
             self::makeView(),
             new LanguageRepo,
             self::makeTranslationRepo()
@@ -44,13 +41,11 @@ class Dic
 
     public static function makeLanguageMenuController(): LanguageMenuController
     {
-        global $pth, $cf, $plugin_cf;
+        global $pth;
 
         return new LanguageMenuController(
-            $cf['language']['default'],
+            self::makeConf(),
             $pth['folder']['flags'],
-            $plugin_cf['polyglot']['flags_extension'],
-            $plugin_cf['polyglot']['languages_labels'],
             self::makeView(),
             new LanguageRepo,
             self::makeTranslationRepo()
@@ -76,15 +71,21 @@ class Dic
 
     public static function makeMainAdminController(): MainAdminController
     {
-        global $cf;
-
         return new MainAdminController(
-            $cf['language']['default'],
+            self::makeConf(),
             new Pages(),
             self::makeView(),
             new LanguageRepo,
             self::makeTranslationRepo()
         );
+    }
+
+    /** @return array<string,string> */
+    private static function makeConf(): array
+    {
+        global $cf, $plugin_cf;
+
+        return $plugin_cf["polyglot"] + ["language_default" => $cf["language"]["default"]];
     }
 
     private static function makeTranslationRepo(): TranslationRepo

@@ -24,23 +24,17 @@ namespace Polyglot;
 use Plib\HtmlView as View;
 use Plib\Url;
 use Polyglot\Infra\LanguageRepo;
-use Polyglot\Infra\Model;
 use Polyglot\Infra\Request;
 use Polyglot\Infra\TranslationRepo;
+use Polyglot\Logic\Util;
 
 class LanguageMenuController
 {
-    /** @var string */
-    private $defaultLanguage;
+    /** @var array<string,string> */
+    private $conf;
 
     /** @var string */
     private $flagsFolder;
-
-    /** @var string */
-    private $flagsExtension;
-
-    /** @var string */
-    private $languageLabels;
 
     /** @var View */
     private $view;
@@ -51,19 +45,16 @@ class LanguageMenuController
     /** @var TranslationRepo */
     private $translationRepo;
 
+    /** @param array<string,string> $conf */
     public function __construct(
-        string $defaultLanguage,
+        array $conf,
         string $flagsFolder,
-        string $flagsExtension,
-        string $languageLabels,
         View $view,
         LanguageRepo $languageRepo,
         TranslationRepo $translationRepo
     ) {
-        $this->defaultLanguage = $defaultLanguage;
+        $this->conf = $conf;
         $this->flagsFolder = $flagsFolder;
-        $this->flagsExtension = $flagsExtension;
-        $this->languageLabels = $languageLabels;
         $this->view = $view;
         $this->languageRepo = $languageRepo;
         $this->translationRepo = $translationRepo;
@@ -85,44 +76,26 @@ class LanguageMenuController
     private function languageFlag(string $language): string
     {
         return $this->flagsFolder . $language . '.'
-            . $this->flagsExtension;
+            . $this->conf["flags_extension"];
     }
 
     private function getAltAttribute(Request $request, string $language): string
     {
         $translation = $this->translationRepo->findByPage($request->s());
-        $labels = $this->languageLabels();
-        if (isset($labels[$language])) {
-            if ($translation->pageUrl($language) !== null
-                || !isset($labels[$language]["untranslated"])
-            ) {
-                $alt = $labels[$language]["translated"];
-            } else {
-                $alt = $labels[$language]["untranslated"];
-            }
-        } else {
-            $alt = $language;
-        }
-        return $alt;
+        $labels = Util::parseLanguageLabels($this->conf["languages_labels"]);
+        return $this->label($labels, $language, $translation->pageUrl($language) !== null);
     }
 
-    /**
-     * @return array<string,array{translated:string,untranslated?:string}>
-     */
-    private function languageLabels(): array
+    /** @param array<string,array{translated:string,untranslated:string|null}> $labels */
+    private function label(array $labels, string $language, bool $translated): string
     {
-        $languages = preg_split('/\r\n|\r|\n/', $this->languageLabels);
-        assert(is_array($languages));
-        $res = [];
-        foreach ($languages as $language) {
-            list($key, $value) = explode('=', $language, 2);
-            $parts = explode(';', $value, 2);
-            $res[$key]["translated"] = $parts[0];
-            if (isset($parts[1])) {
-                $res[$key]["untranslated"] = $parts[1];
-            }
+        if (!isset($labels[$language])) {
+             return $language;
         }
-        return $res;
+        if (!$translated && $labels[$language]["untranslated"] !== null) {
+            return $labels[$language]["untranslated"];
+        }
+        return $labels[$language]["translated"];
     }
 
     private function languageURL(Request $request, string $language): Url
@@ -130,7 +103,7 @@ class LanguageMenuController
         $translation = $this->translationRepo->findByPage($request->s());
         $tag = $request->s() > 0 ? $translation->tag() : "";
         $pageUrl = $this->translationRepo->findByTag($tag)->pageUrl($language);
-        return $request->url()->lang($language != $this->defaultLanguage ? $language : "")
+        return $request->url()->lang($language != $this->conf["language_default"] ? $language : "")
             ->page($pageUrl !== null ? $pageUrl : "");
     }
 }

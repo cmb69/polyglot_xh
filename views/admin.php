@@ -11,7 +11,7 @@ if (!isset($this)) {
 /**
  * @var View $this
  * @var array<int,string> $languages
- * @var array<string,array{heading:string,url:Url,indent:string,tag:string,translations:array<string,?Url>}> $pages
+ * @var list<array{heading:string,url:Url,indent:string,tag:string,translations:array<string,?Url>}> $pages
  */
 ?>
 <h1>Polyglot – <?=$this->text('label_translations')?></h1>

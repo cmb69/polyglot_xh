@@ -69,7 +69,9 @@ class AlternateLinkController
                 $links = array_merge($links, $this->alternateLinksFor($request, $language, $translation->tag()));
             }
         }
-        $hjs .= $this->view->render('alternate_links', compact('links'));
+        $hjs .= $this->view->render('alternate_links', [
+            "links" => $links,
+        ]);
     }
 
     /**
